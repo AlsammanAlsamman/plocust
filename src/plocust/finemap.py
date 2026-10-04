@@ -143,3 +143,129 @@ def ld_consistency(z: np.ndarray, R: np.ndarray, ridge: float = 0.01) -> np.ndar
     """
     P = np.linalg.inv(np.asarray(R, float) + ridge * np.eye(len(z)))
     return (P @ z) / np.sqrt(np.diag(P))
+
+
+# ------------------------------------------------------------------ regions of GWAS loci
+
+
+def region_z(ss, chrom: str, start: int, end: int):
+    """Signed z for the alt allele of each SNP in [start, end] (sign from beta when reported)."""
+    from .identify import signed_z
+    from .io import normalize_chrom
+
+    r = ss[(ss["chrom"] == normalize_chrom(chrom)) & (ss["pos"] >= start) & (ss["pos"] <= end)]
+    z, signed = signed_z(r)
+    return r.assign(z=z), signed
+
+
+def finemap_region(ss, chrom: str, start: int, end: int, geno, n: int, L: int = 10, max_snps: int = 2500,
+                   min_maf: float = 0.01, panel_name: str = "panel", covariates: Optional[np.ndarray] = None,
+                   min_abs_z: Optional[float] = 4.42, **kw):
+    """Fine-map one region of one study: summary statistics `ss`, LD from genotypes `geno` (same build).
+
+    SNPs are matched to the panel by position and alleles (z flipped to the panel's counted allele).
+    Above max_snps, the most significant SNPs are kept.
+
+    `covariates` (samples x k, same sample order as `geno`): the GWAS covariates, e.g. its PCs. Mixed-model
+    and PC-adjusted z-scores describe genotypes with population structure removed, so LD is computed on
+    genotypes residualised on the same covariates; raw LD makes SuSiE invent signals.
+    `min_abs_z`: a signal is kept only if one of its credible-set SNPs reaches this |z| (4.42 ~ p 1e-5).
+    Returns (FineMap, matched SNP table, LD matrix) or None.
+    """
+    from .coloc import to_panel
+
+    r, signed = region_z(ss, chrom, start, end)
+    if not signed or len(r) < 2:
+        return None
+    df = r.rename(columns={"z": "z"})[["chrom", "pos", "ref", "alt", "z"]]
+    m = to_panel(df.assign(chrom=chrom), geno, tol=0)
+    if len(m) < 2:
+        return None
+    g = geno.read(m["idx"].to_numpy())
+    with np.errstate(invalid="ignore"):
+        af = np.nanmean(g, axis=0) / 2
+    keep = np.isfinite(af) & (np.minimum(af, 1 - af) >= min_maf)
+    m, g = m[keep].reset_index(drop=True), g[:, keep]
+    if len(m) > max_snps:
+        top = np.sort(np.argsort(-np.abs(m["z_a1"].to_numpy()))[:max_snps])
+        m, g = m.iloc[top].reset_index(drop=True), g[:, top]
+    if len(m) < 2:
+        return None
+    from .ld import _standardize
+
+    x = _standardize(g)
+    if covariates is not None:
+        c = np.column_stack([np.ones(len(x)), np.asarray(covariates, float)])
+        x = x - c @ np.linalg.lstsq(c, x, rcond=None)[0]
+        sd = x.std(0)
+        x = x / np.where(sd == 0, 1, sd)
+    R = (x.T @ x) / x.shape[0]
+    np.fill_diagonal(R, 1.0)
+    fm = susie_rss(m["z_a1"].to_numpy(), R, n=n, L=L, **kw)
+    if min_abs_z is not None:
+        z = np.abs(m["z_a1"].to_numpy())
+        fm.signals = [s for s in fm.signals if z[s.variants].max() >= min_abs_z]
+    resid = ld_consistency(m["z_a1"].to_numpy(), R)
+    fm.notes.append(f"ld_outliers={int((np.abs(resid) > 4).sum())}")
+    return fm, m.assign(resid=resid), R
+
+
+def to_fine_mapping(fm, m, start: int, end: int, L: int, ld_source: list[str], method: str = "susie_rss",
+                    lead_pos: Optional[int] = None, R: Optional[np.ndarray] = None):
+    """Convert a FineMap on SNP table `m` (pos, idx) to the passport schema."""
+    from .passport import CredibleVariant, FineMapping, FineMapSignal
+
+    pos = m["pos"].to_numpy()
+    signals = [FineMapSignal(log_bf=round(s.log_bf, 3), purity=round(min(max(s.purity, 0.0), 1.0), 3),
+                             coverage=round(min(s.coverage, 1.0), 4),
+                             variants=[CredibleVariant(pos=int(pos[v]), pip=round(float(min(pp, 1.0)), 5))
+                                       for v, pp in zip(s.variants, s.pip)]) for s in fm.signals]
+    lead_signal = None
+    if lead_pos is not None and fm.signals:
+        hit = [i for i, s in enumerate(fm.signals) if lead_pos in set(pos[s.variants].tolist())]
+        if hit:
+            lead_signal = hit[0]
+        elif R is not None and lead_pos in set(pos.tolist()):
+            j = int(np.flatnonzero(pos == lead_pos)[0])
+            r2 = [float(np.max(R[j, s.variants] ** 2)) for s in fm.signals]
+            lead_signal = int(np.argmax(r2)) if max(r2) >= 0.5 else None
+    outliers = next((int(n.split("=")[1]) for n in fm.notes if n.startswith("ld_outliers=")), 0)
+    return FineMapping(method=method, ld_source=ld_source, region_start=int(start), region_end=int(end),
+                       n_snps=len(m), max_signals=L, converged=fm.converged, ld_outliers=outliers, signals=signals,
+                       lead_signal=lead_signal)
+
+
+def loci_regions(passports, build: str, flank: int = 250_000, max_len: int = 2_000_000):
+    """Group a study's loci into regions: lead +- flank, overlapping windows merged (capped at max_len)."""
+    spans = []
+    for p in passports:
+        pl = p.placement(build)
+        if pl is not None and pl.lead_pos is not None:
+            spans.append((pl.chrom, max(1, pl.lead_pos - flank), pl.lead_pos + flank, p))
+    spans.sort(key=lambda t: (t[0], t[1]))
+    regions = []
+    for chrom, a, b, p in spans:
+        if regions and regions[-1][0] == chrom and a <= regions[-1][2] and b - regions[-1][1] <= max_len:
+            regions[-1][2] = max(regions[-1][2], b)
+            regions[-1][3].append(p)
+        else:
+            regions.append([chrom, a, b, [p]])
+    return [tuple(r) for r in regions]
+
+
+def finemap_passports(passports, ss, geno, build: str, n: Optional[int] = None, L: int = 10,
+                      covariates: Optional[np.ndarray] = None, ld_source: str = "panel", flank: int = 250_000):
+    """Fine-map the regions of a study's loci and attach the result to every passport. Returns region rows."""
+    rows = []
+    for chrom, a, b, members in loci_regions(passports, build, flank=flank):
+        nn = n or next((p.source.n_samples for p in members if p.source.n_samples), None) or 1000
+        res = finemap_region(ss, chrom, a, b, geno, n=nn, L=L, covariates=covariates)
+        if res is None:
+            continue
+        fm, m, R = res
+        for p in members:
+            p.fine_mapping = to_fine_mapping(fm, m, a, b, L, [ld_source], lead_pos=p.placement(build).lead_pos, R=R)
+        rows.append({"chrom": chrom, "start": a, "end": b, "loci": len(members), "snps": len(m),
+                     "signals": len(fm.signals), "cs_sizes": ",".join(str(len(s.variants)) for s in fm.signals),
+                     "ld_outliers": int((np.abs(m["resid"]) > 4).sum())})
+    return rows

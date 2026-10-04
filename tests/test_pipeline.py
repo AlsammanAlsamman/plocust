@@ -436,3 +436,33 @@ def test_ld_call_without_coloc(world, loci):
     for coloc in (True, False):
         rows = compare([loci[0]], [loci[0].model_copy(deep=True), other], "SRC", geno, MatchConfig(coloc=coloc))
         assert rows.sort_values("distance_bp")["call"].tolist() == ["same", "distinct_nearby"]
+
+
+def test_finemap_passports_and_cli(world, loci, tmp_path):
+    from plocust.finemap import finemap_passports
+    from plocust.passport import write_passports
+
+    ss = read_sumstats(world.sumstats_path)
+    ps = [p.model_copy(deep=True) for p in loci]
+    rows = finemap_passports(ps, ss, Genotypes.open(world.bfile), "SRC", n=300)
+    fm = ps[0].fine_mapping
+    assert rows and fm.signals and fm.lead_signal == 0
+    assert any(v.pos == CAUSAL_POS for v in fm.signals[0].variants)  # the causal SNP is in the credible set
+    f = tmp_path / "l.jsonl"
+    write_passports(f, loci)
+    out = tmp_path / "fm.jsonl"
+    assert main(["finemap", str(f), "--sumstats", str(world.sumstats_path), "--bfile", str(world.bfile),
+                 "--n", "300", "--out", str(out)]) == 0
+    assert read_passports(out)[0].fine_mapping.signals
+
+
+def test_loci_regions_merge_overlaps(loci):
+    from plocust.finemap import loci_regions
+
+    a = loci[0]
+    b = a.model_copy(deep=True)
+    b.placements[0].lead_pos += 100_000
+    c = a.model_copy(deep=True)
+    c.placements[0].lead_pos += 5_000_000
+    regs = loci_regions([a, b, c], "SRC")
+    assert [len(r[3]) for r in regs] == [2, 1]

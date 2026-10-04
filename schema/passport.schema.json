@@ -134,6 +134,126 @@
       "title": "CredibleVariant",
       "type": "object"
     },
+    "FineMapSignal": {
+      "additionalProperties": false,
+      "description": "One causal signal of the region, with its credible set (most probable variant first).",
+      "properties": {
+        "log_bf": {
+          "title": "Log Bf",
+          "type": "number"
+        },
+        "purity": {
+          "description": "min |r| between credible-set variants",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Purity",
+          "type": "number"
+        },
+        "coverage": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Coverage",
+          "type": "number"
+        },
+        "variants": {
+          "items": {
+            "$ref": "#/$defs/CredibleVariant"
+          },
+          "title": "Variants",
+          "type": "array"
+        }
+      },
+      "required": [
+        "log_bf",
+        "purity",
+        "coverage",
+        "variants"
+      ],
+      "title": "FineMapSignal",
+      "type": "object"
+    },
+    "FineMapping": {
+      "additionalProperties": false,
+      "description": "Multi-signal fine-mapping of the region around the locus (SuSiE from summary statistics + LD).",
+      "properties": {
+        "method": {
+          "description": "e.g. 'susie_rss', 'susie_rss_multi'",
+          "title": "Method",
+          "type": "string"
+        },
+        "ld_source": {
+          "description": "genotype panel(s) the LD came from, one per population",
+          "items": {
+            "type": "string"
+          },
+          "title": "Ld Source",
+          "type": "array"
+        },
+        "region_start": {
+          "minimum": 1,
+          "title": "Region Start",
+          "type": "integer"
+        },
+        "region_end": {
+          "minimum": 1,
+          "title": "Region End",
+          "type": "integer"
+        },
+        "n_snps": {
+          "minimum": 0,
+          "title": "N Snps",
+          "type": "integer"
+        },
+        "max_signals": {
+          "minimum": 1,
+          "title": "Max Signals",
+          "type": "integer"
+        },
+        "converged": {
+          "title": "Converged",
+          "type": "boolean"
+        },
+        "ld_outliers": {
+          "default": 0,
+          "description": "SNPs whose z does not fit the LD (|residual| > 4)",
+          "minimum": 0,
+          "title": "Ld Outliers",
+          "type": "integer"
+        },
+        "signals": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/FineMapSignal"
+          },
+          "title": "Signals",
+          "type": "array"
+        },
+        "lead_signal": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "index of the signal this locus's lead belongs to",
+          "title": "Lead Signal"
+        }
+      },
+      "required": [
+        "method",
+        "ld_source",
+        "region_start",
+        "region_end",
+        "n_snps",
+        "max_signals",
+        "converged"
+      ],
+      "title": "FineMapping",
+      "type": "object"
+    },
     "Gene": {
       "additionalProperties": false,
       "properties": {
@@ -836,7 +956,7 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "default": "0.2.0",
+      "default": "0.3.0",
       "title": "Schema Version",
       "type": "string"
     },
@@ -920,6 +1040,17 @@
       "anyOf": [
         {
           "$ref": "#/$defs/Imprint"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "fine_mapping": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FineMapping"
         },
         {
           "type": "null"

@@ -13,7 +13,7 @@
 <p align="center">
   <img alt="python" src="https://img.shields.io/badge/python-%E2%89%A53.10-3776AB">
   <img alt="status" src="https://img.shields.io/badge/status-early%20development-orange">
-  <img alt="tests" src="https://img.shields.io/badge/tests-40%20passing-brightgreen">
+  <img alt="tests" src="https://img.shields.io/badge/tests-51%20passing-brightgreen">
   <img alt="crop" src="https://img.shields.io/badge/first%20crop-rice-4caf50">
   <img alt="schema" src="https://img.shields.io/badge/passport%20schema-0.1.0-blue">
 </p>
@@ -65,6 +65,8 @@ Wherever the anchor sequence is found, the locus is found.
 4. **Anchor** it with DNA: from the genome, or from SNP-chip marker sequences when no genome is at hand.
 5. **Place** it on any other genome by aligning its anchors.
 6. **Compare and match**: same signal or not (LD, effect direction, colocalization), and which known genes are there.
+7. **Fine-map**: split each region into its causal signals with credible sets (SuSiE). Studies from different
+   subpopulations (e.g. indica and japonica) can be fine-mapped **jointly**, which narrows the credible sets.
 
 ## 📥 Input → 📤 Output
 
@@ -112,7 +114,7 @@ top SNPs, and a summary panel with signal, imprint, anchors, placements and know
 git clone <repo-url> plocust && cd plocust
 python -m venv .venv && . .venv/bin/activate
 pip install -e ".[dev]"
-pytest                      # 40 tests
+pytest                      # 51 tests
 ```
 
 Python ≥ 3.10. Alignment uses `mappy` (minimap2) and sequence access uses `pysam`, both installed from PyPI.
@@ -135,13 +137,16 @@ plocust identify --sumstats old.tsv --db plocust-db-rice.sqlite --build MSU6 \
 # 2. Place passports on another genome or variety
 plocust anchor old.jsonl --genome IRGSP-1.0.fa --build IRGSP-1.0 --out old.irgsp.jsonl
 
-# 3. Compare two studies (LD from your panel, or the database's reference panel)
+# 3. Fine-map: how many signals, and which variants (SuSiE from summary statistics + LD)
+plocust finemap loci.jsonl --sumstats gwas.tsv --bfile panel --covar pcs.tsv --out loci.fm.jsonl
+
+# 4. Compare two studies (LD from your panel, or the database's reference panel)
 plocust compare old.irgsp.jsonl loci.jsonl --build IRGSP-1.0 --db plocust-db-rice.sqlite --out pairs.tsv
 
-# 4. Match to known genes
+# 5. Match to known genes
 plocust match loci.jsonl --db plocust-db-rice.sqlite --build IRGSP-1.0 --out known.tsv
 
-# 5. Draw a locus card
+# 6. Draw a locus card
 plocust card loci.jsonl --index 0 --sumstats gwas.tsv --gff IRGSP-1.0.gff3.gz \
     --db plocust-db-rice.sqlite --out locus.png
 ```
@@ -192,13 +197,27 @@ anchor_passports(loci, Aligner("MH63RS2.fa", build="MH63RS2"))
 | Match the **same locus in two real studies**? | ✅ yes | *sd1*, *Wx*, *Rc* matched between RDP1 (MSU6) and 3K (IRGSP-1.0) |
 | Notice **opposite trait coding**? | ✅ yes | *Wx*: amylose vs waxy endosperm → `same_opposite_effect` |
 | Recover **known genes**? | ✅ mostly | *Rc*, *Wx* in both studies; *sd1* in 3K; awn genes not found (weak signal) |
+| **Fine-map** loci into signals? | ✅ for counting | 525 clumped loci → 480 signals; over-split traits shrink (e.g. 16 → 6) |
+| Pinpoint the **causal variant**? | ⚠️ partly | *sd1* and *GS3* (PIP 0.92 on a SNP inside *GS3*); 3/16 known genes overall; depends on how LD is set |
 
 Full details: [`validation/README.md`](validation/README.md).
 
+## 🌾 The rice atlas
+
+plocust has been run on public rice data: GWAS for **64 traits** (3K and RDP1 panels), **44,354 leaf eQTLs**,
+**4,314 cloned genes**, fine-mapping of every locus, and a joint indica/japonica fine-mapping test.
+The result is a local passport database of **49,193 records**. Scripts, results and lessons:
+[`atlas/README.md`](atlas/README.md).
+
 ## ⚠️ Good to know
 
+- **LD must match the study population and its covariates.** LD borrowed from another subpopulation gave
+  almost only false signals; raw LD with mixed-model z-scores doubled the number of signals. `plocust finemap
+  --covar` adjusts LD for the GWAS covariates, and every region reports its LD outliers.
 - **Use a dense LD panel.** With a sparse panel, a missing lead SNP can be replaced by a poor proxy (this made *Rc* look
   "ambiguous" until the dense 3K panel was used).
+- **Variant-level fine-mapping is the open problem**: results depend on how LD is adjusted for population
+  structure, and in real data joint indica/japonica fine-mapping gained little so far (simulation: credible sets halved).
 - **Colocalization is a second opinion**, not a replacement for the LD test: in simulation it did not beat it.
 - **Early numbers.** The simulation has few true pairs (24); more runs are planned.
 - **Long-range LD** can split one signal into several loci.
@@ -223,7 +242,9 @@ plocust db info        plocust-db-rice.sqlite
 - [x] Identify · anchor · compare · match · locus card
 - [x] Build detection, effect direction, regional imprint, marker lookup, reference LD panel, colocalization
 - [x] Validation on real rice data (two rounds)
-- [ ] Merge loci split by long-range LD
+- [x] Fine-mapping (SuSiE from summary statistics), joint cross-subpopulation model
+- [x] Rice atlas: 64 GWAS traits, 44k eQTLs, passport database
+- [ ] Tissue-matched expression data for gene prioritisation
 - [ ] Release the rice database (with a dense LD panel)
 - [ ] More crops (wheat, maize, sorghum, barley)
 - [ ] Publish on PyPI as `plocust`

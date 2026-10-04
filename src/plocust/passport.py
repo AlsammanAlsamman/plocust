@@ -18,7 +18,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from .ids import normalize_sequence, passport_id
 
-SCHEMA_VERSION = "0.2.0"
+SCHEMA_VERSION = "0.3.0"
 
 
 class _Model(BaseModel):
@@ -180,6 +180,30 @@ class Imprint(_Model):
     territory_end: Optional[int] = None
 
 
+class FineMapSignal(_Model):
+    """One causal signal of the region, with its credible set (most probable variant first)."""
+
+    log_bf: float
+    purity: float = Field(ge=0, le=1, description="min |r| between credible-set variants")
+    coverage: float = Field(gt=0, le=1)
+    variants: list[CredibleVariant]
+
+
+class FineMapping(_Model):
+    """Multi-signal fine-mapping of the region around the locus (SuSiE from summary statistics + LD)."""
+
+    method: str = Field(description="e.g. 'susie_rss', 'susie_rss_multi'")
+    ld_source: list[str] = Field(description="genotype panel(s) the LD came from, one per population")
+    region_start: int = Field(ge=1)
+    region_end: int = Field(ge=1)
+    n_snps: int = Field(ge=0)
+    max_signals: int = Field(ge=1)
+    converged: bool
+    ld_outliers: int = Field(0, ge=0, description="SNPs whose z does not fit the LD (|residual| > 4)")
+    signals: list[FineMapSignal] = []
+    lead_signal: Optional[int] = Field(None, description="index of the signal this locus's lead belongs to")
+
+
 class Gene(_Model):
     id: str
     name: Optional[str] = None
@@ -224,6 +248,7 @@ class LocusPassport(_Model):
     credible_set: Optional[CredibleSet] = None
     ld_block: Optional[LDBlock] = None
     imprint: Optional[Imprint] = None
+    fine_mapping: Optional[FineMapping] = None
     genes: list[Gene] = []
     neighbours: list[Neighbour] = []
     notes: Optional[str] = None

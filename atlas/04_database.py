@@ -10,15 +10,16 @@ from plocust.passport import read_passports
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 PASS = DATA / "atlas" / "passports"
+PASS_FM = DATA / "atlas" / "passports_fm"  # fine-mapped GWAS passports (step 7), used when present
 OUT = DATA / "db" / "plocust-db-rice-atlas.sqlite"
-VERSION = "0.1.0-atlas"
+VERSION = "0.2.0-atlas"
 
 
 def main():
     genes = LocusDB(DATA / "db/plocust-db-rice.sqlite")
     passports = [p for p in genes.by_trait("")]
     sources = {"gene (funRiceGenes)": len(passports)}
-    for f in sorted(PASS.glob("gwas_*.jsonl")):
+    for f in sorted((PASS_FM if PASS_FM.exists() else PASS).glob("gwas_*.jsonl")):
         ps = read_passports(f)
         passports += ps
         sources["gwas"] = sources.get("gwas", 0) + len(ps)

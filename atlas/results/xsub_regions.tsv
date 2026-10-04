@@ -1,0 +1,349 @@
+trait	region	snps	method	signals	top_cs_size	known_gene	top_cs_hits_known_gene
+culm_length	1:23103960-23603960	3000	full panel	0		Os01g0598200	
+culm_length	1:23103960-23603960	3000	A alone	0		Os01g0598200	
+culm_length	1:23103960-23603960	3000	B alone	0		Os01g0598200	
+culm_length	1:23103960-23603960	3000	A + B joint	0		Os01g0598200	
+culm_length	1:25840994-26340994	2238	full panel	0			
+culm_length	1:25840994-26340994	2238	A alone	0			
+culm_length	1:25840994-26340994	2238	B alone	0			
+culm_length	1:25840994-26340994	2238	A + B joint	0			
+culm_length	1:28905612-29405612	3000	full panel	1	149.0		
+culm_length	1:28905612-29405612	3000	A alone	1	175.0		
+culm_length	1:28905612-29405612	3000	B alone	0			
+culm_length	1:28905612-29405612	3000	A + B joint	1	152.0		
+culm_length	1:29840453-30340453	3000	full panel	1	1.0	Os01g0718300	False
+culm_length	1:29840453-30340453	3000	A alone	2	1.0	Os01g0718300	False
+culm_length	1:29840453-30340453	3000	B alone	0		Os01g0718300	
+culm_length	1:29840453-30340453	3000	A + B joint	2	1.0	Os01g0718300	False
+culm_length	1:32220665-32720665	3000	full panel	1	9.0	Os01g0769700	False
+culm_length	1:32220665-32720665	3000	A alone	1	1.0	Os01g0769700	False
+culm_length	1:32220665-32720665	3000	B alone	0		Os01g0769700	
+culm_length	1:32220665-32720665	3000	A + B joint	1	1.0	Os01g0769700	False
+culm_length	1:34254927-34754927	3000	full panel	1	2.0	Os01g0812000	True
+culm_length	1:34254927-34754927	3000	A alone	1	2.0	Os01g0812000	True
+culm_length	1:34254927-34754927	3000	B alone	0		Os01g0812000	
+culm_length	1:34254927-34754927	3000	A + B joint	1	2.0	Os01g0812000	True
+culm_length	1:38749212-39249212	3000	full panel	1	1.0	Os01g0890100	False
+culm_length	1:38749212-39249212	3000	A alone	1	1.0	Os01g0890100	False
+culm_length	1:38749212-39249212	3000	B alone	0		Os01g0890100	
+culm_length	1:38749212-39249212	3000	A + B joint	1	1.0	Os01g0890100	False
+culm_length	1:39928869-40428869	3000	full panel	1	1.0	Os01g0919400	False
+culm_length	1:39928869-40428869	3000	A alone	1	1.0	Os01g0919400	False
+culm_length	1:39928869-40428869	3000	B alone	0		Os01g0919400	
+culm_length	1:39928869-40428869	3000	A + B joint	1	1.0	Os01g0919400	False
+flag_leaf_angle	8:3436550-3936550	3000	full panel	1	3.0		
+flag_leaf_angle	8:3436550-3936550	3000	A alone	0			
+flag_leaf_angle	8:3436550-3936550	3000	B alone	0			
+flag_leaf_angle	8:3436550-3936550	3000	A + B joint	0			
+flag_leaf_angle	8:8855034-9355034	3000	full panel	1	32.0		
+flag_leaf_angle	8:8855034-9355034	3000	A alone	0			
+flag_leaf_angle	8:8855034-9355034	3000	B alone	0			
+flag_leaf_angle	8:8855034-9355034	3000	A + B joint	0			
+flag_leaf_angle	8:20062843-20562843	3000	full panel	1	9.0		
+flag_leaf_angle	8:20062843-20562843	3000	A alone	0			
+flag_leaf_angle	8:20062843-20562843	3000	B alone	0			
+flag_leaf_angle	8:20062843-20562843	3000	A + B joint	0			
+secondary_branching	3:11908109-12408109	2677	full panel	0			
+secondary_branching	3:11908109-12408109	2677	A alone	0			
+secondary_branching	3:11908109-12408109	2677	B alone	0			
+secondary_branching	3:11908109-12408109	2677	A + B joint	0			
+secondary_branching	7:9170907-9670907	3000	full panel	1	23.0	Os07g0262200	False
+secondary_branching	7:9170907-9670907	3000	A alone	0		Os07g0262200	
+secondary_branching	7:9170907-9670907	3000	B alone	1	123.0	Os07g0262200	True
+secondary_branching	7:9170907-9670907	3000	A + B joint	0		Os07g0262200	
+secondary_branching	7:11372913-11872913	3000	full panel	1	1.0	Os07g0281700	False
+secondary_branching	7:11372913-11872913	3000	A alone	0		Os07g0281700	
+secondary_branching	7:11372913-11872913	3000	B alone	1	117.0	Os07g0281700	False
+secondary_branching	7:11372913-11872913	3000	A + B joint	0		Os07g0281700	
+secondary_branching	9:20584747-21084747	3000	full panel	0		Os09g0531600	
+secondary_branching	9:20584747-21084747	3000	A alone	0		Os09g0531600	
+secondary_branching	9:20584747-21084747	3000	B alone	0		Os09g0531600	
+secondary_branching	9:20584747-21084747	3000	A + B joint	0		Os09g0531600	
+panicle_shattering	1:14193061-14693061	3000	full panel	0			
+panicle_shattering	1:14193061-14693061	3000	A alone	0			
+panicle_shattering	1:14193061-14693061	3000	B alone	0			
+panicle_shattering	1:14193061-14693061	3000	A + B joint	0			
+panicle_shattering	1:16358994-16858994	2912	full panel	0			
+panicle_shattering	1:16358994-16858994	2912	A alone	0			
+panicle_shattering	1:16358994-16858994	2912	B alone	0			
+panicle_shattering	1:16358994-16858994	2912	A + B joint	0			
+panicle_shattering	1:20831228-21331228	3000	full panel	1	2.0		
+panicle_shattering	1:20831228-21331228	3000	A alone	0			
+panicle_shattering	1:20831228-21331228	3000	B alone	0			
+panicle_shattering	1:20831228-21331228	3000	A + B joint	0			
+lemma_pubescence	1:39607518-40107518	3000	full panel	0		Os01g0930400	
+lemma_pubescence	1:39607518-40107518	3000	A alone	0		Os01g0930400	
+lemma_pubescence	1:39607518-40107518	3000	B alone	0		Os01g0930400	
+lemma_pubescence	1:39607518-40107518	3000	A + B joint	0		Os01g0930400	
+lemma_pubescence	11:2318747-2818747	3000	full panel	1	147.0		
+lemma_pubescence	11:2318747-2818747	3000	A alone	0			
+lemma_pubescence	11:2318747-2818747	3000	B alone	0			
+lemma_pubescence	11:2318747-2818747	3000	A + B joint	0			
+lemma_pubescence	3:14089-514089	2164	full panel	0			
+lemma_pubescence	3:14089-514089	2164	A alone	0			
+lemma_pubescence	3:14089-514089	2164	B alone	0			
+lemma_pubescence	3:14089-514089	2164	A + B joint	0			
+lemma_pubescence	3:2789122-3289122	1934	full panel	1	1.0		
+lemma_pubescence	3:2789122-3289122	1934	A alone	0			
+lemma_pubescence	3:2789122-3289122	1934	B alone	0			
+lemma_pubescence	3:2789122-3289122	1934	A + B joint	0			
+lemma_pubescence	3:5240320-5740320	3000	full panel	0			
+lemma_pubescence	3:5240320-5740320	3000	A alone	0			
+lemma_pubescence	3:5240320-5740320	3000	B alone	0			
+lemma_pubescence	3:5240320-5740320	3000	A + B joint	0			
+lemma_pubescence	3:21327555-21827555	3000	full panel	0			
+lemma_pubescence	3:21327555-21827555	3000	A alone	0			
+lemma_pubescence	3:21327555-21827555	3000	B alone	0			
+lemma_pubescence	3:21327555-21827555	3000	A + B joint	0			
+lemma_pubescence	3:27481358-27981358	3000	full panel	0			
+lemma_pubescence	3:27481358-27981358	3000	A alone	0			
+lemma_pubescence	3:27481358-27981358	3000	B alone	0			
+lemma_pubescence	3:27481358-27981358	3000	A + B joint	0			
+lemma_pubescence	3:28159585-28659585	3000	full panel	1	1.0		
+lemma_pubescence	3:28159585-28659585	3000	A alone	0			
+lemma_pubescence	3:28159585-28659585	3000	B alone	0			
+lemma_pubescence	3:28159585-28659585	3000	A + B joint	0			
+lemma_pubescence	3:29325207-29825207	2973	full panel	0			
+lemma_pubescence	3:29325207-29825207	2973	A alone	0			
+lemma_pubescence	3:29325207-29825207	2973	B alone	0			
+lemma_pubescence	3:29325207-29825207	2973	A + B joint	0			
+lemma_pubescence	3:30792296-31292296	2486	full panel	0			
+lemma_pubescence	3:30792296-31292296	2486	A alone	0			
+lemma_pubescence	3:30792296-31292296	2486	B alone	0			
+lemma_pubescence	3:30792296-31292296	2486	A + B joint	0			
+lemma_pubescence	6:7814397-8314397	3000	full panel	0			
+lemma_pubescence	6:7814397-8314397	3000	A alone	0			
+lemma_pubescence	6:7814397-8314397	3000	B alone	0			
+lemma_pubescence	6:7814397-8314397	3000	A + B joint	0			
+lemma_pubescence	6:10136706-10636706	3000	full panel	0			
+lemma_pubescence	6:10136706-10636706	3000	A alone	0			
+lemma_pubescence	6:10136706-10636706	3000	B alone	0			
+lemma_pubescence	6:10136706-10636706	3000	A + B joint	0			
+lemma_pubescence	6:12443791-12943791	3000	full panel	0		Os06g0325200	
+lemma_pubescence	6:12443791-12943791	3000	A alone	0		Os06g0325200	
+lemma_pubescence	6:12443791-12943791	3000	B alone	0		Os06g0325200	
+lemma_pubescence	6:12443791-12943791	3000	A + B joint	0		Os06g0325200	
+lemma_pubescence	6:13236004-13736004	3000	full panel	1	1.0		
+lemma_pubescence	6:13236004-13736004	3000	A alone	0			
+lemma_pubescence	6:13236004-13736004	3000	B alone	0			
+lemma_pubescence	6:13236004-13736004	3000	A + B joint	0			
+lemma_pubescence	6:15507606-16007606	3000	full panel	0			
+lemma_pubescence	6:15507606-16007606	3000	A alone	0			
+lemma_pubescence	6:15507606-16007606	3000	B alone	0			
+lemma_pubescence	6:15507606-16007606	3000	A + B joint	0			
+lemma_pubescence	6:19175911-19675911	3000	full panel	0			
+lemma_pubescence	6:19175911-19675911	3000	A alone	0			
+lemma_pubescence	6:19175911-19675911	3000	B alone	0			
+lemma_pubescence	6:19175911-19675911	3000	A + B joint	0			
+lemma_pubescence	6:19966395-20466395	3000	full panel	0			
+lemma_pubescence	6:19966395-20466395	3000	A alone	0			
+lemma_pubescence	6:19966395-20466395	3000	B alone	0			
+lemma_pubescence	6:19966395-20466395	3000	A + B joint	0			
+lemma_pubescence	6:21439575-21939575	3000	full panel	0			
+lemma_pubescence	6:21439575-21939575	3000	A alone	0			
+lemma_pubescence	6:21439575-21939575	3000	B alone	0			
+lemma_pubescence	6:21439575-21939575	3000	A + B joint	0			
+lemma_pubescence	6:24388016-24888016	3000	full panel	1	1.0		
+lemma_pubescence	6:24388016-24888016	3000	A alone	0			
+lemma_pubescence	6:24388016-24888016	3000	B alone	0			
+lemma_pubescence	6:24388016-24888016	3000	A + B joint	0			
+lemma_pubescence	6:26179179-26679179	3000	full panel	0			
+lemma_pubescence	6:26179179-26679179	3000	A alone	0			
+lemma_pubescence	6:26179179-26679179	3000	B alone	0			
+lemma_pubescence	6:26179179-26679179	3000	A + B joint	0			
+lemma_pubescence	6:26685791-27185791	3000	full panel	0		Os06g0657500	
+lemma_pubescence	6:26685791-27185791	3000	A alone	0		Os06g0657500	
+lemma_pubescence	6:26685791-27185791	3000	B alone	0		Os06g0657500	
+lemma_pubescence	6:26685791-27185791	3000	A + B joint	0		Os06g0657500	
+lemma_pubescence	6:27858012-28358012	3000	full panel	0		Os06g0701600	
+lemma_pubescence	6:27858012-28358012	3000	A alone	0		Os06g0701600	
+lemma_pubescence	6:27858012-28358012	3000	B alone	0		Os06g0701600	
+lemma_pubescence	6:27858012-28358012	3000	A + B joint	0		Os06g0701600	
+lemma_pubescence	6:29267205-29767205	3000	full panel	0		Os06g0701600	
+lemma_pubescence	6:29267205-29767205	3000	A alone	0		Os06g0701600	
+lemma_pubescence	6:29267205-29767205	3000	B alone	0		Os06g0701600	
+lemma_pubescence	6:29267205-29767205	3000	A + B joint	0		Os06g0701600	
+lemma_pubescence	7:8013631-8513631	3000	full panel	0			
+lemma_pubescence	7:8013631-8513631	3000	A alone	0			
+lemma_pubescence	7:8013631-8513631	3000	B alone	0			
+lemma_pubescence	7:8013631-8513631	3000	A + B joint	0			
+lemma_pubescence	7:9920540-10420540	3000	full panel	1	9.0		
+lemma_pubescence	7:9920540-10420540	3000	A alone	0			
+lemma_pubescence	7:9920540-10420540	3000	B alone	0			
+lemma_pubescence	7:9920540-10420540	3000	A + B joint	0			
+lemma_pubescence	7:11043023-11543023	3000	full panel	1	2.0		
+lemma_pubescence	7:11043023-11543023	3000	A alone	0			
+lemma_pubescence	7:11043023-11543023	3000	B alone	0			
+lemma_pubescence	7:11043023-11543023	3000	A + B joint	0			
+lemma_pubescence	8:2230747-2730747	3000	full panel	1	1.0		
+lemma_pubescence	8:2230747-2730747	3000	A alone	0			
+lemma_pubescence	8:2230747-2730747	3000	B alone	0			
+lemma_pubescence	8:2230747-2730747	3000	A + B joint	0			
+lemma_pubescence	8:3407536-3907536	3000	full panel	0			
+lemma_pubescence	8:3407536-3907536	3000	A alone	0			
+lemma_pubescence	8:3407536-3907536	3000	B alone	0			
+lemma_pubescence	8:3407536-3907536	3000	A + B joint	0			
+lemma_pubescence	8:4412531-4912531	3000	full panel	1	7.0		
+lemma_pubescence	8:4412531-4912531	3000	A alone	0			
+lemma_pubescence	8:4412531-4912531	3000	B alone	0			
+lemma_pubescence	8:4412531-4912531	3000	A + B joint	0			
+lemma_pubescence	8:6045289-6545289	3000	full panel	0			
+lemma_pubescence	8:6045289-6545289	3000	A alone	0			
+lemma_pubescence	8:6045289-6545289	3000	B alone	0			
+lemma_pubescence	8:6045289-6545289	3000	A + B joint	0			
+lemma_pubescence	8:7904754-8404754	3000	full panel	0			
+lemma_pubescence	8:7904754-8404754	3000	A alone	0			
+lemma_pubescence	8:7904754-8404754	3000	B alone	0			
+lemma_pubescence	8:7904754-8404754	3000	A + B joint	0			
+lemma_pubescence	8:11535243-12035243	3000	full panel	1	110.0		
+lemma_pubescence	8:11535243-12035243	3000	A alone	0			
+lemma_pubescence	8:11535243-12035243	3000	B alone	0			
+lemma_pubescence	8:11535243-12035243	3000	A + B joint	0			
+lemma_pubescence	8:15333747-15833747	3000	full panel	1	1.0		
+lemma_pubescence	8:15333747-15833747	3000	A alone	0			
+lemma_pubescence	8:15333747-15833747	3000	B alone	0			
+lemma_pubescence	8:15333747-15833747	3000	A + B joint	0			
+lemma_pubescence	8:19762294-20262294	3000	full panel	0			
+lemma_pubescence	8:19762294-20262294	3000	A alone	0			
+lemma_pubescence	8:19762294-20262294	3000	B alone	0			
+lemma_pubescence	8:19762294-20262294	3000	A + B joint	0			
+lemma_pubescence	8:22728581-23228581	2173	full panel	1	1.0		
+lemma_pubescence	8:22728581-23228581	2173	A alone	0			
+lemma_pubescence	8:22728581-23228581	2173	B alone	0			
+lemma_pubescence	8:22728581-23228581	2173	A + B joint	0			
+lemma_pubescence	8:24321470-24821470	2795	full panel	0			
+lemma_pubescence	8:24321470-24821470	2795	A alone	0			
+lemma_pubescence	8:24321470-24821470	2795	B alone	0			
+lemma_pubescence	8:24321470-24821470	2795	A + B joint	0			
+lemma_pubescence	8:26683189-27183189	3000	full panel	0			
+lemma_pubescence	8:26683189-27183189	3000	A alone	0			
+lemma_pubescence	8:26683189-27183189	3000	B alone	0			
+lemma_pubescence	8:26683189-27183189	3000	A + B joint	0			
+lemma_pubescence	9:15961395-16461395	3000	full panel	1	1.0		
+lemma_pubescence	9:15961395-16461395	3000	A alone	0			
+lemma_pubescence	9:15961395-16461395	3000	B alone	0			
+lemma_pubescence	9:15961395-16461395	3000	A + B joint	0			
+lemma_pubescence	9:16657824-17157824	3000	full panel	0			
+lemma_pubescence	9:16657824-17157824	3000	A alone	0			
+lemma_pubescence	9:16657824-17157824	3000	B alone	0			
+lemma_pubescence	9:16657824-17157824	3000	A + B joint	0			
+lemma_pubescence	9:18172696-18672696	2876	full panel	0			
+lemma_pubescence	9:18172696-18672696	2876	A alone	0			
+lemma_pubescence	9:18172696-18672696	2876	B alone	0			
+lemma_pubescence	9:18172696-18672696	2876	A + B joint	0			
+lemma_pubescence	9:18716338-19216338	3000	full panel	1	2.0		
+lemma_pubescence	9:18716338-19216338	3000	A alone	0			
+lemma_pubescence	9:18716338-19216338	3000	B alone	0			
+lemma_pubescence	9:18716338-19216338	3000	A + B joint	0			
+lemma_pubescence	9:20710270-21210270	3000	full panel	0			
+lemma_pubescence	9:20710270-21210270	3000	A alone	0			
+lemma_pubescence	9:20710270-21210270	3000	B alone	0			
+lemma_pubescence	9:20710270-21210270	3000	A + B joint	0			
+lemma_pubescence	9:21378391-21878391	3000	full panel	1	1.0		
+lemma_pubescence	9:21378391-21878391	3000	A alone	0			
+lemma_pubescence	9:21378391-21878391	3000	B alone	0			
+lemma_pubescence	9:21378391-21878391	3000	A + B joint	0			
+lemma_pubescence	9:22646545-23146545	1555	full panel	1	17.0		
+lemma_pubescence	9:22646545-23146545	1555	A alone	0			
+lemma_pubescence	9:22646545-23146545	1555	B alone	0			
+lemma_pubescence	9:22646545-23146545	1555	A + B joint	0			
+glutinous_endosperm	6:619297-2431132	3000	full panel	2	1.0	Os06g0130400;Os06g0133000	True
+glutinous_endosperm	6:619297-2431132	3000	A alone	1	1.0	Os06g0130400;Os06g0133000	False
+glutinous_endosperm	6:619297-2431132	3000	B alone	2	1.0	Os06g0130400;Os06g0133000	False
+glutinous_endosperm	6:619297-2431132	3000	A + B joint	2	2.0	Os06g0130400;Os06g0133000	True
+glutinous_endosperm	6:4461884-4965899	3000	full panel	1	1.0		
+glutinous_endosperm	6:4461884-4965899	3000	A alone	1	4.0		
+glutinous_endosperm	6:4461884-4965899	3000	B alone	0			
+glutinous_endosperm	6:4461884-4965899	3000	A + B joint	1	4.0		
+glutinous_endosperm	6:6502888-7381087	3000	full panel	1	3.0	Os06g0229800;Os06g0232200	True
+glutinous_endosperm	6:6502888-7381087	3000	A alone	1	12.0	Os06g0229800;Os06g0232200	True
+glutinous_endosperm	6:6502888-7381087	3000	B alone	1	3.0	Os06g0229800;Os06g0232200	False
+glutinous_endosperm	6:6502888-7381087	3000	A + B joint	1	3.0	Os06g0229800;Os06g0232200	True
+glutinous_endosperm	6:15872954-16372954	3000	full panel	0			
+glutinous_endosperm	6:15872954-16372954	3000	A alone	0			
+glutinous_endosperm	6:15872954-16372954	3000	B alone	0			
+glutinous_endosperm	6:15872954-16372954	3000	A + B joint	0			
+glutinous_endosperm	6:17221092-17721092	3000	full panel	0		Os06g0498400	
+glutinous_endosperm	6:17221092-17721092	3000	A alone	1	372.0	Os06g0498400	True
+glutinous_endosperm	6:17221092-17721092	3000	B alone	0		Os06g0498400	
+glutinous_endosperm	6:17221092-17721092	3000	A + B joint	1	371.0	Os06g0498400	True
+seed_coat_colour	7:5671393-7011880	3000	full panel	5	1.0	Os07g0211500	True
+seed_coat_colour	7:5671393-7011880	3000	A alone	2	6.0	Os07g0211500	True
+seed_coat_colour	7:5671393-7011880	3000	B alone	3	1.0	Os07g0211500	True
+seed_coat_colour	7:5671393-7011880	3000	A + B joint	6	6.0	Os07g0211500	True
+seed_coat_colour	7:14541805-15041805	3000	full panel	1	90.0		
+seed_coat_colour	7:14541805-15041805	3000	A alone	1	79.0		
+seed_coat_colour	7:14541805-15041805	3000	B alone	0			
+seed_coat_colour	7:14541805-15041805	3000	A + B joint	1	79.0		
+apiculus_colour	6:4474044-5850138	3000	full panel	3	1.0	Os06g0205100	False
+apiculus_colour	6:4474044-5850138	3000	A alone	3	1.0	Os06g0205100	False
+apiculus_colour	6:4474044-5850138	3000	B alone	1	2.0	Os06g0205100	True
+apiculus_colour	6:4474044-5850138	3000	A + B joint	3	1.0	Os06g0205100	False
+apiculus_colour	6:5898476-6398476	3000	full panel	1	1.0		
+apiculus_colour	6:5898476-6398476	3000	A alone	1	1.0		
+apiculus_colour	6:5898476-6398476	3000	B alone	0			
+apiculus_colour	6:5898476-6398476	3000	A + B joint	1	1.0		
+apiculus_colour	6:7219390-7719390	3000	full panel	0			
+apiculus_colour	6:7219390-7719390	3000	A alone	1	1.0		
+apiculus_colour	6:7219390-7719390	3000	B alone	0			
+apiculus_colour	6:7219390-7719390	3000	A + B joint	1	1.0		
+hull_colour	9:5838414-7557864	3000	full panel	4	39.0	Os09g0292900	False
+hull_colour	9:5838414-7557864	3000	A alone	4	31.0	Os09g0292900	False
+hull_colour	9:5838414-7557864	3000	B alone	1	3.0	Os09g0292900	True
+hull_colour	9:5838414-7557864	3000	A + B joint	5	10.0	Os09g0292900	False
+leaf_sheath_colour	6:3012408-3512408	3000	full panel	0			
+leaf_sheath_colour	6:3012408-3512408	3000	A alone	0			
+leaf_sheath_colour	6:3012408-3512408	3000	B alone	0			
+leaf_sheath_colour	6:3012408-3512408	3000	A + B joint	0			
+leaf_sheath_colour	6:4427259-5630833	3000	full panel	3	1.0	Os06g0205100	True
+leaf_sheath_colour	6:4427259-5630833	3000	A alone	3	2.0	Os06g0205100	True
+leaf_sheath_colour	6:4427259-5630833	3000	B alone	0		Os06g0205100	
+leaf_sheath_colour	6:4427259-5630833	3000	A + B joint	3	2.0	Os06g0205100	True
+leaf_sheath_colour	6:5898476-6398476	3000	full panel	1	279.0		
+leaf_sheath_colour	6:5898476-6398476	3000	A alone	1	1.0		
+leaf_sheath_colour	6:5898476-6398476	3000	B alone	0			
+leaf_sheath_colour	6:5898476-6398476	3000	A + B joint	1	1.0		
+leaf_sheath_colour	6:6860025-7360025	3000	full panel	0			
+leaf_sheath_colour	6:6860025-7360025	3000	A alone	1	82.0		
+leaf_sheath_colour	6:6860025-7360025	3000	B alone	0			
+leaf_sheath_colour	6:6860025-7360025	3000	A + B joint	1	82.0		
+leaf_sheath_colour	6:7449285-7949285	3000	full panel	1	7.0		
+leaf_sheath_colour	6:7449285-7949285	3000	A alone	1	6.0		
+leaf_sheath_colour	6:7449285-7949285	3000	B alone	0			
+leaf_sheath_colour	6:7449285-7949285	3000	A + B joint	1	6.0		
+auricle_colour	1:21968988-22468988	3000	full panel	1	50.0	Os01g0576100	True
+auricle_colour	1:21968988-22468988	3000	A alone	1	78.0	Os01g0576100	True
+auricle_colour	1:21968988-22468988	3000	B alone	0		Os01g0576100	
+auricle_colour	1:21968988-22468988	3000	A + B joint	1	71.0	Os01g0576100	True
+auricle_colour	6:3073630-3573630	3000	full panel	1	12.0		
+auricle_colour	6:3073630-3573630	3000	A alone	0			
+auricle_colour	6:3073630-3573630	3000	B alone	0			
+auricle_colour	6:3073630-3573630	3000	A + B joint	1	116.0		
+auricle_colour	6:4602735-5683796	3000	full panel	4	7.0	Os06g0205100	False
+auricle_colour	6:4602735-5683796	3000	A alone	2	1.0	Os06g0205100	False
+auricle_colour	6:4602735-5683796	3000	B alone	0		Os06g0205100	
+auricle_colour	6:4602735-5683796	3000	A + B joint	1	1.0	Os06g0205100	False
+auricle_colour	6:6519102-7019102	3000	full panel	0			
+auricle_colour	6:6519102-7019102	3000	A alone	0			
+auricle_colour	6:6519102-7019102	3000	B alone	0			
+auricle_colour	6:6519102-7019102	3000	A + B joint	0			
+auricle_colour	6:7449285-7949285	3000	full panel	0			
+auricle_colour	6:7449285-7949285	3000	A alone	0			
+auricle_colour	6:7449285-7949285	3000	B alone	0			
+auricle_colour	6:7449285-7949285	3000	A + B joint	0			
+collar_colour	1:21960641-22460641	3000	full panel	1	10.0	Os01g0576100	True
+collar_colour	1:21960641-22460641	3000	A alone	1	9.0	Os01g0576100	True
+collar_colour	1:21960641-22460641	3000	B alone	0		Os01g0576100	
+collar_colour	1:21960641-22460641	3000	A + B joint	1	8.0	Os01g0576100	True
+collar_colour	6:4602735-5630833	3000	full panel	4	1.0	Os06g0205100	False
+collar_colour	6:4602735-5630833	3000	A alone	1	2.0	Os06g0205100	True
+collar_colour	6:4602735-5630833	3000	B alone	0		Os06g0205100	
+collar_colour	6:4602735-5630833	3000	A + B joint	1	1.0	Os06g0205100	False
+collar_colour	6:6519102-7019102	3000	full panel	0			
+collar_colour	6:6519102-7019102	3000	A alone	0			
+collar_colour	6:6519102-7019102	3000	B alone	0			
+collar_colour	6:6519102-7019102	3000	A + B joint	0			
+collar_colour	6:7449285-7949285	3000	full panel	0			
+collar_colour	6:7449285-7949285	3000	A alone	0			
+collar_colour	6:7449285-7949285	3000	B alone	0			
+collar_colour	6:7449285-7949285	3000	A + B joint	0			

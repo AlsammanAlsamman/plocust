@@ -157,6 +157,30 @@ def cmd_match(args):
     return 0
 
 
+def cmd_finemap(args):
+    from .finemap import finemap_passports
+    from .io import Genotypes, read_sumstats
+
+    passports = read_passports(args.passports)
+    ss = read_sumstats(args.sumstats, _kv(args.column), sep=args.sep)
+    geno = Genotypes.open(args.bfile)
+    cov = None
+    if args.covar:
+        c = pd.read_csv(args.covar, sep=None, engine="python").rename(columns={"#FID": "FID"})
+        c["IID"] = c["IID"].astype(str)
+        geno = geno.subset(c["IID"])
+        order = geno.samples[geno._keep]["iid"].astype(str)
+        cov = c.set_index("IID").loc[order].drop(columns=[x for x in ("FID",) if x in c]).to_numpy(float)
+    build = args.build or passports[0].placements[0].build
+    rows = finemap_passports(passports, ss, geno, build, n=args.n, L=args.L, covariates=cov,
+                             ld_source=Path(args.bfile).name + (" (covariate-adjusted)" if cov is not None else ""))
+    write_passports(args.out, passports)
+    pd.DataFrame(rows).to_csv(Path(args.out).with_suffix(".regions.tsv"), sep="\t", index=False)
+    n_sig = sum(r["signals"] for r in rows)
+    print(f"{len(rows)} regions, {n_sig} signals for {len(passports)} loci -> {args.out}")
+    return 0
+
+
 def cmd_db_build_genes(args):
     from .anchor import Aligner, anchor_passports
     from .db import create, gene_passports
@@ -294,6 +318,19 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--check-unique", action="store_true", help="map anchors back to the genome (needs --genome)")
     p.add_argument("--out", required=True, help="output .jsonl (a .tsv summary is written next to it)")
     p.set_defaults(func=cmd_identify)
+
+    p = sub.add_parser("finemap", help="fine-map the loci: number of signals and credible sets (SuSiE)")
+    p.add_argument("passports")
+    p.add_argument("--sumstats", required=True)
+    p.add_argument("--column", action="append", metavar="STD=FILECOL")
+    p.add_argument("--sep", default=None)
+    p.add_argument("--bfile", required=True, help="genotypes for LD: the GWAS panel, or a matching reference")
+    p.add_argument("--covar", help="the GWAS covariates (FID IID PC1..): LD is adjusted for them")
+    p.add_argument("--build")
+    p.add_argument("--n", type=int, help="GWAS sample size (default: from the passports)")
+    p.add_argument("--L", type=int, default=10, help="maximum signals per region")
+    p.add_argument("--out", required=True)
+    p.set_defaults(func=cmd_finemap)
 
     p = sub.add_parser("anchor", help="place passports on another assembly by sequence")
     p.add_argument("passports")

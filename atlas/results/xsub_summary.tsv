@@ -1,0 +1,5 @@
+method	regions	signals	median_top_cs	regions_with_known_gene	top_cs_hits_known_gene
+full panel	87	62	2.0	25	7
+A alone	87	34	2.0	25	8
+B alone	87	10	3.0	25	4
+A + B joint	87	40	2.0	25	8
