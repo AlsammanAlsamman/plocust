@@ -21,6 +21,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
+import weakref
+
 import numpy as np
 import pandas as pd
 
@@ -57,7 +59,18 @@ def _panel_index(geno: Genotypes, chrom: str, positions, proxy_bp: int) -> list[
     return out
 
 
+_PROXY_CACHE: "weakref.WeakKeyDictionary[Genotypes, dict]" = weakref.WeakKeyDictionary()
+
+
 def _best_proxy(p: LocusPassport, build: str, geno: Genotypes, proxy_bp: int) -> Optional[int]:
+    cache = _PROXY_CACHE.setdefault(geno, {})
+    key = (p.passport_id, p.source.study, build, proxy_bp)
+    if key not in cache:
+        cache[key] = _best_proxy_uncached(p, build, geno, proxy_bp)
+    return cache[key]
+
+
+def _best_proxy_uncached(p: LocusPassport, build: str, geno: Genotypes, proxy_bp: int) -> Optional[int]:
     """Stand-in for a lead missing from the panel: the study's most associated SNP (from its imprint)
     that is in the panel, within proxy_bp of the lead. The nearest SNP may not be in LD with the lead."""
     from .coloc import imprint_on_build, to_panel

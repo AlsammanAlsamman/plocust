@@ -1,0 +1,36 @@
+panel	trait	loci	placed_on_IRGSP	unique_lead_anchor	median_block_kb	seconds
+RDP1	flowering_time_at_arkansas	2	2	2	81.3	0.3
+RDP1	flowering_time_at_faridpur	1	1	1	66.8	0.1
+RDP1	flowering_time_at_aberdeen	11	11	11	10.6	0.4
+RDP1	ft_ratio_of_arkansas_aberdeen	8	8	8	12.6	0.3
+RDP1	ft_ratio_of_faridpur_aberdeen	4	4	4	32.4	0.3
+RDP1	culm_habit	0	0	0		0.1
+RDP1	leaf_pubescence	9	9	9	40.4	0.3
+RDP1	flag_leaf_length	0	0	0		0.1
+RDP1	flag_leaf_width	2	2	2	97.7	0.3
+RDP1	awn_presence	1	1	1	92.9	0.2
+RDP1	panicle_number_per_plant	1	1	1	0.0	0.2
+RDP1	plant_height	2	2	2	20.5	0.1
+RDP1	panicle_length	0	0	0		0.1
+RDP1	primary_panicle_branch_number	1	1	1	212.6	0.2
+RDP1	seed_number_per_panicle	0	0	0		0.1
+RDP1	florets_per_panicle	0	0	0		0.1
+RDP1	panicle_fertility	0	0	0		0.1
+RDP1	seed_length	2	2	2	138.5	0.2
+RDP1	seed_width	4	4	4	0.0	0.4
+RDP1	seed_volume	3	3	3	14.7	0.2
+RDP1	seed_surface_area	0	0	0		0.1
+RDP1	brown_rice_seed_length	3	3	3	135.5	0.3
+RDP1	brown_rice_seed_width	2	2	2	23.2	0.4
+RDP1	brown_rice_surface_area	0	0	0		0.1
+RDP1	brown_rice_volume	2	2	2	30.6	0.2
+RDP1	seed_length_width_ratio	6	6	6	53.2	0.5
+RDP1	brown_rice_length_width_ratio	5	5	5	46.4	0.2
+RDP1	pericarp_color	33	33	33	24.5	1.0
+RDP1	straighthead_suseptability	1	1	1	0.0	0.2
+RDP1	blast_resistance	3	3	3	29.4	0.2
+RDP1	amylose_content	6	6	6	0.8	0.4
+RDP1	alkali_spreading_value	5	5	5	0.0	0.2
+RDP1	protein_content	0	0	0		0.2
+RDP1	year07flowering_time_at_arkansas	0	0	0		0.1
+RDP1	year06flowering_time_at_arkansas	0	0	0		0.1

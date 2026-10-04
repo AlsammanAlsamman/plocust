@@ -1,0 +1,67 @@
+pair	query	target	target_kind	chrom	query_lead	target_lead	distance_bp	overlap	r2	direction	profile_corr	call	score	PP.H3	PP.H4	coloc_snps	coloc_call
+plant_height~culm_length	OsLP.VMZi1zYCIklqsIa8eJd4aHXOLpkP-T2m	OsLP.NfBRKWeoyx6pslaScZ4JbuzcTNH1cVwJ	gwas	1	33069490	32470665	598825	True	0.1031		0.384	ambiguous	0.1031				
+plant_height~culm_length	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	OsLP.GnKqrK4VOhM1Y6GcvKFvCDyjnt9nHrpR	gwas	1	38112582	38999212	886630	True	0.8321	concordant	0.4601	same	0.8321				
+amylose_content~glutinous_endosperm	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.ZpoDd3eNFwc2g30wmgQnQ33vtVgqT-sS	gwas	6	1765761	1779126	13365	True	1.0	discordant	0.512	same_opposite_effect	1.0	0.001	0.999	563.0	same
+amylose_content~glutinous_endosperm	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.75Qcfh5Fq4B2XUvH0yTHtezIKe8aGXx9	gwas	6	1765761	1832115	66354	True	0.0682		0.2965	distinct_nearby	0.0682	0.1695	0.0826	1174.0	inconclusive
+amylose_content~glutinous_endosperm	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.4WqpilsxSucsuUFZuvPaXUTFocGQIJ8v	gwas	6	1765761	2181132	415371	False	0.0383		0.3733	distinct_nearby	0.0383				
+amylose_content~glutinous_endosperm	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.wEkPqOGRPAB__PwoBq6DWSd-qUMFFR2F	gwas	6	1765761	1605240	160521	False	0.0837		-0.0617	distinct_nearby	0.0837	0.8599	0.1398	2003.0	distinct
+amylose_content~glutinous_endosperm	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.NsKOF9zLiavshmAxyweuue1k6gqmGA1O	gwas	6	1765761	1116627	649134	False	0.223		0.0952	ambiguous	0.223				
+amylose_content~glutinous_endosperm	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.03bxJaA0nM_c8fHZLyRZkEF8iea62m_g	gwas	6	1765761	869297	896464	False	0.1456		0.218	ambiguous	0.1456				
+amylose_content~glutinous_endosperm	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.A2pBixlanqIo3r2yU8Kbfqzz5JSjoTdc	gwas	6	1765761	1394031	371730	False	0.0625		0.0813	distinct_nearby	0.0625				
+pericarp_color~seed_coat_colour	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.SPx2v_yCqacDhvKmIJzCrjombj8-dJeJ	gwas	7	6067855	6107387	39532	True	0.9173	concordant	0.0689	same	0.9173	0.438	0.562	740.0	inconclusive
+pericarp_color~seed_coat_colour	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.bd4_hussezCwibMS_UzcEkBkqOW1ncUh	gwas	7	6067855	6670284	602429	False	0.1163		0.1528	ambiguous	0.1163				
+pericarp_color~seed_coat_colour	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.GZUJQ2pBrnF5U0-ELV3FIj4iyDrwkG9E	gwas	7	6067855	6062746	5109	True	0.0037		0.2448	distinct_nearby	0.0037	0.0198	0.9802	419.0	same
+pericarp_color~seed_coat_colour	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP._qaX-4725PjtUSSY9L8Hzmwe8Ssml-kE	gwas	7	6067855	6761880	694025	False	0.1346		0.1767	ambiguous	0.1346				
+pericarp_color~seed_coat_colour	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.8fOIrhhe4_d2TugYOXqmB7O9GXBerm_X	gwas	7	6067855	6363692	295837	False	0.0183		0.3994	distinct_nearby	0.0183				
+pericarp_color~seed_coat_colour	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.6-hXYiW5SWcWV-AZ3S0jjQ31uI-noc43	gwas	7	6067855	5921393	146462	True	0.0549		-0.2317	distinct_nearby	0.0549				
+pericarp_color~seed_coat_colour	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.i2BFFnZDOgpprkjAPufof8R5RBJoZc8T	gwas	7	6067855	6259667	191812	False	0.0001		0.2165	distinct_nearby	0.0001				
+pericarp_color~seed_coat_colour	OsLP.NRBYv5Jw_qx2p1Xq97p63xWjR7h1Mno_	OsLP.SPx2v_yCqacDhvKmIJzCrjombj8-dJeJ	gwas	7	5937544	6107387	169843	True	0.0487		0.1174	distinct_nearby	0.0487				
+pericarp_color~seed_coat_colour	OsLP.NRBYv5Jw_qx2p1Xq97p63xWjR7h1Mno_	OsLP.bd4_hussezCwibMS_UzcEkBkqOW1ncUh	gwas	7	5937544	6670284	732740	False	0.0654		0.0902	distinct_nearby	0.0654				
+pericarp_color~seed_coat_colour	OsLP.NRBYv5Jw_qx2p1Xq97p63xWjR7h1Mno_	OsLP.GZUJQ2pBrnF5U0-ELV3FIj4iyDrwkG9E	gwas	7	5937544	6062746	125202	False	0.0086		0.3481	distinct_nearby	0.0086				
+pericarp_color~seed_coat_colour	OsLP.NRBYv5Jw_qx2p1Xq97p63xWjR7h1Mno_	OsLP._qaX-4725PjtUSSY9L8Hzmwe8Ssml-kE	gwas	7	5937544	6761880	824336	False	0.0166		0.0221	distinct_nearby	0.0166				
+pericarp_color~seed_coat_colour	OsLP.NRBYv5Jw_qx2p1Xq97p63xWjR7h1Mno_	OsLP.8fOIrhhe4_d2TugYOXqmB7O9GXBerm_X	gwas	7	5937544	6363692	426148	False	0.0004		-0.0921	distinct_nearby	0.0004				
+pericarp_color~seed_coat_colour	OsLP.NRBYv5Jw_qx2p1Xq97p63xWjR7h1Mno_	OsLP.6-hXYiW5SWcWV-AZ3S0jjQ31uI-noc43	gwas	7	5937544	5921393	16151	True	0.9639		0.2996	same	0.9639	0.0753	0.9246	1733.0	same
+pericarp_color~seed_coat_colour	OsLP.NRBYv5Jw_qx2p1Xq97p63xWjR7h1Mno_	OsLP.i2BFFnZDOgpprkjAPufof8R5RBJoZc8T	gwas	7	5937544	6259667	322123	False	0.0118		-0.1859	distinct_nearby	0.0118				
+pericarp_color~seed_coat_colour	OsLP.m_YSvR44889SJ_ls8KjVkQupBBnVwx1U	OsLP.bd4_hussezCwibMS_UzcEkBkqOW1ncUh	gwas	7	7474179	6670284	803895	False	0.2642		0.0912	ambiguous	0.2642				
+pericarp_color~seed_coat_colour	OsLP.m_YSvR44889SJ_ls8KjVkQupBBnVwx1U	OsLP._qaX-4725PjtUSSY9L8Hzmwe8Ssml-kE	gwas	7	7474179	6761880	712299	False	0.0212		0.2436	distinct_nearby	0.0212				
+leaf_pubescence~lemma_pubescence	OsLP.jFg1dokj4f4_j9rJzBCvIl7WAEppwudN	OsLP.hKhjI9MxsRaKW181e8gB6O61mZZQPMKs	gwas	9	18690518	18422696	267822	True	0.0822		0.3177	distinct_nearby	0.0822	0.0024	0.0029	979	inconclusive
+leaf_pubescence~lemma_pubescence	OsLP.jFg1dokj4f4_j9rJzBCvIl7WAEppwudN	OsLP.VDrNOLmSFlwngn0j5gXJgchvphetsPDe	gwas	9	18690518	18966338	275820	False	0.0585		0.309	distinct_nearby	0.0585	0.0035	0.0031	1249	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.pr87JadhySNT_7ndvWLRWWywbCPrJy-_	gwas	5	840545	607460	233085	True	0.3286	concordant	0.218	ambiguous	0.3286	0.1141	0.2333	378.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.uuRz-CrC0LqLkjLVQmmwKoNr1Ssd-cvQ	gwas	5	840545	1111421	270876	False	0.151		-0.3865	ambiguous	0.151				
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.SLFMPil_SoLUZD3E9Qy5bduXNahx2M5N	gwas	5	840545	524471	316074	True	0.0356		-0.039	distinct_nearby	0.0356				
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP._4BXqxVrs9SB67wMGdgVgbmTi9YODS9i	gwas	5	840545	532820	307725	True	0.0109		0.0995	distinct_nearby	0.0109				
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.gWJ3UHUoY65gcSsG91hIoVby25PJ1BGR	gwas	5	840545	358026	482519	False	0.0003		0.3094	distinct_nearby	0.0003				
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.weD6OWMtyEP6xLDHsO7yIOuWbQTOJJky	gwas	5	840545	1756092	915547	False	0.0797		-0.186	distinct_nearby	0.0797				
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.A9EZKLU1bnDX1Fmpog5bWMypNKCE1vkC	gwas	5	840545	947656	107111	False	0.0012		-0.1815	distinct_nearby	0.0012	0.0398	0.9602	1210.0	same
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.ZlWbJORGdHgyx5wqhF5BKxqG6U72BE-7	gwas	5	840545	1420891	580346	False	0.0939		-0.2471	distinct_nearby	0.0939				
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.pKhbekvcx7DukBI4gt_vnsliGZd8cxFm	gwas	5	840545	798503	42042	False	0.0031		-0.0317	distinct_nearby	0.0031	0.3675	0.3596	1570.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.S0fZp8BHtFiapT7LDfqTOE27TUPZBPrv	gwas	5	840545	29471	811074	False	0.176		0.4501	ambiguous	0.176				
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.QpVnBUt99_OIQKOD_vJi2fb2B-WD4ebN	gwas	5	840545	1048535	207990	True	0.0075		-0.188	distinct_nearby	0.0075	0.0085	0.5021	19.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.UdM59XHw0I_9RA6PaXxBpZ6LVhgevDND	gwas	5	840545	1140037	299492	False	0.0365		-0.1807	distinct_nearby	0.0365				
+leaf_pubescence~blade_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	OsLP.5da85VTeQkXqno56auVcZofrJW-uVk1w	gwas	5	840545	842465	1920	False	0.2491		0.375	ambiguous	0.2491	0.0742	0.9257	951.0	same
+leaf_pubescence~blade_pubescence	OsLP.dzE5aj4KUjyibffmV78fAZCOPpFuUtoX	OsLP.5YL23TMVDAd9APylpN-cvSVaXuMXAiRT	gwas	2	26279660	27068915	789255	False	0.0012		0.4668	distinct_nearby	0.0012				
+leaf_pubescence~blade_pubescence	OsLP.dzE5aj4KUjyibffmV78fAZCOPpFuUtoX	OsLP.e5lQMhYmlrQQKF8QDuli-qtBAytdsVBD	gwas	2	26279660	25639399	640261	True	0.0006		0.5079	distinct_nearby	0.0006				
+leaf_pubescence~blade_pubescence	OsLP.dzE5aj4KUjyibffmV78fAZCOPpFuUtoX	OsLP.L19LYST-9aArBfchHNL_chzNkAOahXQQ	gwas	2	26279660	25998948	280712	True	0.1186		0.2068	ambiguous	0.1186				
+leaf_pubescence~blade_pubescence	OsLP.dzE5aj4KUjyibffmV78fAZCOPpFuUtoX	OsLP.X_KxEhFrbGUmdcC_RDOhIIlgk3v05nmd	gwas	2	26279660	26410683	131023	True	0.0015		0.2836	distinct_nearby	0.0015	0.0055	0.9945	2599.0	same
+leaf_pubescence~blade_pubescence	OsLP.dzE5aj4KUjyibffmV78fAZCOPpFuUtoX	OsLP.ZxY0y0IhkNBbgpfLjRcJZagrgrwlFTa3	gwas	2	26279660	26042378	237282	True	0.049		-0.0501	distinct_nearby	0.049	0.1344	0.0739	2603.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.dzE5aj4KUjyibffmV78fAZCOPpFuUtoX	OsLP._EoeueeFCT5do5NXpAEQhD_wIoyv27zO	gwas	2	26279660	25699878	579782	False	0.0009		-0.0488	distinct_nearby	0.0009				
+leaf_pubescence~blade_pubescence	OsLP.dzE5aj4KUjyibffmV78fAZCOPpFuUtoX	OsLP.sJQ6jx5xm1ROWs7gnOYGhUZuJJHZ1q4n	gwas	2	26279660	25892791	386869	False	0.45	concordant	0.1101	ambiguous	0.45				
+leaf_pubescence~blade_pubescence	OsLP.dzE5aj4KUjyibffmV78fAZCOPpFuUtoX	OsLP.i4Ft6ACR-HkKCHHB53y1nbj7-VvPfQHI	gwas	2	26279660	26757027	477367	False	0.4666	concordant	0.0681	ambiguous	0.4666				
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.pr87JadhySNT_7ndvWLRWWywbCPrJy-_	gwas	5	1165808	607460	558348	True	0.1388		0.0605	ambiguous	0.1388				
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.uuRz-CrC0LqLkjLVQmmwKoNr1Ssd-cvQ	gwas	5	1165808	1111421	54387	True	0.0799		0.3295	distinct_nearby	0.0799	0.0876	0.6185	216.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.SLFMPil_SoLUZD3E9Qy5bduXNahx2M5N	gwas	5	1165808	524471	641337	False	0.1928		0.0623	ambiguous	0.1928				
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP._4BXqxVrs9SB67wMGdgVgbmTi9YODS9i	gwas	5	1165808	532820	632988	True	0.1912		0.1486	ambiguous	0.1912				
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.gWJ3UHUoY65gcSsG91hIoVby25PJ1BGR	gwas	5	1165808	358026	807782	False	0.0339		-0.3769	distinct_nearby	0.0339				
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.weD6OWMtyEP6xLDHsO7yIOuWbQTOJJky	gwas	5	1165808	1756092	590284	False	0.0345		0.5263	distinct_nearby	0.0345				
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.A9EZKLU1bnDX1Fmpog5bWMypNKCE1vkC	gwas	5	1165808	947656	218152	False	0.0285		0.6211	distinct_nearby	0.0285				
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.ZlWbJORGdHgyx5wqhF5BKxqG6U72BE-7	gwas	5	1165808	1420891	255083	True	0.0809		0.4799	distinct_nearby	0.0809	0.0094	0.0259	379.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.pKhbekvcx7DukBI4gt_vnsliGZd8cxFm	gwas	5	1165808	798503	367305	False	0.0007		-0.2168	distinct_nearby	0.0007				
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.QpVnBUt99_OIQKOD_vJi2fb2B-WD4ebN	gwas	5	1165808	1048535	117273	True	0.0053		0.3759	distinct_nearby	0.0053	0.1602	0.4472	829.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.UdM59XHw0I_9RA6PaXxBpZ6LVhgevDND	gwas	5	1165808	1140037	25771	True	0.8964	concordant	0.2649	same	0.8964	0.3782	0.5417	1999.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	OsLP.5da85VTeQkXqno56auVcZofrJW-uVk1w	gwas	5	1165808	842465	323343	False	0.0161		-0.0543	distinct_nearby	0.0161				
+leaf_pubescence~blade_pubescence	OsLP.i9HljpxkUI4puUODeBgFgIyyZ5LaYP4t	OsLP.sUziu-33FWiEBq_AzQbJEzqLnELzE834	gwas	11	25108737	24311943	796794	False	0.0834		0.303	distinct_nearby	0.0834				
+leaf_pubescence~blade_pubescence	OsLP.i9HljpxkUI4puUODeBgFgIyyZ5LaYP4t	OsLP.7CWFIXVF8RRp8O3OAe45WM25l64a-NkM	gwas	11	25108737	24728937	379800	False	0.1646		0.2763	ambiguous	0.1646	0.0005	0.0017	284.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.IMHdhKLUUaYtnN_477u4naX27Ca2NSUg	OsLP.Ckex2jUKoFdfWVH26aweKshdjR3iD1nm	gwas	2	24291098	24082745	208353	True	0.0004		0.0443	distinct_nearby	0.0004	0.0292	0.0172	2230.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.IMHdhKLUUaYtnN_477u4naX27Ca2NSUg	OsLP.0XWJzRWtM-BHh8lLu3xLdnGh8-hyYce-	gwas	2	24291098	24582772	291674	False	0.0005		0.5141	distinct_nearby	0.0005	0.0051	0.0092	672.0	inconclusive
+leaf_pubescence~blade_pubescence	OsLP.IMHdhKLUUaYtnN_477u4naX27Ca2NSUg	OsLP.xAEr9g6HIyhl9oj5Ne639MVTdjXkhD58	gwas	2	24291098	23721204	569894	False	0.0006		-0.1498	distinct_nearby	0.0006				
+leaf_pubescence~blade_pubescence	OsLP.IMHdhKLUUaYtnN_477u4naX27Ca2NSUg	OsLP.hppURi7mU6Mk42uA-adJ-wBQiGSwZBA8	gwas	2	24291098	25275198	984100	False	0.0264		0.0579	distinct_nearby	0.0264				

@@ -66,26 +66,45 @@ def imprint_on_build(p: LocusPassport, build: str) -> Optional[pd.DataFrame]:
 
 
 def to_panel(df: pd.DataFrame, geno: Genotypes, tol: int) -> pd.DataFrame:
-    """Match SNPs to the panel; returns rows with panel `idx` and z for the panel's counted allele (A1)."""
+    """Match SNPs to the panel; returns rows with panel `idx` and z for the panel's counted allele (A1).
+
+    Exact positions are matched in one merge; only the rest are searched within +-tol bp.
+    """
+    empty = pd.DataFrame(columns=["idx", "pos", "z_a1"])
+    if df is None or df.empty:
+        return empty
     chrom = df["chrom"].iat[0]
     v = geno.region(chrom, int(df["pos"].min()) - tol, int(df["pos"].max()) + tol).sort_values("pos")
     if v.empty:
-        return df.iloc[:0].assign(idx=[], z_a1=[])
-    vp = v["pos"].to_numpy()
-    out = []
-    for r in df.itertuples():
-        lo, hi = np.searchsorted(vp, r.pos - tol), np.searchsorted(vp, r.pos + tol, side="right")
-        best = None
-        for k in range(lo, hi):
-            a1, a2 = str(v["a1"].iat[k]).upper(), str(v["a2"].iat[k]).upper()
-            ref, alt = str(r.ref).upper(), str(r.alt).upper()
-            if {ref, alt} == {a1, a2} and (best is None or abs(vp[k] - r.pos) < abs(vp[best] - r.pos)):
-                best = k
-        if best is not None:
-            sign = 1.0 if str(r.alt).upper() == str(v["a1"].iat[best]).upper() else -1.0
-            out.append((int(v["idx"].iat[best]), int(vp[best]), r.z * sign))
-    m = pd.DataFrame(out, columns=["idx", "pos", "z_a1"]).drop_duplicates("idx")
-    return m
+        return empty
+    d = df.assign(ref=df["ref"].astype(str).str.upper(), alt=df["alt"].astype(str).str.upper())
+    vv = v.assign(a1=v["a1"].astype(str).str.upper(), a2=v["a2"].astype(str).str.upper())
+
+    def aligned(m: pd.DataFrame) -> pd.DataFrame:
+        ok = ((m["ref"] == m["a1"]) & (m["alt"] == m["a2"])) | ((m["ref"] == m["a2"]) & (m["alt"] == m["a1"]))
+        m = m[ok]
+        sign = np.where(m["alt"] == m["a1"], 1.0, -1.0)
+        return pd.DataFrame({"idx": m["idx"].astype(int).to_numpy(), "pos": m["pos_panel"].astype(int).to_numpy(),
+                             "z_a1": m["z"].to_numpy() * sign, "row_": m["row_"].to_numpy()})
+
+    d = d.reset_index(drop=True).assign(row_=lambda x: np.arange(len(x)))
+    exact = aligned(d.merge(vv.rename(columns={"pos": "pos_panel"}), left_on="pos", right_on="pos_panel"))
+    rest = d[~d["row_"].isin(exact["row_"])]
+    near = []
+    if tol > 0 and len(rest):
+        vp = vv["pos"].to_numpy()
+        for r in rest.itertuples():
+            lo, hi = np.searchsorted(vp, r.pos - tol), np.searchsorted(vp, r.pos + tol, side="right")
+            if lo == hi:
+                continue
+            c = vv.iloc[lo:hi]
+            ok = ((c["a1"] == r.ref) & (c["a2"] == r.alt)) | ((c["a1"] == r.alt) & (c["a2"] == r.ref))
+            c = c[ok]
+            if len(c):
+                k = c.iloc[int(np.argmin(np.abs(c["pos"].to_numpy() - r.pos)))]
+                near.append((int(k["idx"]), int(k["pos"]), r.z * (1.0 if r.alt == k["a1"] else -1.0), r.row_))
+    out = pd.concat([exact, pd.DataFrame(near, columns=["idx", "pos", "z_a1", "row_"])], ignore_index=True)
+    return out.drop(columns="row_").drop_duplicates("idx").reset_index(drop=True)
 
 
 def impute(z_obs: np.ndarray, g_obs: np.ndarray, g_tgt: np.ndarray, ridge: float) -> tuple[np.ndarray, np.ndarray]:

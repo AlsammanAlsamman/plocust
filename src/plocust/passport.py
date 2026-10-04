@@ -18,7 +18,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from .ids import normalize_sequence, passport_id
 
-SCHEMA_VERSION = "0.1.0"
+SCHEMA_VERSION = "0.2.0"
 
 
 class _Model(BaseModel):
@@ -67,6 +67,7 @@ class LocusKind(str, Enum):
     gwas = "gwas"  # a GWAS peak; the primary anchor is the lead SNP
     gene = "gene"  # a cloned / known gene; the primary anchor is in the gene
     qtl = "qtl"  # a mapped QTL interval with a marker as primary anchor
+    eqtl = "eqtl"  # an expression QTL; the regulated gene is in `genes`
 
 
 class PlacementFlag(str, Enum):

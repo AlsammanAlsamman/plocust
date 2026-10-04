@@ -48,3 +48,4 @@ build/
 Thumbs.db
 .claude/
 graphify-out/
+atlas/*.log

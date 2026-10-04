@@ -1,0 +1,65 @@
+panel	trait	source_column	binary	n	minor_class
+3K	culm_length	CULT_CODE_REPRO	False	2093	
+3K	culm_diameter	CUDI_CODE_REPRO	True	2110	738.0
+3K	culm_number	CUNO_CODE_REPRO	False	2094	
+3K	leaf_length	LLT_CODE	False	2094	
+3K	panicle_length	PLT_CODE_POST	False	2089	
+3K	seedling_height	SDHT_CODE	False	2092	
+3K	sterile_lemma_length	SLLT_CODE	False	2260	
+3K	leaf_angle	LA	False	1527	
+3K	flag_leaf_angle	FLA_REPRO	False	2261	
+3K	culm_angle	CUAN_REPRO	False	2263	
+3K	panicle_exsertion	PEX_REPRO	False	2264	
+3K	secondary_branching	SECOND_BR_REPRO	False	1522	
+3K	leaf_senescence	LSEN	False	2262	
+3K	spikelet_fertility	SPKF	False	2263	
+3K	panicle_threshability	PTH	False	2261	
+3K	panicle_shattering	PSH	False	1526	
+3K	panicle_type	PTY	False	2261	
+3K	lemma_pubescence	LPPUB	False	1526	
+3K	blade_pubescence	BLPUB_VEG	False	2264	
+3K	awn	AWPR_REPRO	True	2113	423.0
+3K	glutinous_endosperm	ENDO	True	2107	143.0
+3K	seed_coat_colour	SCCO_REV	True	2114	440.0
+3K	apiculus_colour	APCO_REV_REPRO	True	2260	791.0
+3K	hull_colour	LPCO_REV_POST	True	2261	984.0
+3K	leaf_sheath_colour	BLSCO_REV_VEG	True	2263	350.0
+3K	internode_colour	INCO_REV_REPRO	True	2264	754.0
+3K	auricle_colour	AUCO_REV_VEG	True	2262	251.0
+3K	collar_colour	CCO_REV_VEG	True	2262	236.0
+3K	sterile_lemma_colour	SLCO_REV	True	2054	257.0
+RDP1	flowering_time_at_arkansas	Flowering time at Arkansas	False	374	
+RDP1	flowering_time_at_faridpur	Flowering time at Faridpur	False	305	
+RDP1	flowering_time_at_aberdeen	Flowering time at Aberdeen	False	359	
+RDP1	ft_ratio_of_arkansas_aberdeen	FT ratio of Arkansas/Aberdeen	False	349	
+RDP1	ft_ratio_of_faridpur_aberdeen	FT ratio of Faridpur/Aberdeen	False	304	
+RDP1	culm_habit	Culm habit	False	384	
+RDP1	leaf_pubescence	Leaf pubescence	True	288	43.0
+RDP1	flag_leaf_length	Flag leaf length	False	377	
+RDP1	flag_leaf_width	Flag leaf width	False	377	
+RDP1	awn_presence	Awn presence	True	369	82.0
+RDP1	panicle_number_per_plant	Panicle number per plant	False	372	
+RDP1	plant_height	Plant height	False	383	
+RDP1	panicle_length	Panicle length	False	375	
+RDP1	primary_panicle_branch_number	Primary panicle branch number	False	375	
+RDP1	seed_number_per_panicle	Seed number per panicle	False	376	
+RDP1	florets_per_panicle	Florets per panicle	False	377	
+RDP1	panicle_fertility	Panicle fertility	False	376	
+RDP1	seed_length	Seed length	False	377	
+RDP1	seed_width	Seed width	False	377	
+RDP1	seed_volume	Seed volume	False	377	
+RDP1	seed_surface_area	Seed surface area	False	377	
+RDP1	brown_rice_seed_length	Brown rice seed length	False	377	
+RDP1	brown_rice_seed_width	Brown rice seed width	False	377	
+RDP1	brown_rice_surface_area	Brown rice surface area	False	377	
+RDP1	brown_rice_volume	Brown rice volume	False	377	
+RDP1	seed_length_width_ratio	Seed length/width ratio	False	377	
+RDP1	brown_rice_length_width_ratio	Brown rice length/width ratio	False	377	
+RDP1	pericarp_color	Pericarp color	True	377	34.0
+RDP1	straighthead_suseptability	Straighthead suseptability	False	340	
+RDP1	blast_resistance	Blast resistance	False	385	
+RDP1	amylose_content	Amylose content	False	401	
+RDP1	alkali_spreading_value	Alkali spreading value	False	403	
+RDP1	protein_content	Protein content	False	393	
+RDP1	year07flowering_time_at_arkansas	Year07Flowering time at Arkansas	False	367	
+RDP1	year06flowering_time_at_arkansas	Year06Flowering time at Arkansas	False	337	

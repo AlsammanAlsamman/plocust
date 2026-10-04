@@ -1,0 +1,10 @@
+3K	RDP1	rdp1_loci	3k_loci	rdp1_with_3k_within_1Mb	best_same	best_same_opposite_effect	best_ambiguous	best_distinct_nearby	coloc_same
+culm_length	plant_height	2	8	2.0	1.0	0.0	1.0	0.0	0.0
+glutinous_endosperm	amylose_content	6	16	1.0	0.0	1.0	0.0	0.0	1.0
+seed_coat_colour	pericarp_color	32	9	3.0	2.0	0.0	1.0	0.0	1.0
+awn	awn_presence	1	0						
+panicle_length	panicle_length	0	1						
+lemma_pubescence	leaf_pubescence	9	46	1.0	0.0	0.0	0.0	1.0	0.0
+blade_pubescence	leaf_pubescence	9	263	5.0	1.0	0.0	3.0	1.0	0.0
+culm_angle	culm_habit	0	1						
+panicle_shattering	panicle_fertility	0	3						

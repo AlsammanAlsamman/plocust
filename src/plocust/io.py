@@ -194,7 +194,7 @@ _BED_LOOKUP = np.array(
 ).reshape(256, 4)
 
 
-@dataclass
+@dataclass(eq=False)  # identity-hashable, so results can be cached per panel
 class Genotypes:
     """PLINK 1 binary fileset (.bed/.bim/.fam), read lazily by region."""
 

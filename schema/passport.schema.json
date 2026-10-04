@@ -433,7 +433,8 @@
       "enum": [
         "gwas",
         "gene",
-        "qtl"
+        "qtl",
+        "eqtl"
       ],
       "title": "LocusKind",
       "type": "string"
@@ -835,7 +836,7 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "default": "0.1.0",
+      "default": "0.2.0",
       "title": "Schema Version",
       "type": "string"
     },

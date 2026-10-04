@@ -34,6 +34,8 @@ class IdentifyConfig:
     p_threshold: Optional[float] = None  # None = Bonferroni 0.05 / number of tests
     window_kb: float = 500  # clumping radius around a lead
     clump_r2: float = 0.1  # with genotypes: SNPs with r2 >= this join the lead's clump
+    merge_r2: Optional[float] = 0.5  # merge clumps whose leads are in LD (one signal split by long-range LD); None = off
+    merge_kb: float = 2000  # only clumps this close are considered for merging
     min_significant: int = 1  # drop clumps with fewer significant SNPs (singletons are often artefacts)
     flank: int = 100  # anchor = variant +- flank bp
     block_r2: float = 0.5  # LD block = region around the lead where r2 with it stays >= this
@@ -144,7 +146,39 @@ def clump(ss: pd.DataFrame, threshold: float, cfg: IdentifyConfig, geno: Optiona
         remaining[near_k] = False
         members = sig[near_k][np.argsort(pos[near_k], kind="stable")]
         clumps.append(_Clump(int(lead), [int(i) for i in members]))
+    if geno is not None and cfg.merge_r2 is not None:
+        clumps = merge_clumps(ss, clumps, geno, cfg)
     return [c for c in clumps if len(c.members) >= cfg.min_significant]
+
+
+def merge_clumps(ss: pd.DataFrame, clumps: list[_Clump], geno: Genotypes, cfg: IdentifyConfig) -> list[_Clump]:
+    """Merge clumps whose leads are in LD (r2 >= merge_r2): one signal split by long-range LD.
+
+    Clumps are visited strongest first; a clump joins the first stronger clump it is in LD with.
+    """
+    if len(clumps) < 2:
+        return clumps
+    leads = [c.lead for c in clumps]
+    idx = _variant_index(ss, leads, geno)
+    chroms = ss.loc[leads, "chrom"].to_numpy()
+    pos = ss.loc[leads, "pos"].to_numpy()
+    owner = list(range(len(clumps)))
+    for j in range(1, len(clumps)):
+        if idx[j] < 0:
+            continue
+        cand = [i for i in range(j) if owner[i] == i and chroms[i] == chroms[j] and idx[i] >= 0
+                and abs(pos[i] - pos[j]) <= cfg.merge_kb * 1000]
+        if not cand:
+            continue
+        g = geno.read([idx[j]] + [idx[i] for i in cand])
+        r2 = r2_with(g[:, 1:], g[:, 0])
+        best = int(np.argmax(r2))
+        if r2[best] >= cfg.merge_r2:
+            owner[j] = cand[best]
+    merged: dict[int, list[int]] = {}
+    for j, o in enumerate(owner):
+        merged.setdefault(o, []).extend(clumps[j].members)
+    return [_Clump(clumps[o].lead, sorted(set(m), key=lambda i: ss.at[i, "pos"])) for o, m in merged.items()]
 
 
 def _variant_index(ss: pd.DataFrame, rows, geno: Genotypes) -> np.ndarray:

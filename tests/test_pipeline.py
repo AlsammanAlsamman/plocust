@@ -371,3 +371,57 @@ def test_missing_lead_uses_best_associated_proxy(world, loci, tmp_path):
     assert panel.nearest("1", lead, 0) is None
     row = compare([loci[0]], [loci[0].model_copy(deep=True)], "SRC", panel).iloc[0]
     assert row["call"] == "same" and row["r2"] > 0.9
+
+
+def test_passports_from_hits(world):
+    """A published hit table (no summary statistics, no genotypes) becomes anchored, matchable passports."""
+    from plocust.hits import passports_from_hits
+    from plocust.passport import LocusKind
+
+    genome = Genome(world.genome, "SRC")
+    genes = read_genes(world.gff)
+    hits = pd.DataFrame({"chrom": ["chr01", "chr01"], "pos": [CAUSAL_POS, 200_500], "p": [1e-12, 1e-8],
+                         "id": ["a", "b"], "gene": ["G1", "G3"]})
+    ps = passports_from_hits(hits, genome, "Oryza sativa", "toy eQTL", kind=LocusKind.eqtl, genes=genes)
+    assert [p.kind for p in ps] == [LocusKind.eqtl] * 2
+    assert ps[0].trait.name == "expression of G1" and ps[0].genes[0].distance_bp == 0
+    assert ps[0].lead_anchor.sequence[ps[0].lead_anchor.variant_offset] == genome.fetch("1", CAUSAL_POS, CAUSAL_POS)
+    pl = anchor_passports(ps, Aligner(world.target, build="TGT"))[0]
+    assert pl.lead_pos == CAUSAL_POS + INSERT_LEN
+
+
+def test_merge_fragmented_clumps(world):
+    """With a tiny clumping window one LD block splits into several clumps; merging restores one locus."""
+    ss = read_sumstats(world.sumstats_path)
+    geno = Genotypes.open(world.bfile)
+    split = identify_loci(ss, STUDY, genome=Genome(world.genome, "SRC"), geno=geno,
+                          cfg=IdentifyConfig(p_threshold=1e-8, window_kb=2, merge_r2=None))
+    merged = identify_loci(ss, STUDY, genome=Genome(world.genome, "SRC"), geno=geno,
+                           cfg=IdentifyConfig(p_threshold=1e-8, window_kb=2))
+    assert len(split) > 1 and len(merged) == 1
+    assert merged[0].signal.n_significant == sum(p.signal.n_significant for p in split)
+
+
+def test_to_panel_exact_and_near(world):
+    from plocust.coloc import to_panel
+
+    geno = Genotypes.open(world.bfile)
+    v = geno.variants.iloc[:3]
+    df = pd.DataFrame({"chrom": "1", "pos": [v["pos"].iat[0], v["pos"].iat[1] + 7, 999_999],
+                       "ref": [v["a2"].iat[0], v["a1"].iat[1], "A"], "alt": [v["a1"].iat[0], v["a2"].iat[1], "C"],
+                       "z": [2.0, 3.0, 1.0]})
+    m = to_panel(df, geno, tol=20).sort_values("pos")
+    assert m["idx"].tolist() == [int(v["idx"].iat[0]), int(v["idx"].iat[1])]
+    assert m["z_a1"].tolist() == [2.0, -3.0]  # second SNP reported for the other allele: sign flipped
+
+
+def test_one_locus_many_traits_keeps_every_record(world, loci, tmp_path):
+    """Same lead SNP for two traits: one passport_id (one locus), two database records (pleiotropy)."""
+    a = loci[0]
+    b = a.model_copy(deep=True)
+    b.trait.name = "grain weight"
+    assert a.passport_id == b.passport_id
+    db = tmp_path / "db.sqlite"
+    assert create(db, [a, b], name="t", version="0") == 2
+    recs = LocusDB(db).records(a.passport_id)
+    assert sorted(r.trait.name for r in recs) == ["grain weight", "plant height"]
