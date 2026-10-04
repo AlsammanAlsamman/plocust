@@ -195,3 +195,139 @@ def test_credible_sets_do_not_borrow_other_clumps(world, tmp_path):
                        cfg=IdentifyConfig(p_threshold=1e-8))
     weak = next(p for p in ps if p.signal.lead.pos == 125_500)
     assert 140_500 not in {v.pos for v in weak.credible_set.variants}
+
+
+def test_detect_build(world):
+    from plocust.build import detect_build
+
+    ss = read_sumstats(world.sumstats_path)
+    res = detect_build(ss, [Genome(world.genome, "SRC"), Genome(world.target, "TGT")])
+    assert res.loc[0, "build"] == "SRC" and res.loc[0, "verdict"] == "likely build"
+    assert res.loc[0, "allele_match"] == 1.0
+    assert res.loc[1, "score"] < 0.8  # 5 kb insertion shifts every SNP after 50 kb
+
+
+def test_cli_detect_build(world, capsys):
+    assert main(["detect-build", "--sumstats", str(world.sumstats_path), "--genome", f"{world.genome}:SRC",
+                 "--genome", f"{world.target}:TGT"]) == 0
+    assert "likely build" in capsys.readouterr().out
+
+
+def test_effect_direction(world, loci):
+    geno = Genotypes.open(world.bfile)
+    a = loci[0]
+    same = a.model_copy(deep=True)
+    assert compare([a], [same], "SRC", geno).iloc[0]["direction"] == "concordant"
+    flipped = a.model_copy(deep=True)
+    flipped.signal.beta = -flipped.signal.beta  # same SNP, opposite effect: cannot be the same causal effect
+    row = compare([a], [flipped], "SRC", geno).iloc[0]
+    assert row["direction"] == "discordant" and row["call"] == "ambiguous"
+    swapped = flipped.model_copy(deep=True)  # opposite sign but reported for the other allele: concordant again
+    swapped.signal.effect_allele = swapped.signal.lead.ref
+    assert compare([a], [swapped], "SRC", geno).iloc[0]["direction"] == "concordant"
+
+
+def test_imprint(loci):
+    imp = loci[0].imprint
+    assert imp.z_signed and len(imp.z) == len(imp.pos) == len(imp.ids) > 100
+    assert len(imp.profile) == imp.bins and max(imp.profile) == pytest.approx(max(abs(z) for z in imp.z))
+    assert imp.n_significant >= 1 and imp.independent_signals == 1
+    assert imp.ld_edges and all(r2 >= 0.5 for _, _, r2 in imp.ld_edges)
+    lead = loci[0].signal.lead.pos
+    assert imp.pos.index(lead) == int(np.argmax(np.abs(imp.z)))
+
+
+def test_profile_similarity(world, loci):
+    a = loci[0]
+    row = compare([a], [a.model_copy(deep=True)], "SRC").iloc[0]
+    assert row["profile_corr"] == pytest.approx(1.0)
+
+
+def test_marker_lookup_without_genome(world, tmp_path):
+    """A breeder with marker IDs only: flanks come from the database, then anchors place the locus."""
+    from plocust.db import add_markers
+
+    genome = Genome(world.genome, "SRC")
+    ss = read_sumstats(world.sumstats_path)
+    seqs = []
+    for pos, ref, alt in zip(ss["pos"], ss["ref"], ss["alt"]):
+        left, right = genome.fetch("1", pos - 60, pos - 1), genome.fetch("1", pos + 1, pos + 60)
+        seqs.append(f"{left}[{ref}/{alt}]{right}")
+    db = tmp_path / "db.sqlite"
+    create(db, [], name="t", version="0")
+    assert add_markers(db, pd.DataFrame({"marker_id": ss["id"], "sequence": seqs}), "toy chip") == len(ss)
+    flanks = LocusDB(db).marker_flanks()
+    ps = identify_loci(ss, STUDY, flanks=flanks, cfg=IdentifyConfig(p_threshold=1e-8))
+    assert ps and len(ps[0].lead_anchor.sequence) == 121
+    pl = anchor_passports(ps, Aligner(world.target, build="TGT"))[0]
+    assert pl.lead_pos == ps[0].signal.lead.pos + INSERT_LEN
+
+
+def test_reference_ld_panel(world, loci, tmp_path):
+    from plocust.db import attach_ld_panel
+    from plocust.passport import write_passports
+
+    db = tmp_path / "db.sqlite"
+    create(db, [], name="t", version="0")
+    attach_ld_panel(db, world.bfile, "SRC", "toy panel")
+    g = LocusDB(db).ld_panel("SRC")
+    assert g is not None and g.n_samples == 300 and LocusDB(db).ld_panel("OTHER") is None
+    f = tmp_path / "l.jsonl"
+    write_passports(f, loci)
+    out = tmp_path / "c.tsv"
+    assert main(["compare", str(f), str(f), "--build", "SRC", "--db", str(db), "--out", str(out)]) == 0
+    assert pd.read_csv(out, sep="\t")["call"].tolist() == ["same"]  # LD came from the registered panel
+
+
+def _study(world, causal_cols, seed):
+    from scipy import stats
+
+    from plocust.io import standardize_sumstats
+
+    geno = Genotypes.open(world.bfile)
+    v = geno.variants
+    g = geno.read(v["idx"].to_numpy())
+    rng = np.random.default_rng(seed)
+    y = sum(g[:, c] / 2 for c in causal_cols) + rng.normal(0, 1, len(g))
+    rows = []
+    for j in range(g.shape[1]):
+        r = stats.linregress(g[:, j], y) if g[:, j].std() > 0 else None
+        rows.append(("1", int(v["pos"].iat[j]), v["id"].iat[j], v["a2"].iat[j], v["a1"].iat[j], v["a1"].iat[j],
+                     r.slope if r else 0.0, r.stderr if r else np.nan, max(r.pvalue, 1e-300) if r else 1.0, len(g)))
+    ss = standardize_sumstats(pd.DataFrame(rows, columns=["chrom", "pos", "id", "ref", "alt", "effect_allele",
+                                                          "beta", "se", "p", "n"]))
+    study = StudyInfo(species="Oryza sativa", trait="t", study=f"s{seed}", build="SRC", n_samples=len(g))
+    return identify_loci(ss, study, genome=Genome(world.genome, "SRC"), geno=geno, cfg=IdentifyConfig(p_threshold=1e-6))
+
+
+def test_coloc_same_and_distinct(world):
+    geno = Genotypes.open(world.bfile)
+    g = geno.read(geno.variants["idx"].to_numpy())
+    c1 = int(np.flatnonzero(geno.variants["pos"] == CAUSAL_POS)[0])
+    nxt = range((c1 // BLOCK_SNPS + 1) * BLOCK_SNPS, (c1 // BLOCK_SNPS + 2) * BLOCK_SNPS)
+    c2 = max(nxt, key=lambda j: g[:, j].std())
+    a, a2, b = _study(world, [c1], 1), _study(world, [c1], 2), _study(world, [c2], 3)
+    same = compare(a, a2, "SRC", geno).sort_values("distance_bp").iloc[0]
+    assert same["coloc_call"] == "same" and same["PP.H4"] > 0.8
+    diff = compare(a, b, "SRC", geno).sort_values("distance_bp").iloc[0]
+    assert diff["coloc_call"] == "distinct" and diff["PP.H3"] > 0.8
+
+
+def test_coloc_across_builds(world, tmp_path):
+    """Both studies moved to the target build by anchors; LD from a panel in target coordinates."""
+    import shutil
+
+    geno = Genotypes.open(world.bfile)
+    c1 = int(np.flatnonzero(geno.variants["pos"] == CAUSAL_POS)[0])
+    a, a2 = _study(world, [c1], 1), _study(world, [c1], 2)
+    aligner = Aligner(world.target, build="TGT")
+    anchor_passports(a, aligner)
+    anchor_passports(a2, aligner)
+    # the same panel, re-coordinated to the target build (5 kb insertion at 50 kb)
+    bim = pd.read_csv(f"{world.bfile}.bim", sep="\t", header=None)
+    bim[3] = np.where(bim[3] >= 50_000, bim[3] + INSERT_LEN, bim[3])
+    bim.to_csv(tmp_path / "tgt.bim", sep="\t", header=False, index=False)
+    for ext in ("bed", "fam"):
+        shutil.copy(f"{world.bfile}.{ext}", tmp_path / f"tgt.{ext}")
+    row = compare(a, a2, "TGT", Genotypes.open(tmp_path / "tgt")).sort_values("distance_bp").iloc[0]
+    assert row["coloc_call"] == "same" and row["coloc_snps"] > 50

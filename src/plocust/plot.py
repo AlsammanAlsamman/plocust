@@ -127,22 +127,29 @@ def locus_card(
     axg.set_xlabel(f"chr{chrom} position (Mb, {build})")
     ax.set_xlim(lo / mb, hi / mb)
 
-    # --- haplotypes
-    blk = passport.ld_block
-    if blk and blk.haplotype_freqs:
-        f = blk.haplotype_freqs
-        axh.barh(range(len(f)), f, color=R2_RAMP[4], height=0.7)
-        axh.set_yticks(range(len(f)), [f"H{i + 1}" for i in range(len(f))])
-        axh.invert_yaxis()
-        for i, v in enumerate(f):
-            axh.text(v + 0.01, i, f"{v:.0%}", va="center", fontsize=8, color=INK_2)
-        axh.set_xlim(0, 1.1)
-        axh.set_xlabel("haplotype frequency in source panel")
-        axh.grid(axis="x", color=GRID, lw=0.6)
+    # --- LD network of the significant SNPs (from the imprint), drawn as arcs along the chromosome
+    imp = passport.imprint
+    if imp is not None and pl.method == "source" and imp.ld_edges:
+        axh.sharex(ax)
+        pos = np.array(imp.pos) / mb
+        lp = np.abs(np.array(imp.z))
+        nodes = sorted({i for e in imp.ld_edges for i in e[:2]})
+        for i, j, r2 in imp.ld_edges:
+            x0, x1 = sorted((pos[i], pos[j]))
+            t = np.linspace(0, np.pi, 30)
+            axh.plot(x0 + (x1 - x0) * (1 - np.cos(t)) / 2, np.sin(t) * (x1 - x0), color=R2_RAMP[4],
+                     alpha=0.15 + 0.6 * (r2 - imp.ld_edge_r2) / (1 - imp.ld_edge_r2 + 1e-9), lw=1)
+        axh.scatter(pos[nodes], np.zeros(len(nodes)), s=10 + 40 * lp[nodes] / lp.max(), color=INK_2, zorder=3, lw=0)
+        axh.set_ylim(-0.02 * (hi - lo) / mb, None)
+        axh.set_yticks([])
+        axh.spines["left"].set_visible(False)
+        axh.set_xlabel(f"LD network of top significant SNPs (r² ≥ {imp.ld_edge_r2}); node size = |z|")
+        plt.setp(axg.get_xticklabels(), visible=True)
     else:
         axh.axis("off")
 
     # --- info panel
+    blk = passport.ld_block
     axi.axis("off")
     lines = []
     s = passport.signal
@@ -153,12 +160,18 @@ def locus_card(
         if passport.credible_set:
             lines.append(f"credible set: {len(passport.credible_set.variants)} SNPs "
                          f"({passport.credible_set.coverage:.0%})")
+    if imp is not None:
+        lines += ["", "REGIONAL IMPRINT", f"{imp.n_significant} significant SNPs in ±{imp.window_bp // 1000} kb",
+                  f"half-max width {imp.half_max_width_bp / 1000:,.0f} kb, {imp.independent_signals} signal(s)",
+                  f"{len(imp.ld_edges)} LD links" if imp.ld_edge_r2 else "no LD (no genotypes)"]
     if blk:
         if blk.end > blk.start:
             desc = f"{blk.length_kb:,.1f} kb, {blk.n_haplotypes or '-'} haplotypes"
         else:
             desc = f"lead only (no SNP at r²≥{blk.r2_threshold})"
         lines += ["", "LD BLOCK", desc + ("  [inversion-like]" if blk.inversion_like else "")]
+        if blk.haplotype_freqs:
+            lines.append("haplotypes " + " ".join(f"{f:.0%}" for f in blk.haplotype_freqs[:5]))
     lines += ["", "ANCHORS"]
     for a in passport.anchors:
         u = {True: "unique", False: "not unique", None: "unchecked"}[a.unique]

@@ -57,6 +57,19 @@ def cmd_validate(args):
     return status
 
 
+def cmd_detect_build(args):
+    from .build import detect_build
+    from .io import Genome, read_sumstats
+
+    ss = read_sumstats(args.sumstats, _kv(args.column), sep=args.sep)
+    genomes = []
+    for spec in args.genome:
+        fasta, build = spec.rsplit(":", 1) if ":" in Path(spec).name else (spec, None)
+        genomes.append(Genome(fasta, build=build))
+    print(detect_build(ss, genomes, n=args.n).to_string(index=False))
+    return 0
+
+
 def cmd_identify(args):
     from .identify import IdentifyConfig, StudyInfo, identify_loci
     from .io import FlankTable, Genome, Genotypes, read_genes, read_sumstats
@@ -67,6 +80,10 @@ def cmd_identify(args):
     if build is None:
         sys.exit("--build is required when no --genome is given")
     flanks = FlankTable.read(args.flanks) if args.flanks else None
+    if flanks is None and args.db:
+        from .db import LocusDB
+
+        flanks = LocusDB(args.db).marker_flanks()
     cfg = IdentifyConfig(p_threshold=args.p, window_kb=args.window_kb, flank=args.flank, block_r2=args.block_r2,
                          min_significant=args.min_significant)
     study = StudyInfo(species=args.species, trait=args.trait, study=args.study, build=build,
@@ -98,9 +115,19 @@ def cmd_anchor(args):
 
 
 def _geno(args):
+    """Genotypes for LD: --bfile, else the reference panel registered in --db for --build."""
     from .io import Genotypes
 
-    return Genotypes.open(args.bfile) if args.bfile else None
+    if args.bfile:
+        return Genotypes.open(args.bfile)
+    if getattr(args, "db", None):
+        from .db import LocusDB
+
+        g = LocusDB(args.db).ld_panel(args.build)
+        if g is not None:
+            print(f"LD from the reference panel registered in {args.db}", file=sys.stderr)
+        return g
+    return None
 
 
 def cmd_compare(args):
@@ -148,6 +175,24 @@ def cmd_db_build_genes(args):
     n = create(args.out, passports, name=args.name, version=args.version,
                extra_meta={"species": args.species, "source": args.study, "reference_build": genome.build})
     print(f"{n} gene passports -> {args.out}")
+    return 0
+
+
+def cmd_db_add_markers(args):
+    from .db import add_markers
+
+    t = pd.read_csv(args.markers, sep=args.sep, dtype=str)
+    n = add_markers(args.db, t, args.panel, id_col=args.id_col or t.columns[0],
+                    seq_col=args.seq_col or next(c for c in t.columns if "seq" in c.lower()))
+    print(f"{n} markers ({args.panel}) -> {args.db}")
+    return 0
+
+
+def cmd_db_attach_ld(args):
+    from .db import attach_ld_panel
+
+    attach_ld_panel(args.db, args.bfile, args.build, args.name)
+    print(f"LD panel {args.name} ({args.build}) registered in {args.db}")
     return 0
 
 
@@ -215,12 +260,21 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("passports", nargs="+")
     p.set_defaults(func=cmd_validate)
 
+    p = sub.add_parser("detect-build", help="which genome build do the GWAS coordinates belong to?")
+    p.add_argument("--sumstats", required=True)
+    p.add_argument("--column", action="append", metavar="STD=FILECOL")
+    p.add_argument("--sep", default=None)
+    p.add_argument("--genome", action="append", required=True, metavar="FASTA[:BUILD]", help="candidate (repeat)")
+    p.add_argument("--n", type=int, default=2000, help="SNPs to test")
+    p.set_defaults(func=cmd_detect_build)
+
     p = sub.add_parser("identify", help="detect loci in GWAS results and write passports")
     p.add_argument("--sumstats", required=True)
     p.add_argument("--column", action="append", metavar="STD=FILECOL", help="map a column, e.g. p=MLM_P")
     p.add_argument("--sep", default=None, help="field separator (default: guess)")
     p.add_argument("--genome", help="reference FASTA (indexed) of the GWAS build")
     p.add_argument("--flanks", help="per-SNP flanking sequences (TSV: id, sequence with [A/G])")
+    p.add_argument("--db", help="known-loci database: look up marker flanking sequences by SNP ID")
     p.add_argument("--build", help="build name (default: from the FASTA name)")
     p.add_argument("--gff", help="gene annotation (GFF3) of the same build")
     p.add_argument("--bfile", help="PLINK genotypes of the GWAS panel, for LD")
@@ -254,6 +308,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("b")
     p.add_argument("--build", required=True, help="build both studies are placed on")
     p.add_argument("--bfile", help="genotype panel on that build, for the same-signal test")
+    p.add_argument("--db", help="use the reference LD panel registered in this database when --bfile is not given")
     p.add_argument("--max-kb", type=float, default=1000)
     p.add_argument("--out", required=True)
     p.set_defaults(func=cmd_compare)
@@ -281,6 +336,20 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--version", default="dev")
     p.add_argument("--out", required=True)
     p.set_defaults(func=cmd_db_build_genes)
+    p = db.add_parser("add-markers", help="add SNP-chip / KASP marker flanking sequences")
+    p.add_argument("db")
+    p.add_argument("--markers", required=True, help="table with marker ID and sequence written as ...[A/G]...")
+    p.add_argument("--panel", required=True, help="marker panel name, e.g. 'RDP1 44K'")
+    p.add_argument("--id-col")
+    p.add_argument("--seq-col")
+    p.add_argument("--sep", default="\t")
+    p.set_defaults(func=cmd_db_add_markers)
+    p = db.add_parser("attach-ld", help="register a reference genotype panel for LD")
+    p.add_argument("db")
+    p.add_argument("--bfile", required=True)
+    p.add_argument("--build", required=True)
+    p.add_argument("--name", required=True)
+    p.set_defaults(func=cmd_db_attach_ld)
     p = db.add_parser("info")
     p.add_argument("db")
     p.set_defaults(func=cmd_db_info)

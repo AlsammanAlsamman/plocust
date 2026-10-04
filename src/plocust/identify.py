@@ -17,6 +17,7 @@ from .passport import (
     CredibleSet,
     CredibleVariant,
     Gene,
+    Imprint,
     LDBlock,
     LocusPassport,
     Neighbour,
@@ -48,6 +49,10 @@ class IdentifyConfig:
     gene_window_kb: float = 50
     max_genes: int = 15
     neighbour_kb: float = 2000
+    imprint_kb: float = 250  # imprint window: lead +- this
+    imprint_bins: int = 25
+    imprint_nodes: int = 40  # top significant SNPs in the LD network
+    imprint_edge_r2: float = 0.5
 
 
 @dataclass
@@ -160,6 +165,61 @@ def _r2_to_lead(ss, lead, rows, geno) -> np.ndarray:
         g = geno.read(np.concatenate([[idx[0]], idx[1:][ok]]))
         out[ok] = r2_with(g[:, 1:], g[:, 0])
     return out
+
+
+# ------------------------------------------------------------------ imprint
+
+
+def signed_z(ss: pd.DataFrame) -> tuple[np.ndarray, bool]:
+    """z for the alt allele (sign from beta) when effects are reported, else |z|."""
+    z = np.abs(norm.isf(ss["p"].to_numpy(dtype=float) / 2))
+    beta = pd.to_numeric(ss["beta"], errors="coerce").to_numpy() if "beta" in ss else np.full(len(ss), np.nan)
+    if not np.isfinite(beta).any():
+        return z, False
+    sign = np.sign(np.nan_to_num(beta))
+    ea = ss["effect_allele"].astype(str).str.upper().to_numpy()
+    ref = ss["ref"].astype(str).str.upper().to_numpy()
+    sign = np.where(ea == ref, -sign, sign)  # express every effect for the alt allele
+    return z * sign, True
+
+
+def imprint(ss: pd.DataFrame, lead_row, threshold: float, n_loci_in_window: int, cfg: IdentifyConfig,
+            geno: Optional[Genotypes] = None) -> Imprint:
+    chrom, lead_pos = lead_row["chrom"], int(lead_row["pos"])
+    w = int(cfg.imprint_kb * 1000)
+    r = ss[(ss["chrom"] == chrom) & (ss["pos"] >= lead_pos - w) & (ss["pos"] <= lead_pos + w)]
+    z, signed = signed_z(r)
+    az = np.abs(z)
+    edges = np.linspace(lead_pos - w, lead_pos + w, cfg.imprint_bins + 1)
+    which = np.clip(np.searchsorted(edges, r["pos"].to_numpy(), side="right") - 1, 0, cfg.imprint_bins - 1)
+    profile = np.zeros(cfg.imprint_bins)
+    np.maximum.at(profile, which, az)
+    lp = -np.log10(r["p"].to_numpy())
+    half = r["pos"].to_numpy()[lp >= lp.max() / 2]
+    sig = np.flatnonzero(r["p"].to_numpy() <= threshold)
+
+    ld_edges = []
+    if geno is not None and len(sig) > 1:
+        top = sig[np.argsort(-az[sig])][: cfg.imprint_nodes]
+        idx = _variant_index(r, r.index[top], geno)
+        ok = idx >= 0
+        if ok.sum() > 1:
+            g = geno.read(idx[ok])
+            r2 = r2_matrix(g, g)
+            nodes = top[ok]
+            for i in range(len(nodes)):
+                for j in range(i + 1, len(nodes)):
+                    if r2[i, j] >= cfg.imprint_edge_r2:
+                        ld_edges.append((int(nodes[i]), int(nodes[j]), round(float(r2[i, j]), 3)))
+    return Imprint(
+        window_bp=w, threshold=threshold, z_signed=signed,
+        ids=r["id"].astype(str).tolist(), pos=r["pos"].astype(int).tolist(),
+        ref=r["ref"].fillna("N").astype(str).tolist(), alt=r["alt"].fillna("N").astype(str).tolist(),
+        z=[round(float(x), 3) for x in z], bins=cfg.imprint_bins, profile=[round(float(x), 3) for x in profile],
+        half_max_width_bp=int(half.max() - half.min()) if len(half) else 0, n_significant=len(sig),
+        independent_signals=n_loci_in_window, ld_edge_r2=cfg.imprint_edge_r2 if geno is not None else None,
+        ld_edges=ld_edges,
+    )
 
 
 # ----------------------------------------------------------- LD block / haplotypes
@@ -358,6 +418,9 @@ def identify_loci(
                 signal=signal,
                 credible_set=cs,
                 ld_block=block,
+                imprint=imprint(ss, lead, threshold, 1 + sum(
+                    1 for o in clumps if o is not c and ss.at[o.lead, "chrom"] == chrom
+                    and abs(int(ss.at[o.lead, "pos"]) - lead_pos) <= cfg.imprint_kb * 1000), cfg, geno),
                 genes=nearby_genes(genes, chrom, lead_pos, start, end, cs, cfg) if genes is not None else [],
                 notes="; ".join(notes) or None,
             )

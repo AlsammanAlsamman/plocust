@@ -4,6 +4,7 @@ Tables:
     meta(key, value)
     passports(passport_id, kind, species, trait, ontology_id, study, traits, json)
     placements(passport_id, build, chrom, start, end, lead_pos, method)
+    markers(marker_id, sequence, panel)   flanking sequence of SNP-chip / KASP markers, variant as [A/G]
 """
 
 from __future__ import annotations
@@ -37,6 +38,7 @@ CREATE TABLE placements (
     start INTEGER, "end" INTEGER, lead_pos INTEGER, method TEXT);
 CREATE INDEX placements_region ON placements(build, chrom, start, "end");
 CREATE INDEX passports_trait ON passports(trait);
+CREATE TABLE IF NOT EXISTS markers (marker_id TEXT PRIMARY KEY, sequence TEXT NOT NULL, panel TEXT);
 """
 
 
@@ -71,6 +73,36 @@ def create(path: str | Path, passports: Iterable[LocusPassport], name: str, vers
     con.commit()
     con.close()
     return n
+
+
+def add_markers(path: str | Path, markers: pd.DataFrame, panel: str, id_col: str = "marker_id",
+                seq_col: str = "sequence") -> int:
+    """Add marker flanking sequences (variant written as [A/G]) to an existing database."""
+    con = sqlite3.connect(path)
+    con.execute("CREATE TABLE IF NOT EXISTS markers (marker_id TEXT PRIMARY KEY, sequence TEXT NOT NULL, panel TEXT)")
+    rows = [(str(m), str(q), panel) for m, q in zip(markers[id_col], markers[seq_col]) if isinstance(q, str) and "[" in q]
+    con.executemany("INSERT OR REPLACE INTO markers VALUES (?,?,?)", rows)
+    con.commit()
+    con.close()
+    return len(rows)
+
+
+def attach_ld_panel(path: str | Path, bfile: str | Path, build: str, name: str) -> None:
+    """Register a reference genotype panel (PLINK prefix) for LD on `build`.
+
+    Stored relative to the database file when it sits next to it, so database and panel can be
+    downloaded and moved together.
+    """
+    path, bfile = Path(path).resolve(), Path(str(bfile).removesuffix(".bed")).resolve()
+    try:
+        ref = str(bfile.relative_to(path.parent))
+    except ValueError:
+        ref = str(bfile)
+    con = sqlite3.connect(path)
+    con.executemany("INSERT OR REPLACE INTO meta VALUES (?,?)",
+                    [(f"ld_panel:{build}", ref), (f"ld_panel_name:{build}", name)])
+    con.commit()
+    con.close()
 
 
 class LocusDB:
@@ -113,6 +145,29 @@ class LocusDB:
                 for r in self.region(build, pl.chrom, pl.start - pad, pl.end + pad):
                     out[r.passport_id] = r
         return list(out.values())
+
+    def ld_panel(self, build: str):
+        """The reference LD panel registered for `build`, or None."""
+        from .io import Genotypes
+
+        row = self._con.execute("SELECT value FROM meta WHERE key = ?", (f"ld_panel:{build}",)).fetchone()
+        if row is None:
+            return None
+        prefix = Path(row[0])
+        if not prefix.is_absolute():
+            prefix = self.path.parent / prefix
+        return Genotypes.open(prefix)
+
+    def marker_flanks(self, panel: Optional[str] = None):
+        """Marker flanking sequences as a FlankTable (empty when the database has none)."""
+        from .io import FlankTable
+
+        try:
+            q = "SELECT marker_id, sequence FROM markers" + (" WHERE panel = ?" if panel else "")
+            rows = self._con.execute(q, (panel,) if panel else ()).fetchall()
+        except sqlite3.OperationalError:
+            rows = []
+        return FlankTable(pd.DataFrame(rows, columns=["marker_id", "sequence"]), "marker_id", "sequence")
 
     def by_trait(self, keyword: str) -> list[LocusPassport]:
         rows = self._con.execute("SELECT passport_id FROM passports WHERE lower(traits) LIKE ?", (f"%{keyword.lower()}%",))

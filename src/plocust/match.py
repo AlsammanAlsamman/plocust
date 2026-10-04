@@ -8,6 +8,11 @@ given, the same-signal test uses LD measured in that panel:
     r2 <  distinct_r2  -> "distinct_nearby"  (independent signals in one region)
     otherwise          -> "ambiguous"
 
+When both studies report effects, the direction test asks whether the
+trait-increasing alleles sit on the same haplotype in the panel (sign of the
+lead-to-lead correlation x the two effect signs). A "same" call with opposite
+directions is downgraded to "ambiguous".
+
 Without genotypes the call falls back to distance ("same_by_position").
 """
 
@@ -18,6 +23,8 @@ from typing import Optional
 
 import numpy as np
 import pandas as pd
+
+from .ids import reverse_complement
 
 from .io import Genotypes
 from .ld import r2_matrix
@@ -33,6 +40,7 @@ class MatchConfig:
     position_same_kb: float = 100  # without genotypes: leads this close are called the same
     cs_top: int = 10  # credible-set variants per locus used in the LD test
     gene_pad_kb: float = 50  # a gene within the locus interval +- this is "gene_in_locus"
+    coloc: bool = True  # also run summary-statistics colocalization when imprints and genotypes allow
 
 
 def _lead(p: LocusPassport, build: str):
@@ -69,6 +77,56 @@ def signal_r2(a: LocusPassport, b: LocusPassport, build: str, geno: Genotypes, c
     return float(np.nanmax(r2_matrix(g[:, : len(ia)], g[:, len(ia) :])))
 
 
+def _panel_sign(p: LocusPassport, pl, v) -> Optional[int]:
+    """Sign of p's effect expressed for the panel's counted allele (A1), or None if unknown."""
+    s = p.signal
+    if s is None or s.beta is None or s.beta == 0 or not np.isfinite(s.beta):
+        return None
+    ea = (s.effect_allele or s.lead.alt or "").upper()
+    if pl.strand == "-":  # passport alleles are on the other strand of this build
+        ea = reverse_complement(ea) if ea and set(ea) <= set("ACGTN") else ea
+    sign = 1 if s.beta > 0 else -1
+    if ea == str(v["a1"]).upper():
+        return sign
+    if ea == str(v["a2"]).upper():
+        return -sign
+    return None
+
+
+def direction(a: LocusPassport, b: LocusPassport, build: str, geno: Genotypes, min_r2: float = 0.3) -> Optional[str]:
+    """'concordant' / 'discordant' effect direction of two leads in LD, or None when it cannot be told."""
+    pa, pb = _lead(a, build), _lead(b, build)
+    va, vb = geno.nearest(pa.chrom, pa.lead_pos, 0), geno.nearest(pb.chrom, pb.lead_pos, 0)
+    if va is None or vb is None:
+        return None
+    sa, sb = _panel_sign(a, pa, va), _panel_sign(b, pb, vb)
+    if sa is None or sb is None:
+        return None
+    g = geno.read([int(va["idx"]), int(vb["idx"])])
+    ok = ~np.isnan(g).any(axis=1)
+    if ok.sum() < 10 or g[ok, 0].std() == 0 or g[ok, 1].std() == 0:
+        return None
+    r = float(np.corrcoef(g[ok, 0], g[ok, 1])[0, 1])
+    if r * r < min_r2:
+        return None
+    return "concordant" if sa * sb * np.sign(r) > 0 else "discordant"
+
+
+def profile_similarity(a: LocusPassport, b: LocusPassport, build: str) -> Optional[float]:
+    """Correlation of the two imprints' significance profiles (oriented to `build`), or None."""
+    ia, ib = a.imprint, b.imprint
+    if ia is None or ib is None or ia.bins != ib.bins or ia.window_bp != ib.window_bp:
+        return None
+    pa, pb = np.array(ia.profile), np.array(ib.profile)
+    if a.placement(build) and a.placement(build).strand == "-":
+        pa = pa[::-1]
+    if b.placement(build) and b.placement(build).strand == "-":
+        pb = pb[::-1]
+    if pa.std() == 0 or pb.std() == 0:
+        return None
+    return round(float(np.corrcoef(pa, pb)[0, 1]), 4)
+
+
 def match_pair(a: LocusPassport, b: LocusPassport, build: str, geno: Optional[Genotypes] = None,
                cfg: Optional[MatchConfig] = None) -> Optional[dict]:
     """Compare two passports on `build`; None when they are not on it or too far apart."""
@@ -82,7 +140,8 @@ def match_pair(a: LocusPassport, b: LocusPassport, build: str, geno: Optional[Ge
     overlap = pa.start <= pb.end and pb.start <= pa.end
     row = {"query": a.passport_id, "target": b.passport_id, "target_kind": b.kind.value, "chrom": pa.chrom,
            "query_lead": pa.lead_pos, "target_lead": pb.lead_pos, "distance_bp": dist, "overlap": overlap,
-           "r2": None, "call": None, "score": None}
+           "r2": None, "direction": None, "profile_corr": profile_similarity(a, b, build), "call": None,
+           "score": None, "PP.H3": None, "PP.H4": None, "coloc_snps": None, "coloc_call": None}
 
     if b.kind is LocusKind.gene or a.kind is LocusKind.gene:
         pad = cfg.gene_pad_kb * 1000
@@ -96,6 +155,15 @@ def match_pair(a: LocusPassport, b: LocusPassport, build: str, geno: Optional[Ge
         row["r2"] = round(r2, 4)
         row["score"] = round(r2, 4)
         row["call"] = "same" if r2 >= cfg.same_r2 else "distinct_nearby" if r2 < cfg.distinct_r2 else "ambiguous"
+        row["direction"] = direction(a, b, build, geno)
+        if row["call"] == "same" and row["direction"] == "discordant":
+            row["call"] = "ambiguous"
+    if geno is not None and cfg.coloc:
+        from .coloc import coloc_pair
+
+        res = coloc_pair(a, b, build, geno)
+        if res is not None:
+            row.update({k: res[k] for k in ("PP.H3", "PP.H4", "coloc_snps", "coloc_call")})
     else:
         row["score"] = round(1 - dist / (cfg.max_distance_kb * 1000), 4)
         row["call"] = "same_by_position" if dist <= cfg.position_same_kb * 1000 or overlap else "nearby"
@@ -123,7 +191,7 @@ def compare(query: list[LocusPassport], target: list[LocusPassport], build: str,
             if r is not None:
                 rows.append(r)
     cols = ["query", "target", "target_kind", "chrom", "query_lead", "target_lead", "distance_bp", "overlap", "r2",
-            "call", "score"]
+            "direction", "profile_corr", "call", "score", "PP.H3", "PP.H4", "coloc_snps", "coloc_call"]
     return pd.DataFrame(rows, columns=cols)
 
 

@@ -114,6 +114,8 @@ class Genome:
         name = self.name(chrom)
         start = max(1, start)
         end = min(self._fa.get_reference_length(name), end)
+        if end < start:  # interval entirely past the chromosome end
+            return ""
         return self._fa.fetch(name, start - 1, end).upper()
 
     def flank(self, chrom, pos: int, flank: int) -> tuple[str, int]:

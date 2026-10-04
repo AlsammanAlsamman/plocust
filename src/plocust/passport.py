@@ -148,6 +148,34 @@ class LDBlock(_Model):
         return (self.end - self.start + 1) / 1000
 
 
+class Imprint(_Model):
+    """The locus's surroundings as seen in the GWAS summary statistics of the source study.
+
+    `pos`, `ids`, `ref`, `alt`, `z` are parallel lists for every tested SNP within
+    +- window_bp of the lead (source build). `z` is signed for the alt allele when the
+    study reports effects (`z_signed`), otherwise |z| from the p-value.
+    `profile` is the max |z| in `bins` equal bins across the window, centred on the
+    lead: a fixed-length shape that can be compared between studies.
+    `ld_edges` links the top significant SNPs (indices into the lists) with r2 >= ld_edge_r2.
+    """
+
+    window_bp: int = Field(ge=1)
+    threshold: float
+    z_signed: bool
+    ids: list[str]
+    pos: list[int]
+    ref: list[str]
+    alt: list[str]
+    z: list[float]
+    bins: int
+    profile: list[float]
+    half_max_width_bp: int = Field(ge=0, description="span of SNPs with -log10 p >= half the lead's")
+    n_significant: int = Field(ge=0)
+    independent_signals: int = Field(ge=1, description="loci of this study within the window, this one included")
+    ld_edge_r2: Optional[float] = None
+    ld_edges: list[tuple[int, int, float]] = []
+
+
 class Gene(_Model):
     id: str
     name: Optional[str] = None
@@ -191,6 +219,7 @@ class LocusPassport(_Model):
     signal: Optional[Signal] = None
     credible_set: Optional[CredibleSet] = None
     ld_block: Optional[LDBlock] = None
+    imprint: Optional[Imprint] = None
     genes: list[Gene] = []
     neighbours: list[Neighbour] = []
     notes: Optional[str] = None
