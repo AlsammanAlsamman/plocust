@@ -149,37 +149,59 @@ def c_cross(gwas, dense):
     return pd.DataFrame(rows)
 
 
-def d_eqtl(gwas, eqtl, dense, known):
-    """Same-signal eQTLs per GWAS locus (local eQTLs only), and the benchmark against cloned genes."""
+def msu_to_rap(rap_genes: pd.DataFrame) -> dict:
+    """MSU locus -> RAP gene with the largest overlap on IRGSP-1.0 (both annotations use that assembly)."""
+    t = pd.read_csv(DATA / "ref/msu7/locus_brief_info.7.0", sep="\t")
+    msu = t.groupby("locus").agg(chrom=("chr", "first"), start=("start", "min"), end=("stop", "max")).reset_index()
+    msu["chrom"] = msu["chrom"].map(normalize_chrom)
+    out = {}
+    for chrom, m in msu.groupby("chrom"):
+        r = rap_genes[rap_genes["chrom"] == chrom].sort_values("start")
+        rs, re_, rid = r["start"].to_numpy(), r["end"].to_numpy(), r["id"].to_numpy()
+        for locus, a, b in zip(m["locus"], m["start"], m["end"]):
+            i = np.searchsorted(re_, a)  # candidates whose end >= a (ends are nearly sorted with starts)
+            best, best_ov = None, 0
+            for j in range(max(0, i - 5), min(len(rs), i + 10)):
+                ov = min(b, re_[j]) - max(a, rs[j])
+                if ov > best_ov:
+                    best, best_ov = rid[j], ov
+            if best is not None:
+                out[locus] = best
+    return out
+
+
+def nearest_gene(genes: pd.DataFrame, chrom: str, pos: int):
+    g = genes[(genes["chrom"] == chrom) & (genes["biotype"] == "protein_coding")]
+    d = np.maximum(0, np.maximum(g["start"].to_numpy() - pos, pos - g["end"].to_numpy()))
+    return g["id"].iat[int(np.argmin(d))] if len(g) else None
+
+
+def d_eqtl(gwas, eqtl, dense, known, rap_genes):
+    """Same-signal local eQTLs per GWAS locus, and the benchmark: eQTL gene vs nearest gene, against cloned genes."""
+    m2r = msu_to_rap(rap_genes)
     idx = defaultdict(list)
     for e in eqtl:
-        pl = e.placement(B)
-        if e.genes and e.genes[0].distance_bp <= 100_000:  # local (cis) eQTLs
-            idx[pl.chrom].append(e)
-    rows = []
+        if e.genes and e.genes[0].distance_bp <= 100_000:  # local (cis) eQTLs only
+            idx[e.placement(B).chrom].append(e)
+    kn = {(r.panel, r.trait, r.passport_id): r.nearest_known_id for r in known.itertuples()} if len(known) else {}
     cfg = MatchConfig(max_distance_kb=250, proxy_kb=20, coloc=False)
-    kn = known.set_index("passport_id") if len(known) else known
+    rows = []
     for panel, trait, p in gwas:
         pl = p.placement(B)
         if pl is None:
             continue
         near = [e for e in idx[pl.chrom] if abs(e.placement(B).lead_pos - pl.lead_pos) <= 250_000]
-        if not near:
-            continue
-        pairs = compare([p], near, B, dense, cfg)
-        same = pairs[pairs["call"].isin(["same", "same_opposite_effect"])]
-        gene_of = {e.passport_id: e.genes[0].id for e in near}
-        same_genes = same.sort_values("r2", ascending=False)["target"].map(gene_of).drop_duplicates().tolist()
-        k = kn.loc[p.passport_id] if len(kn) and p.passport_id in kn.index else None
+        gene_of = {e.passport_id: m2r.get(e.genes[0].id, e.genes[0].id) for e in near}
+        same = []
+        if near:
+            pairs = compare([p], near, B, dense, cfg)
+            hit = pairs[pairs["call"].isin(["same", "same_opposite_effect"])].sort_values("r2", ascending=False)
+            same = list(dict.fromkeys(hit["target"].map(gene_of)))
         rows.append({"panel": panel, "trait": trait, "passport_id": p.passport_id, "eqtls_within_250kb": len(near),
-                     "same_signal_eqtl_genes": ";".join(same_genes[:5]), "n_same_genes": len(same_genes),
-                     "known_gene": None if k is None else k["nearest_known_id"]})
+                     "same_signal_eqtl_genes": ";".join(same[:5]), "n_same_genes": len(same),
+                     "nearest_gene": nearest_gene(rap_genes, pl.chrom, pl.lead_pos),
+                     "known_gene": kn.get((panel, trait, p.passport_id))})
     return pd.DataFrame(rows)
-
-
-def msu_to_rap() -> dict:
-    g = pd.read_csv(DATA / "known/geneInfo.table.txt", sep="\t", quoting=csv.QUOTE_NONE, encoding_errors="replace", dtype=str)
-    return {m: r for m, r in zip(g["MSU"], g["RAPdb"]) if isinstance(m, str) and isinstance(r, str)}
 
 
 def main():
@@ -203,15 +225,25 @@ def main():
     c.to_csv(RES / "learn_C_cross_study.tsv", sep="\t", index=False)
     print("\nC. 3K vs RDP1\n", c.to_string(index=False), flush=True)
 
-    d = d_eqtl(gwas, eqtl, dense, known)
-    rap = msu_to_rap()
-    d["same_genes_rap"] = d["same_signal_eqtl_genes"].fillna("").map(lambda s: ";".join(rap.get(g, g) for g in s.split(";") if g))
+    from plocust.io import read_genes
+
+    rap_genes = read_genes(DATA / "ref/Oryza_sativa.IRGSP-1.0.63.gff3.gz")
+    d = d_eqtl(gwas, eqtl, dense, known, rap_genes)
     d.to_csv(RES / "learn_D_gwas_eqtl.tsv", sep="\t", index=False)
-    bench = d[d["known_gene"].notna() & (d["n_same_genes"] > 0)]
-    hit = bench.apply(lambda r: r["known_gene"] in r["same_genes_rap"].split(";"), axis=1) if len(bench) else pd.Series(dtype=bool)
-    print(f"\nD. GWAS x eQTL: {len(d)} loci with local eQTLs nearby; {int((d['n_same_genes'] > 0).sum())} with a "
-          f"same-signal eQTL gene; benchmark loci (known gene + same-signal eQTL): {len(bench)}, "
-          f"eQTL gene = known gene: {int(hit.sum()) if len(bench) else 0}", flush=True)
+    with_eqtl = d[d["n_same_genes"] > 0]
+    bench = with_eqtl[with_eqtl["known_gene"].notna()]
+    top_eqtl = bench.apply(lambda r: r["same_signal_eqtl_genes"].split(";")[0] == r["known_gene"], axis=1)
+    any_eqtl = bench.apply(lambda r: r["known_gene"] in r["same_signal_eqtl_genes"].split(";"), axis=1)
+    nearest = bench["nearest_gene"] == bench["known_gene"]
+    summary = pd.DataFrame([{
+        "gwas_loci": len(d), "with_same_signal_eqtl": len(with_eqtl),
+        "benchmark_loci (cloned gene + same-signal eQTL)": len(bench),
+        "top eQTL gene = cloned gene": int(top_eqtl.sum()), "any eQTL gene = cloned gene": int(any_eqtl.sum()),
+        "nearest gene = cloned gene": int(nearest.sum()),
+        "loci without cloned gene but with eQTL gene (new candidates)": int(with_eqtl["known_gene"].isna().sum()),
+    }]).T
+    summary.to_csv(RES / "learn_D_benchmark.tsv", sep="\t", header=False)
+    print("\nD. GWAS x eQTL\n", summary.to_string(header=False), flush=True)
 
 
 if __name__ == "__main__":

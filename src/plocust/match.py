@@ -200,15 +200,15 @@ def match_pair(a: LocusPassport, b: LocusPassport, build: str, geno: Optional[Ge
             # one signal, but the trait-increasing alleles differ: opposite trait coding (e.g. amylose vs
             # waxy endosperm), a different trait, or an allele mix-up worth checking
             row["call"] = "same_opposite_effect"
+    else:  # no LD available: decide by distance
+        row["score"] = round(1 - dist / (cfg.max_distance_kb * 1000), 4)
+        row["call"] = "same_by_position" if dist <= cfg.position_same_kb * 1000 or overlap else "nearby"
     if geno is not None and cfg.coloc:
         from .coloc import coloc_pair
 
         res = coloc_pair(a, b, build, geno)
         if res is not None:
             row.update({k: res[k] for k in ("PP.H3", "PP.H4", "coloc_snps", "coloc_call")})
-    else:
-        row["score"] = round(1 - dist / (cfg.max_distance_kb * 1000), 4)
-        row["call"] = "same_by_position" if dist <= cfg.position_same_kb * 1000 or overlap else "nearby"
     return row
 
 

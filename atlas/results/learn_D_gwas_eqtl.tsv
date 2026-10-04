@@ -1,0 +1,526 @@
+panel	trait	passport_id	eqtls_within_250kb	same_signal_eqtl_genes	n_same_genes	nearest_gene	known_gene
+3K	apiculus_colour	OsLP.Wd7YTkkgUdrREDzzktHXy3BIcgvzypBk	19		0	Os06g0205000	Os06g0205100
+3K	apiculus_colour	OsLP.vuh9Q8EtW0h7s0ogebCw44RFSz6d9wLN	25	Os06g0203702	1	Os06g0203500	Os06g0205100
+3K	apiculus_colour	OsLP.jx2p6JLKE1a-UFBeRoANiV-p-a3vhylD	17		0	Os06g0205337	Os06g0205100
+3K	apiculus_colour	OsLP.UfBfIbdGRbKaW72BHuEPAkUEIgXn-ca8	25		0	Os06g0203500	Os06g0205100
+3K	apiculus_colour	OsLP.XE0udoXO51QxdFHvauPJ8hlbxOHliVGp	18		0	Os06g0205337	Os06g0205100
+3K	apiculus_colour	OsLP.CxtbKNR3iwZElkEnmQY1m9MERvhr1uXn	48		0	Os06g0219400	
+3K	apiculus_colour	OsLP.oJIJW0I_y742FewmZtxUzBnHLSHvD10L	46	Os06g0191200;Os06g0191300	2	Os06g0194000	
+3K	apiculus_colour	OsLP.Ivdqjn3JEHLJ5_QoPL6EHjKuIRsvOMM-	33	Os06g0195800;Os06g0196600;Os06g0196700	3	Os06g0195800	
+3K	apiculus_colour	OsLP.Rs0wJ3FvqhKwe0DY5wHLd56qNCAl999n	34		0	Os06g0196700	Os06g0205100
+3K	apiculus_colour	OsLP.gn_rrhoiA5Em1qujqAiKII91Bfczl4G3	23	Os06g0210200;LOC_Os06g10800	2	Os06g0209700	
+3K	apiculus_colour	OsLP.ecqFWJAPwfKCPE-HgcXRKhIY0n87FGul	19		0	Os06g0243801	
+3K	auricle_colour	OsLP.Wd7YTkkgUdrREDzzktHXy3BIcgvzypBk	19		0	Os06g0205000	Os06g0205100
+3K	auricle_colour	OsLP.vuh9Q8EtW0h7s0ogebCw44RFSz6d9wLN	25	Os06g0203702	1	Os06g0203500	Os06g0205100
+3K	auricle_colour	OsLP.dPuNsvOrK5GU0j0510dpPY67U8sLWiU8	41	Os01g0575200	1	Os01g0576100	Os01g0576100
+3K	auricle_colour	OsLP.jOfdjeQRvcy2FBGDc1DR0knrRCim2b7Y	32		0	Os06g0195600	
+3K	auricle_colour	OsLP.rA7i6gnh7jJeguljCT-gT_cUqSolBYXB	18		0	Os06g0248400	
+3K	auricle_colour	OsLP.RrpvJnx5ARYhfNd4wiJ7HRjj7DfAbu5S	18		0	Os06g0206401	Os06g0205100
+3K	auricle_colour	OsLP.qcmDQCAbwLZmgnPilfAKTSmOJsN3OoVQ	64	Os06g0232600;Os06g0232233	2	Os06g0230400	
+3K	auricle_colour	OsLP.6pBj3h6kWP688tzCTgiBtHtoFO0Y3hF5	62	Os06g0168400;Os06g0166200;Os06g0164900;Os06g0167400;Os06g0165500	6	Os06g0166100	
+3K	auricle_colour	OsLP.e6a-dYCudi4ig9C8JAMOYwja1yclLqKR	20		0	Os06g0207200	
+3K	blade_pubescence	OsLP.pr87JadhySNT_7ndvWLRWWywbCPrJy-_	51	Os05g0114700	1	Os05g0111300	Os05g0118700
+3K	blade_pubescence	OsLP.uuRz-CrC0LqLkjLVQmmwKoNr1Ssd-cvQ	48		0	Os05g0120900	Os05g0118700
+3K	blade_pubescence	OsLP.SLFMPil_SoLUZD3E9Qy5bduXNahx2M5N	49	Os05g0111200	1	Os05g0109600	Os05g0118700
+3K	blade_pubescence	OsLP.63H0BJ3-InTLz3qhMKyGGi2uAG53hhGC	19		0	Os02g0232500	Os02g0236100
+3K	blade_pubescence	OsLP.yjj5AxvaUU2mMYsALgswxSRgGgl5E30H	29		0	Os05g0565900	
+3K	blade_pubescence	OsLP._4BXqxVrs9SB67wMGdgVgbmTi9YODS9i	49		0	Os05g0109825	Os05g0118700
+3K	blade_pubescence	OsLP.5wTFnMbmDLbIU3XxOpku4ecEf2Vj4HR5	21		0	Os05g0177900	
+3K	blade_pubescence	OsLP.b22_eRyp-27BPZHZSl6gpUz-Oj1A4ARP	15		0	Os05g0475400	
+3K	blade_pubescence	OsLP.9P73-I6L99Jlh1nv0RlL6jqCxdPEEEAs	18		0	Os05g0349800	
+3K	blade_pubescence	OsLP.5YL23TMVDAd9APylpN-cvSVaXuMXAiRT	8		0	Os02g0666500	
+3K	blade_pubescence	OsLP.gWJ3UHUoY65gcSsG91hIoVby25PJ1BGR	57		0	Os05g0106600	
+3K	blade_pubescence	OsLP.bF4wf5Dt2DCEvxaHq8tXPPdyfkbj-96o	26		0	Os02g0130900	
+3K	blade_pubescence	OsLP.weD6OWMtyEP6xLDHsO7yIOuWbQTOJJky	47		0	Os05g0130100	
+3K	blade_pubescence	OsLP.FjTIM_u-pHQl9JY0cNewKnE75U-k08wW	58		0	Os02g0248800	
+3K	blade_pubescence	OsLP.iYd3Xoim0WLdzVNLQ7WgQj6Cxb7YrM5q	40		0	Os05g0577200	
+3K	blade_pubescence	OsLP.AqYTMSjZP06bHSib5Qq2vqArxekM82tw	16		0	Os05g0436400	
+3K	blade_pubescence	OsLP.S5QFBxSvUnxckbrn48mu0rJJNF6IjZxj	16		0	Os05g0443900	
+3K	blade_pubescence	OsLP.e5lQMhYmlrQQKF8QDuli-qtBAytdsVBD	50		0	Os02g0639100	
+3K	blade_pubescence	OsLP.WZ7aLK6JSYfOuuj4pcZYAEl2BGZpY-sq	59		0	Os02g0554300	
+3K	blade_pubescence	OsLP.A9EZKLU1bnDX1Fmpog5bWMypNKCE1vkC	56		0	Os05g0117864	Os05g0118700
+3K	blade_pubescence	OsLP.RDDyVVEojW_VcOH8cKCaSl-VYHLiDDMR	13	Os05g0515200	1	Os05g0514600	
+3K	blade_pubescence	OsLP.E1ufVDqhSCXTUvaommvs_VhI3mjOtW-V	22		0	Os05g0477300	
+3K	blade_pubescence	OsLP.jmkUiktrU-YqQY6hg2rlqVeP6RqzM9lG	29		0	Os03g0764000	
+3K	blade_pubescence	OsLP.dkRbVw6CjLIPlSph6ecPdGq0Cc_awf7m	7		0	Os02g0690200	
+3K	blade_pubescence	OsLP.ZlWbJORGdHgyx5wqhF5BKxqG6U72BE-7	29		0	Os05g0124800	
+3K	blade_pubescence	OsLP.rLpWQVN6c_6HClqx_ViuHbz-MxldOgzg	48		0	Os02g0596900	
+3K	blade_pubescence	OsLP.I068XEQ7WhRuV1p9X_2qyiqMRR3pOjJS	26		0	Os05g0591400	Os05g0592800
+3K	blade_pubescence	OsLP.vCb1j3f5x_tTK15cXWyLxW8IMlv99yFb	53		0	Os05g0401000	
+3K	blade_pubescence	OsLP.q_4GcMVu4ZKU9MRISUH9v-NJioccsDLr	13		0	Os05g0340000	
+3K	blade_pubescence	OsLP.Ckex2jUKoFdfWVH26aweKshdjR3iD1nm	64		0	Os02g0611800	
+3K	blade_pubescence	OsLP.u9m12Qb92h4dv-_BvLAPG5ZV82m-Seeo	9		0	Os05g0412400	
+3K	blade_pubescence	OsLP.ydj4xZVt39_H9Kv6AMmZ5vcIrAkvpxOn	15		0	Os05g0165450	
+3K	blade_pubescence	OsLP.QXzcOaZizz5uUYH1bv8CQSDKjyuU2dpf	30		0	Os02g0520750	
+3K	blade_pubescence	OsLP.k58SSqSZ1ABZ6B2xJ5DIBk6VoW8UYnDH	47		0	Os06g0135300	
+3K	blade_pubescence	OsLP.y-AC-Xu-3YaIupl1sEsuVYhXjQ50ulp1	24		0	Os01g0271500	
+3K	blade_pubescence	OsLP.2-_PikUtRph07hwT3ehhoj3Hzxrt4n7d	30		0	Os01g0178200	
+3K	blade_pubescence	OsLP.YdhcNQW3ewkY6EnYNZfLTf_7Ji5Xu4Ir	9		0	Os01g0640800	Os01g0619100
+3K	blade_pubescence	OsLP.Fgz7Bepwvw7G5pMKCywv4f567Bk2EROU	28		0	Os02g0833600	
+3K	blade_pubescence	OsLP.qySCYEyq-4x69u3zKRd01qELyOz2bv4X	22		0	Os02g0757100	
+3K	blade_pubescence	OsLP.Sx_dnXgiKh3zFmz44PgNh87gko8iclf5	16		0	Os02g0476700	
+3K	blade_pubescence	OsLP.mV4OKkdKN_GnwoztY2qCDNA9iO4JdIsc	18		0	Os02g0734101	
+3K	blade_pubescence	OsLP.l50Nx_BgWtcDhaLQy1lVQ3tas_OKzvzO	16		0	Os05g0421900	
+3K	blade_pubescence	OsLP.pKhbekvcx7DukBI4gt_vnsliGZd8cxFm	67		0	Os05g0114700	
+3K	blade_pubescence	OsLP.fW1OW_M_5_tXGJkwpGh-vAgCLr4bgi5G	65		0	Os02g0817900	
+3K	blade_pubescence	OsLP.-yTUtqEli-QPQCGB8OMKrx9hKP_99FAt	39		0	Os05g0573000	
+3K	blade_pubescence	OsLP.PlwlFA37JNtEMiUr3tWPR-zcbID94PuR	37		0	Os05g0171900	
+3K	blade_pubescence	OsLP.N3ga-Ju8KcQZkzEPg7mXKjDErEajeqHv	10		0	Os02g0782200	
+3K	blade_pubescence	OsLP.xG1Gm2bKJsYaSkUYYxzggAPKUTeW2WXc	46		0	Os12g0577100	
+3K	blade_pubescence	OsLP.k9ByPu5ubXhjc0SzPgXvLZUa4uGG6nI6	0		0	Os02g0331400	
+3K	blade_pubescence	OsLP.WXxKgMOpFxnWfgvr8xPgvB6fHkDHOKDl	11		0	Os03g0154700	
+3K	blade_pubescence	OsLP.LWgEhd1htQjgduJuOZJvN5s_RsWEgvv0	47		0	Os01g0220100	
+3K	blade_pubescence	OsLP.wJgNIB93KBT-5a-KFkHavCDeNbaxRgch	29	Os02g0510600;Os02g0510300	2	Os02g0513100	
+3K	blade_pubescence	OsLP.xvyDwEie-opClfawNRdTmteU47-02Yy_	48		0	Os02g0244300	Os02g0236100
+3K	blade_pubescence	OsLP.S0fZp8BHtFiapT7LDfqTOE27TUPZBPrv	32		0	Os05g0100100	
+3K	blade_pubescence	OsLP.mf2YymATdyeJsWF6JDXsgmFwcKAjxrlt	8		0	Os05g0249500	
+3K	blade_pubescence	OsLP.L19LYST-9aArBfchHNL_chzNkAOahXQQ	21		0	Os02g0645600	
+3K	blade_pubescence	OsLP.EoBW831NtoiEcTeRoMavu75BPtChppnC	16		0	Os02g0769700	
+3K	blade_pubescence	OsLP.QbQsXYbTxFS_3BOwCwTRxc3Fl_ouFbyN	15		0	Os02g0748800	
+3K	blade_pubescence	OsLP.pmwmTyA37RBwoYPQt-Lt55KoQeHflBwn	17	Os01g0690800	1	Os01g0693532	
+3K	blade_pubescence	OsLP.gAlZ5Kz_XsWBLomTuszQ5kyo4mjkG00G	14	Os05g0184901;Os05g0187100	2	Os05g0186300	
+3K	blade_pubescence	OsLP.vByyJvr16bRB6dnypDgGJPZYCf8-FM71	36	Os05g0142200;Os05g0145900	2	Os05g0142400	
+3K	blade_pubescence	OsLP.hebl5ytu2TnUUKhxkmq8eyV3imWCrLpA	4		0	Os01g0321700	
+3K	blade_pubescence	OsLP.sFm_xmVdKeZKWpFtDvuAc639ydzWIB2o	43		0	Os11g0151400	
+3K	blade_pubescence	OsLP.6yJH9GpoTXWo17lJTEXqvkgdVxAz1ool	14		0	Os05g0364500	
+3K	blade_pubescence	OsLP.yHl5jDih4e9xC2K1hvbpsVYo9rVZou0n	33		0	Os02g0492800	
+3K	blade_pubescence	OsLP.QpVnBUt99_OIQKOD_vJi2fb2B-WD4ebN	48	Os05g0119200	1	Os05g0120100	Os05g0118700
+3K	blade_pubescence	OsLP.X_KxEhFrbGUmdcC_RDOhIIlgk3v05nmd	19		0	Os02g0654600	
+3K	blade_pubescence	OsLP.4KLrht-8mkB_2Vbq2DGMZsW5PtOw6xJL	38		0	Os02g0800100	
+3K	blade_pubescence	OsLP.DQudcvtZHvuERPq2CwbPBJ2jgIKsQiYF	24		0	Os05g0200280	
+3K	blade_pubescence	OsLP.7FAxT2DcsGYnFA-mC1fQvvyaxELnDB3T	10		0	Os02g0782500	
+3K	blade_pubescence	OsLP.Mo9CsZtMN1AMxSmBE7iY9hJLDOdHZ42n	11		0	Os02g0723300	
+3K	blade_pubescence	OsLP.UbFr-0hIreCjiI_0h2p03MFOwbJlAzNM	22		0	Os11g0503900	
+3K	blade_pubescence	OsLP.Z-A03vbR3mmID5A7PezxXvuwTvtWDP4V	11		0	Os01g0655300	
+3K	blade_pubescence	OsLP.p8x9ZZmn-dAo-lq4g-6P400_c5g-xINw	17		0	Os05g0188500	
+3K	blade_pubescence	OsLP.8wlbs5Mr2HK9TCHbFx09Hn9HBIMXaQRi	13		0	Os02g0772000	
+3K	blade_pubescence	OsLP.nGAw-MikmO606PZXls4Vgorhiglm7l68	20		0	Os05g0456500	
+3K	blade_pubescence	OsLP.ecAlhFB1mgRb30qWdKmpsECAx17k3r5g	6		0	Os03g0663600	
+3K	blade_pubescence	OsLP.2ifHAuSm8iGeklgYvTA7Oab0Q8L0LXhY	26		0	Os11g0118800	
+3K	blade_pubescence	OsLP.3GL5nQ7YWz4yXArLi7JJzl3xBP3zAWqk	17		0	Os02g0547300	
+3K	blade_pubescence	OsLP.tgd8Ti0j-CHMMhFiCkwyvbH3ldYw6w3n	20	Os02g0503100;Os02g0504500;Os02g0504100;Os02g0504800;Os02g0504000	5	Os02g0503400	
+3K	blade_pubescence	OsLP.-b-XEGmOdPM51RNhj9S4G3sYQr2I7pGr	21		0	Os05g0488100	
+3K	blade_pubescence	OsLP.sUziu-33FWiEBq_AzQbJEzqLnELzE834	45		0	Os11g0622800	
+3K	blade_pubescence	OsLP.2w2XIyqqYGRdfhgj2VI291vmzgNtALmP	47	Os11g0264300	1	Os11g0265600	
+3K	blade_pubescence	OsLP.VFx0hgBfdBQpOVa7bBWLYuoIvKjHcJGs	0		0	Os11g0420200	
+3K	blade_pubescence	OsLP.Ae-diXCdzaynTq2i4X6wiFpqfag9DsPE	28	Os05g0215500;Os05g0215300;Os05g0215033	3	Os05g0219300	
+3K	blade_pubescence	OsLP.OBSA2of4_3Pdb8WZ4eMUynz8CU_tiWjZ	23		0	Os02g0701300	
+3K	blade_pubescence	OsLP.j1_b4yf6QFGHpy1IFjFLLz-8EHDUs9hX	41	LOC_Os05g46770;Os05g0546300;Os05g0546800;Os05g0546400	4	Os05g0549800	
+3K	blade_pubescence	OsLP.SmPVI_BGXfOCB3J6WyZjvFwK5awGKFjq	17		0	Os05g0224800	
+3K	blade_pubescence	OsLP.ZVprsWhlozAt7iHT4ln6kEekMczByy6y	19		0	Os02g0758200	
+3K	blade_pubescence	OsLP.yaNqHWixJhueqCkJdGyK9_3kxNV0Dl2k	17		0	Os11g0103100	
+3K	blade_pubescence	OsLP.UdM59XHw0I_9RA6PaXxBpZ6LVhgevDND	42	Os05g0119200;Os05g0120800;Os05g0121700	3	Os05g0121400	
+3K	blade_pubescence	OsLP.q6ZEDLlPlCiUXSZESlQpW421nsRfjMdS	11		0	Os11g0455800	
+3K	blade_pubescence	OsLP.kh9LLPTU1_zQzf27oO3lziVocF2LLy8F	26		0	Os02g0524300	
+3K	blade_pubescence	OsLP.DntdTnd6oWeqAtzRkkEul1S86z4Ah5XC	20		0	Os02g0267975	
+3K	blade_pubescence	OsLP.xCDhS8tl5gX_0HgRHl0QTebZYG8TGEaY	35	Os02g0228300	1	Os02g0228900	Os02g0236100
+3K	blade_pubescence	OsLP.dOteYB7W5XEKRX6CDD4FLbOiia5zvsT0	95		0	Os08g0249100	
+3K	blade_pubescence	OsLP.TrjLdu-95sCFSNcTgegw-0IT2GIhFTGa	19		0	Os02g0489500	
+3K	blade_pubescence	OsLP.NQ3xOTaVTZsECFx8J40-ct0xbYNvmSZF	20	Os05g0373400;Os05g0373300;Os05g0373000;Os05g0370600	4	Os05g0373000	
+3K	blade_pubescence	OsLP.FFtPfae3Cdcvetaf7B-9JJX5ZJ7t6HFC	0		0	Os02g0452500	
+3K	blade_pubescence	OsLP.LWQS_VORIkAlmOonjpsxRP22SYQd1bDK	25		0	Os10g0573900	
+3K	blade_pubescence	OsLP.jbMS7sh4o2eCKUJlOqrJVTDoGcU2bEaR	20		0	Os06g0666100	
+3K	blade_pubescence	OsLP.4gzrpuo_MH51b1f7t2JTNY7BjjRidCqR	3		0	Os10g0203600	
+3K	blade_pubescence	OsLP.8aek1XPVKV5bHr75KSHk1xgGVEZrh8nX	15		0	Os05g0185700	
+3K	blade_pubescence	OsLP.GpYJ4b05exo3aI0AnwEnzIliJ4UA8mjg	13		0	Os11g0271100	
+3K	blade_pubescence	OsLP.bCTPH2g80ZIRSNBMVdB5OC1qi5pbQ81z	37		0	Os03g0725100	
+3K	blade_pubescence	OsLP.kdfAR9i2A3djmQfwzJdZPrqCK_7MAqz4	42		0	Os06g0607900	
+3K	blade_pubescence	OsLP.wVc7TN5dWv-qs0BDkb2IsBh-e3gNqmkM	0		0	Os05g0258400	
+3K	blade_pubescence	OsLP.Rsl8Q1w3AmmlC6G_GdVAqlGXMxReBVgX	44		0	Os02g0183900	
+3K	blade_pubescence	OsLP.irUOmmCgxIZnVETYMaHwFLhDoDNWuSKU	49		0	Os08g0547600	
+3K	blade_pubescence	OsLP.5da85VTeQkXqno56auVcZofrJW-uVk1w	63	Os05g0115700	1	Os05g0115500	Os05g0118700
+3K	blade_pubescence	OsLP.FpBlsbXT6nCSbw5FdaAi8UBCUVw6_B68	14	LOC_Os05g28120	1	Os05g0345700	
+3K	blade_pubescence	OsLP.4Hd7_O3TKwn5m58lCnNvH1Km68OdH4v3	22		0	Os02g0581400	
+3K	blade_pubescence	OsLP.0XWJzRWtM-BHh8lLu3xLdnGh8-hyYce-	70		0	Os02g0618400	
+3K	blade_pubescence	OsLP.HWeeU7yZFegefQmn68GBDSj-7qPN8lQ6	16		0	Os08g0493100	
+3K	blade_pubescence	OsLP.UuQM5m-TTOthgtEuTVM-pgBVxObwO70e	19		0	Os03g0642450	
+3K	blade_pubescence	OsLP.CiKdcTZDXGLSMCfDlLMpmL8UrAJfTIWb	37		0	Os05g0171900	
+3K	blade_pubescence	OsLP.E4qCvDsygelMwL4MeL6FXek27mWy-4yd	25		0	Os02g0258300	
+3K	blade_pubescence	OsLP.ceYPPdC_30gTTqupcl2Bycr3iKfCNGkD	59		0	Os02g0192001	
+3K	blade_pubescence	OsLP.mLsbKPfw4H0VFIaufW7VMLwwJpXj1Wkd	61	Os05g0406550;Os05g0400600	2	Os05g0403300	
+3K	blade_pubescence	OsLP.2Bfs1gKiCQc4vQXm7viymEMDILbQdcD2	12		0	Os02g0567800	
+3K	blade_pubescence	OsLP.nx8LwtDoxSpU3jLz9z07t6e6IWakQOJC	22		0	Os05g0528500	
+3K	blade_pubescence	OsLP.xAEr9g6HIyhl9oj5Ne639MVTdjXkhD58	66		0	Os02g0605400	
+3K	blade_pubescence	OsLP.4PJXctOz-lIb41QW7dBiimz6pYdUbCJd	13		0	Os03g0617500	
+3K	blade_pubescence	OsLP.zK1O8Ald6GCQUX2GwJiGdInznpIo0WiG	42		0	Os02g0596100	
+3K	blade_pubescence	OsLP.ZlNM7PXjneLBU16r7yzLsMikHDTeJEQp	51		0	Os08g0549200	
+3K	blade_pubescence	OsLP.H4faPhmY1qRCgwxCQJJ4t8sO42eUAG_Z	0		0	Os08g0474400	
+3K	blade_pubescence	OsLP.oJAkiDZd3IyU8P7Xe4Ld1UVTEbs64zDH	43	Os08g0507702	1	Os08g0505700	
+3K	blade_pubescence	OsLP.aHFsbH63r6WCLnVL9dyb3IXI8sTbkD3w	31		0	Os05g0216950	
+3K	blade_pubescence	OsLP.62OITP6ZqbKkv_IcAWA_bmO-QidxqXZr	57		0	Os02g0224300	
+3K	blade_pubescence	OsLP.Cf0-Nwg7JSp350wuNKON6IC9L4QzAuVE	12		0	Os03g0194900	
+3K	blade_pubescence	OsLP.ZxY0y0IhkNBbgpfLjRcJZagrgrwlFTa3	22		0	Os02g0646500	
+3K	blade_pubescence	OsLP.mmltE8ijTZmrIyD4JiNauXNrF77jFN0A	19		0	Os12g0485400	
+3K	blade_pubescence	OsLP.VX2yJUdcbx5qY2WSn7n1F5v2bbfZC_1_	38		0	Os05g0154700	
+3K	blade_pubescence	OsLP.LGPu8uH0Vi0l46-sddsdx0JJqmHsQlLE	8		0	Os03g0655000	
+3K	blade_pubescence	OsLP.DkAh8PLc-ZwYUSCErtuOMLhzEB_Nq004	53		0	Os03g0368650	
+3K	blade_pubescence	OsLP.P96X-cnD0gkSnRSCft8ktbAkbJzwexQv	42		0	Os01g0347000	
+3K	blade_pubescence	OsLP.fAGdnRHuog8sMfQ6pegTt8T4OtWBPodd	1		0	Os08g0318400	
+3K	blade_pubescence	OsLP.PVDLfrnMYR33osj6Yw8PVE7krUZzDeqt	6	Os05g0307400	1	Os05g0310500	
+3K	blade_pubescence	OsLP._yUCFvhPDyNtGj3K4Q_OVD-OsB_tD3lQ	19		0	Os01g0215100	
+3K	blade_pubescence	OsLP.ciaWaXDdf-oTzjT_XALLzqjG766DkIRa	19		0	Os02g0548100	
+3K	blade_pubescence	OsLP.QT7jRlEmaUVkXpMLpY8aloBIG8tPwENg	8		0	Os08g0278966	
+3K	blade_pubescence	OsLP.HEry9lNqnBuSSesBjsZkYVdrd-iDf06u	40		0	Os05g0544600	
+3K	blade_pubescence	OsLP.8JF_46dOOcSjVDLke1-ZpJMZ-2FNBMsr	4		0	Os12g0416300	
+3K	blade_pubescence	OsLP._wDWxuwanFLKaq_DqQLz-A-LYSFW7hPq	23	Os01g0736500	1	Os01g0737100	
+3K	blade_pubescence	OsLP.ATNwIu3g4AfA08nSyCZxv9W_msC7kU9-	25		0	Os03g0243100	
+3K	blade_pubescence	OsLP.kaCwDoo7Lx_2sWnTKJPYmTMDnlQCpiml	35		0	Os02g0228900	
+3K	blade_pubescence	OsLP.cGAM_qSc-rXCL9kgQ0WaOql2UO4vmSoa	46		0	Os02g0209900	
+3K	blade_pubescence	OsLP.0D97crgGMiCUibWkM_kMXexdaStRUUyq	10		0	Os11g0452400	
+3K	blade_pubescence	OsLP.uqj9e1KV6IR3WsBxnLjc1FvrF443NrM1	6		0	Os11g0437800	
+3K	blade_pubescence	OsLP.Vv_Pvx_5yFe7MMBmbZdU5aFhf35bibwN	45		0	Os02g0207100	
+3K	blade_pubescence	OsLP._lpS9rFsAsSheWjkWcfLBEo5Lt8OamfR	30		0	Os10g0511600	
+3K	blade_pubescence	OsLP.ErfqNEqrOiofl-zm-m-TssZUcAyPxtSV	22		0	Os02g0700700	
+3K	blade_pubescence	OsLP.LTXn4aWfPuSO8ijuIIb08m58wHSiicvb	15	Os10g0342300	1	Os10g0344800	
+3K	blade_pubescence	OsLP.RJOQYmm7_GIOM_qNO5NScQmVgmoHqUaW	10		0	Os10g0478600	
+3K	blade_pubescence	OsLP.SyaLEs0D6wXVcyGxFP0OXZPUXjICHwaD	0		0	Os09g0238700	
+3K	blade_pubescence	OsLP.UjZy7qAeH6j91Sj2EMgratpVjW2pj2Vz	12		0	Os03g0358200	
+3K	blade_pubescence	OsLP.XLa8E6N0ARGlI7YgIIMh4HVa0qfcfeIB	34		0	Os02g0710500	
+3K	blade_pubescence	OsLP.hj0KluybHwHZOPXz1JW3BUN6ZdvrJVDM	27		0	Os10g0377500	
+3K	blade_pubescence	OsLP.pTBuj1w-h2gfg0idzzYBeY6Cj4cWWnW8	23		0	Os05g0387750	
+3K	blade_pubescence	OsLP.UTUyBdKv6y2vvHq0O196BVG_SJqepLAL	57		0	Os06g0222100	
+3K	blade_pubescence	OsLP.f9eCRr7h8QAFvUKRPNTyM0IGEeOCYedy	2		0	Os01g0504950	
+3K	blade_pubescence	OsLP.o_3oR2TWqb7EdMLHh4oLDsdIqzPFcNvP	7	Os04g0103700	1	Os04g0100300	
+3K	blade_pubescence	OsLP.FkNUcNemQYLzzIO7TtzTTVrqqAydVvU9	21		0	Os02g0169800	
+3K	blade_pubescence	OsLP.VsNz17cpvKSPI3xXf3_V_VTnUWaJO6Hq	71		0	Os11g0683800	
+3K	blade_pubescence	OsLP.FEQfTCF9Q7vchGphUK0YGuhi6lmR0mm_	57	Os02g0183900;Os02g0182850;Os02g0187500	3	Os02g0187800	
+3K	blade_pubescence	OsLP.5RqT3OMH2FL_2lXF9iOdRNcpsI6l8z4y	11		0	Os11g0294300	
+3K	blade_pubescence	OsLP.BPoR6nVTmS5ouJQnXCNloxhuH3_i8-hQ	28		0	Os05g0563400	
+3K	blade_pubescence	OsLP.HF4nBpMdac4F6B8M2Z8MwEX4KeCObykZ	24		0	Os02g0241600	Os02g0236100
+3K	blade_pubescence	OsLP.M1Io3Q_K6fw6sDrlY9wpIU4W_K3T7UYc	36		0	Os02g0203700	
+3K	blade_pubescence	OsLP.I2TRFxp0UHuqvSS-vn56Wsk5CpgfH-qP	23		0	Os10g0422600	
+3K	blade_pubescence	OsLP.YrhvizMUfr8p20JmDx6owfAy3omUD1q_	2		0	Os01g0290600	
+3K	blade_pubescence	OsLP.X95G0vN7D-HYAe-ovnfSQX7Utwg4YUGV	34		0	Os03g0673400	
+3K	blade_pubescence	OsLP.mxiiqSggiuuaKJzT3ylAhLGTGUps2uHK	23		0	Os02g0102000	Os02g0102300
+3K	blade_pubescence	OsLP.YwVCH87JQEyErmekrIwah7jhfwELLb_0	21		0	Os03g0610400	
+3K	blade_pubescence	OsLP.RAlVlR3lnJPtyliu-GUkp2DuE95UewMi	14	Os02g0235101	1	Os02g0238150	
+3K	blade_pubescence	OsLP.G8p4d6KNmG-wnE_JJgD4KJVLt0RdMFnq	17		0	Os11g0231800	
+3K	blade_pubescence	OsLP.qEuI1vznrTEkoQvLMLVU01cJgztkx3sW	1		0	Os11g0311300	
+3K	blade_pubescence	OsLP.LmEHiVdD6aUJLWu9q0Ztg3_fmm-Nstne	23		0	Os09g0284200	
+3K	blade_pubescence	OsLP.GYM6DuJh5EnRF__y9LAO1D_GrQ3fY9Ye	8		0	Os01g0287600	
+3K	blade_pubescence	OsLP.9fApvTNZ8_Hgp_rGZ_b27q6KwRIe1zvr	12		0	Os05g0326675	
+3K	blade_pubescence	OsLP.5xAZVU4tclBPVKDauAvzuKSj5ev-ssZw	30	Os03g0603300;Os03g0605300	2	Os03g0603200	
+3K	blade_pubescence	OsLP.h0u_uw5uaIXIA5qb8p1JMGvNK7rsx6jP	29		0	Os01g0518651	
+3K	blade_pubescence	OsLP.yUYdUiD5J2Jizie7hzdhpwVPSGGISXpO	2		0	Os11g0289700	
+3K	blade_pubescence	OsLP.9YTYX6CzBMK5x67skA_OnjTKqszntpnq	34	Os05g0142400	1	Os05g0144800	
+3K	blade_pubescence	OsLP.M2hgYdy39G5TYrNTGq72LCylOHOBD69r	21	Os05g0559900	1	Os05g0560400	
+3K	blade_pubescence	OsLP.udRXmRcnjpWYGWcbClqCDRX0YutmFCuR	20	Os05g0597100	1	Os05g0594100	Os05g0592800
+3K	blade_pubescence	OsLP.842Z5aM5NR29Uth6Pu7gMcQVCGAEInjW	22		0	Os04g0412100	
+3K	blade_pubescence	OsLP.wHhDJsDOMnVeQ7rZ2dnFaBBqafVNjY3G	9		0	Os12g0447310	
+3K	blade_pubescence	OsLP.2efRerdWcNkyDipB_mGOe9PbAh1NFd1b	20		0	Os05g0384300	
+3K	blade_pubescence	OsLP.Q_lUPhCWveLu8D7c8aGXVTGgXENwPJ4Q	53		0	Os02g0117500	
+3K	blade_pubescence	OsLP.NYUdLG8w2PN6TzP3X9xEWFMuOtyRsaX7	32		0	Os02g0528750	
+3K	blade_pubescence	OsLP.okgbgAyAUoKxSbUfyHHyem8UwVzJPJkY	15		0	Os05g0433100	
+3K	blade_pubescence	OsLP.klr5qE6MMFkw_tPyVKx6ZT5v0le6H40o	0		0	Os05g0264200	
+3K	blade_pubescence	OsLP.cdYbTH026aNI-8WF_1b2cKNZXCWyCcMG	18		0	Os03g0226700	
+3K	blade_pubescence	OsLP.EzbBopqm1Fjm3EqdqWDxM1OJ-ewYY8w0	17		0	Os06g0543601	
+3K	blade_pubescence	OsLP.4nDhKHtBOuJR3QJZHCzhnYlFjTiKrlEB	13	Os08g0439600	1	Os08g0440800	
+3K	blade_pubescence	OsLP.FIGdSRdSEDXaHLn1TvzEKD14cV0GCpYp	61		0	Os06g0157500	
+3K	blade_pubescence	OsLP.rhNSzXMf0PuDsJFJYrs-RU5qmXmvI43i	23		0	Os11g0181100	
+3K	blade_pubescence	OsLP.Gt9F412b0-4UUoYc2jwIFsgpf3JTMZEa	11		0	Os05g0518300	
+3K	blade_pubescence	OsLP.1isnTbQd-Zgo2xEshH29836y8lhj_aYN	3		0	Os01g0321300	
+3K	blade_pubescence	OsLP.VpX4MYD6vfFTm6rJrGUNwOlz124RbvJx	44		0	Os08g0130500	
+3K	blade_pubescence	OsLP.u262TGRFlmFG5AYFKUXPtqb600_138pH	1		0	Os02g0298100	
+3K	blade_pubescence	OsLP.QuEZ8_XnB8WZ-r5xUF-xTnQtOlGapa5P	1		0	Os08g0321000	
+3K	blade_pubescence	OsLP.AydVNjb1pb4Pg-xa8pvSX48fbKx313WA	12	Os05g0500000	1	Os05g0498700	
+3K	blade_pubescence	OsLP.V43G6NKbuG9BgzDiG-HUpL8B1Y_VW33u	41	Os02g0183900;Os02g0179200;Os02g0182850;Os02g0180000;Os02g0187500	5	Os02g0182100	
+3K	blade_pubescence	OsLP.dn5Rwb_3q8DYO50nnwvvuP77_76S3Bo-	36		0	Os03g0601500	
+3K	blade_pubescence	OsLP.Vp4pJrjk3p4vCPDrKrLDcM1wGXJ4WNXO	21		0	Os12g0267900	
+3K	blade_pubescence	OsLP.6nesbHbOovPDZeEjQEetpNJAzUVs-HPu	0		0	Os05g0286100	
+3K	blade_pubescence	OsLP.A31BBJzg7DpmH9JOB8sejghgvXvzQbZe	0		0	Os11g0420200	
+3K	blade_pubescence	OsLP.jPvF9v_O8QpnVYyv6MtnsFOhCGB-n10l	29		0	Os10g0112600	
+3K	blade_pubescence	OsLP.yWQLmtKKT5zUtyAgfAsuK9-N5tusWIQ5	102		0	Os03g0846900	
+3K	blade_pubescence	OsLP.dI5THxj9788QkFjDZ1aXVp0wP27fYTwo	41		0	Os05g0545900	
+3K	blade_pubescence	OsLP.5q9CFY1GWPTMBGi2TeoMpfgqYi3Nhntu	41		0	Os11g0224200	
+3K	blade_pubescence	OsLP.0CeAIAz1eQJjMD-o3h1qTAXmZSXHv4-W	13	Os05g0412000;Os05g0412400;Os05g0415600;Os05g0413000;Os05g0408300	6	Os05g0409800	
+3K	blade_pubescence	OsLP.s5RGRQu8-HvjN8ls4PzKQ0WAArwTkKtu	43		0	Os08g0139700	
+3K	blade_pubescence	OsLP.WVEMSGulfraXhwQAim_I75nhYUd9f5De	9		0	Os08g0445000	
+3K	blade_pubescence	OsLP.FfohneN1SonuTvIUn3kcV0kCa156E4jU	14		0	Os04g0471400	
+3K	blade_pubescence	OsLP.hOwa6eQiqOYZGQLYgc23OzaRirOaQM-x	12		0	Os05g0497300	
+3K	blade_pubescence	OsLP._EoeueeFCT5do5NXpAEQhD_wIoyv27zO	38		0	Os02g0640401	
+3K	blade_pubescence	OsLP._H7VqajkTSqmxocZdgoaOoiHTOjmUK_x	37		0	Os02g0811000	
+3K	blade_pubescence	OsLP.pkxCfBAYP9kQhjEQF1XB5ZlVRzvDb6xk	9		0	Os03g0304500	
+3K	blade_pubescence	OsLP.sJQ6jx5xm1ROWs7gnOYGhUZuJJHZ1q4n	25	Os02g0644700;Os02g0644600	2	Os02g0644000	
+3K	blade_pubescence	OsLP.EiAh2w0w9eWPJcPXHcKJEQjHksZ8BXSX	24	Os05g0194000	1	Os05g0195901	
+3K	blade_pubescence	OsLP.mYummQYJY-B1dfSJpkobICHBMaPx14Oo	36	Os08g0232000;Os08g0236400;Os08g0235650;Os08g0236700;Os08g0235800	11	Os08g0232700	
+3K	blade_pubescence	OsLP.x3r7p1EwVdqC6cOuBpaZvAm-w9cuTisM	12		0	Os07g0474300	
+3K	blade_pubescence	OsLP.DWj78aidyPgGGRKvPINiWWJcx_bOXku9	1		0	Os11g0311300	
+3K	blade_pubescence	OsLP.TDZpqixXGpq1kaITlEvuhk9uszAmu6VP	5		0	Os03g0570775	
+3K	blade_pubescence	OsLP.-rPhZrUOFEwOOx0yq-Qci68iIrs4FD-g	30		0	Os02g0577300	
+3K	blade_pubescence	OsLP.QIWlxtYzzuqHYSwU9U6u3bTrr-gYYm7m	22		0	Os11g0184900	
+3K	blade_pubescence	OsLP.P5fVacDKxGdmSLyDLZjtI3B2me-hnJCA	27		0	Os11g0526200	
+3K	blade_pubescence	OsLP.DBmRpuTxgfYH4oem5mzrzmZNDou1Mx80	20	Os11g0505300	1	Os11g0508301	
+3K	blade_pubescence	OsLP.qzrsvgUiw7-0Aub04wlnoZgpOParjlTB	39	Os08g0232000;Os08g0230000;Os08g0235400;Os08g0233300;Os08g0230500	8	Os08g0230200	
+3K	blade_pubescence	OsLP.MiB7zg5cIH0IOwWz07eiKnfPtFlgTKiF	25		0	Os05g0584600	
+3K	blade_pubescence	OsLP.w6lkBEGrbCo-lrg40aNN3fhukhR2diux	3		0	Os12g0435000	
+3K	blade_pubescence	OsLP.i8J4WZYoDP5doezok7_TfFyOss_0Op2T	14		0	Os12g0588200	
+3K	blade_pubescence	OsLP.7CWFIXVF8RRp8O3OAe45WM25l64a-NkM	29		0	Os11g0630501	
+3K	blade_pubescence	OsLP.hzsVtYo4k8rh5jD-kn05_rp1ovcZJ5Z5	19		0	Os07g0213300	
+3K	blade_pubescence	OsLP.i4Ft6ACR-HkKCHHB53y1nbj7-VvPfQHI	10		0	Os02g0660800	
+3K	blade_pubescence	OsLP.CFdCXe5VfoWi6TyIJfbO4K_z4qMu6ygd	65	Os01g0610300	1	Os01g0607200	Os01g0619100
+3K	blade_pubescence	OsLP.-zdqxurHY2rz6ATnellzi9uoq_paXAed	23		0	Os05g0378200	
+3K	blade_pubescence	OsLP.Q5ychHNAQunZClTAI1GQKnbK2SS_SDF7	14		0	Os05g0186100	
+3K	blade_pubescence	OsLP.ueKWoUL9MhqoVw1RFdp45OJ1v29eCHlc	49	Os04g0196300;Os04g0198733;Os04g0194800;Os04g0191600	4	Os04g0194800	
+3K	blade_pubescence	OsLP.RV9JkbM3hJswXa6MzgKKURkceYM_GxsK	41		0	Os02g0206400	
+3K	blade_pubescence	OsLP.54NVRJvf9k3SVqhyS2JhooJobiT1UBjC	53	Os04g0110500;Os04g0111900	2	Os04g0112100	
+3K	blade_pubescence	OsLP.GHoRWZDIPqtPJ1ARPy1K_ijToBG1fAaB	41	Os05g0580900	1	Os05g0577100	
+3K	blade_pubescence	OsLP.bii4JR5YBCg9gwS-fHO-s4lvkMBenyB_	33	Os08g0182400	1	Os08g0177300	
+3K	blade_pubescence	OsLP.KVo3r9hQU6Kg3dUz6gzp6lIkEBZc1wLc	21		0	Os12g0286600	
+3K	blade_pubescence	OsLP.NybQuMyFoiz-cljvppBo6vE9nPlBdhIp	17		0	Os05g0354075	
+3K	blade_pubescence	OsLP.E7ouFyoF4lleY6Dh-GaNjbGhemaeflFB	6		0	Os12g0418200	
+3K	blade_pubescence	OsLP.hppURi7mU6Mk42uA-adJ-wBQiGSwZBA8	60	Os02g0633300	1	Os02g0631500	
+3K	blade_pubescence	OsLP.bXMkHbaKyZV1mvaD4-yA-BAPMZcTpYQY	37		0	Os03g0285300	
+3K	blade_pubescence	OsLP.xp8jQVC1zknx1uB4CXOUyYKZYNcymBfb	12		0	Os08g0451700	
+3K	blade_pubescence	OsLP.smONecShFoxr_ErYPw4fW-8MeU6WXZ9d	74		0	Os11g0678400	
+3K	blade_pubescence	OsLP.rV8kKPdfEnULzY5YrybpIRjIG2bRD5Vn	17		0	Os06g0494400	
+3K	blade_pubescence	OsLP.OXqgY5HiEI3tI82F5aRZpb8qGiJTzwBJ	29		0	Os05g0153000	
+3K	blade_pubescence	OsLP.y4sUXtQntYSYeaxm7V8rJXH0NoafVNJD	77		0	Os08g0531600	
+3K	blade_pubescence	OsLP.1xKShNl1uPHeHvUIo2PJHB6Bg6ETVINd	19		0	Os01g0739700	
+3K	blade_pubescence	OsLP.Lix6H2-zlPkikhqq-6PV6IcdtbaRQk-X	13		0	Os05g0514800	
+3K	blade_pubescence	OsLP.Knua1Ax9WAbPrIPgWaRMa6YJGHzFDXwL	89	Os02g0153700;Os02g0154600;Os02g0154000;Os02g0153100;Os02g0153200	7	Os02g0155600	
+3K	blade_pubescence	OsLP.55m8TCXtAlZO14NolabRLW0fxvnOX2os	28	Os05g0412000;Os05g0412400;Os05g0415600;Os05g0413000;Os05g0408300	6	Os05g0409200	
+3K	blade_pubescence	OsLP.tYS7eCKestN1_Zc1PdC7t8VsD1F6wCy5	15		0	Os01g0672100	
+3K	blade_pubescence	OsLP.PLCCMSmggiVf0bWp0zCXp7ORxlvdINo_	42		0	Os02g0539600	
+3K	blade_pubescence	OsLP.ORMTDMbJa4mRcPlR899szhVQiIFcPIvG	15	Os10g0331500;Os10g0330300	2	Os10g0329900	
+3K	collar_colour	OsLP.zaeopDbP4pGzhXulpA6S8J2ZY7UHmqYJ	24		0	Os06g0204100	Os06g0205100
+3K	collar_colour	OsLP.uqmIkM2pHNNdNGSzvYZAfI9p0x1YOSRI	18	Os06g0203702;Os06g0206401;Os06g0206900	3	Os06g0205600	Os06g0205100
+3K	collar_colour	OsLP.L3-jEyj9jTJuUWKqKTN7PD_He1t4mwSU	25		0	Os06g0202300	
+3K	collar_colour	OsLP.apqsa3oSLprDZQ5mObxeYsZajz4LAWFs	39	Os01g0575200	1	Os01g0576100	Os01g0576100
+3K	collar_colour	OsLP.jOfdjeQRvcy2FBGDc1DR0knrRCim2b7Y	32		0	Os06g0195600	
+3K	collar_colour	OsLP.rA7i6gnh7jJeguljCT-gT_cUqSolBYXB	18		0	Os06g0248400	
+3K	collar_colour	OsLP.qcmDQCAbwLZmgnPilfAKTSmOJsN3OoVQ	64	Os06g0232600;Os06g0232233	2	Os06g0230400	
+3K	collar_colour	OsLP.RrpvJnx5ARYhfNd4wiJ7HRjj7DfAbu5S	18		0	Os06g0206401	Os06g0205100
+3K	collar_colour	OsLP.gOc59iAf0Ls8qnU3zkwUbhcQqoTzTjQV	70	Os06g0168400;Os06g0167400;LOC_Os06g06850	3	Os06g0164100	
+3K	culm_angle	OsLP.hllpTKDHJ-1E4KjDL46F-UggExqBK6BL	110	Os01g0110700;Os01g0111700;Os01g0114600;Os01g0112300;Os01g0112100	9	Os01g0111200	
+3K	culm_length	OsLP.GnKqrK4VOhM1Y6GcvKFvCDyjnt9nHrpR	28		0	Os01g0897300	Os01g0890100
+3K	culm_length	OsLP.0HNX0GDjlplUkjdtOLXG2K-DsRSnFaVN	46		0	Os01g0812000	Os01g0812000
+3K	culm_length	OsLP.NfBRKWeoyx6pslaScZ4JbuzcTNH1cVwJ	19		0	Os01g0769900	Os01g0769700
+3K	culm_length	OsLP.AH9QBu4ZPkkP64LQEfbZcB8rsv-6-aEt	28		0	Os01g0721800	Os01g0718300
+3K	culm_length	OsLP.43daHfvk0NaCRae_MXeu0YX4ahR6iR5w	16		0	Os01g0920300	Os01g0919400
+3K	culm_length	OsLP.3aEGztH4f4VQtnPlzbWWC0H73FXM-Wic	45		0	Os01g0595800	Os01g0598200
+3K	culm_length	OsLP.LDFqWs_9tDBtEQMpXhFfvVHHkNcK9XNR	5		0	Os01g0647200	
+3K	culm_length	OsLP.H8Nxv01lvyXOlmcr4pxQ7007TY_ftj8b	12		0	Os01g0703300	
+3K	flag_leaf_angle	OsLP.33s3kXARywed-pcTzitEsKsvX_MtEnaX	19		0	Os08g0162300	
+3K	flag_leaf_angle	OsLP.kehBBaENOqlUeAeglaEbykwzFQa8fnOq	49		0	Os08g0423600	
+3K	flag_leaf_angle	OsLP.Ld28Qa6GqfSERyq-_B9yHNcsnnuTHg7f	95	Os08g0248900;Os08g0248700	2	Os08g0249100	
+3K	glutinous_endosperm	OsLP.ZpoDd3eNFwc2g30wmgQnQ33vtVgqT-sS	59	Os06g0131700;Os06g0130200;Os06g0129600	3	Os06g0133300	Os06g0133000
+3K	glutinous_endosperm	OsLP.4xru5ocYPyNp9z0SAqiN4AuEBA2X2_yU	58	Os06g0232700	1	Os06g0229800	Os06g0229800
+3K	glutinous_endosperm	OsLP.75Qcfh5Fq4B2XUvH0yTHtezIKe8aGXx9	54		0	Os06g0134200	Os06g0133000
+3K	glutinous_endosperm	OsLP.4WqpilsxSucsuUFZuvPaXUTFocGQIJ8v	37		0	Os06g0141700	
+3K	glutinous_endosperm	OsLP.RXMXHFGpgqgUgOdU-fspvtdNnnsXcRxY	47	Os06g0217900;Os06g0218900;Os06g0216200;Os06g0215400;Os06g0215300	5	Os06g0217700	
+3K	glutinous_endosperm	OsLP.4K-HyclKKS0vSMnbU8DhUpAOS7OyD2Vo	47	Os06g0218500;Os06g0218100;Os06g0219400;Os06g0218900;Os06g0220800	7	Os06g0217700	
+3K	glutinous_endosperm	OsLP.wEkPqOGRPAB__PwoBq6DWSd-qUMFFR2F	61		0	Os06g0130100	Os06g0130400
+3K	glutinous_endosperm	OsLP.XU_ocC6FYfowKOEGsTytqXXCIe0QZC75	45		0	Os06g0193400	
+3K	glutinous_endosperm	OsLP.Weuikcao_bIupPYAd8joPsF4kNDJGATj	57		0	Os06g0237200	
+3K	glutinous_endosperm	OsLP.NsKOF9zLiavshmAxyweuue1k6gqmGA1O	67		0	Os06g0121000	
+3K	glutinous_endosperm	OsLP.OXJY0JIEiH3jeiUWPb7R4CF93gRm_bEm	16	Os06g0500100;Os06g0498000;Os06g0496000;LOC_Os06g30430;Os06g0499100	5	Os06g0498150	Os06g0498400
+3K	glutinous_endosperm	OsLP.03bxJaA0nM_c8fHZLyRZkEF8iea62m_g	74	Os06g0116900;Os06g0116500;Os06g0116600;Os06g0111600	4	Os06g0115500	
+3K	glutinous_endosperm	OsLP.J_dQ3pyRTW4N2H4Vg2gGKlhd0I4-Uwmz	73	Os06g0237100;Os06g0237800;Os06g0233200	3	Os06g0235200	Os06g0232200
+3K	glutinous_endosperm	OsLP.A2pBixlanqIo3r2yU8Kbfqzz5JSjoTdc	56	Os06g0124900	1	Os06g0126000	
+3K	glutinous_endosperm	OsLP._t0GONuupdQwt6ofFHsODlGjY2ZVvc0C	0		0	Os06g0477400	
+3K	glutinous_endosperm	OsLP.j68IzkKRT1kzBG3mt16Ybv8zKvuZqPMc	45	Os06g0193300	1	Os06g0193400	
+3K	hull_colour	OsLP.sbPdxMcdq05wbm5LT34CRDWD7xQwiO0I	5		0	Os09g0292900	Os09g0292900
+3K	hull_colour	OsLP.6OmPLw1asODs46JL1YjWEvjb4C7y_vuR	5		0	Os09g0292400	Os09g0292900
+3K	hull_colour	OsLP.4hCsMS8UF7ZhaUBe468MPgG-vcKguVZk	8		0	Os09g0286600	
+3K	hull_colour	OsLP.WqJg1MX6kvpQOd1TKparucWhw1pDY8j6	1		0	Os09g0292300	
+3K	hull_colour	OsLP.heR6HmnBz4ZrDM0a9Z05xOBEt9pqT-5a	26		0	Os09g0282701	
+3K	hull_colour	OsLP.DKCm7_Amnf6iwxBKVWXTpD76N56VNzO6	2		0	Os09g0290900	Os09g0292900
+3K	hull_colour	OsLP.Q-7ITxdqtdMlm8skA9x6cWxSHqE_xokJ	6		0	Os09g0292900	Os09g0292900
+3K	hull_colour	OsLP.rb0W7_KFFfD6ONVQp6A94R3fkTQdthyP	24	Os09g0299500	1	Os09g0298700	
+3K	hull_colour	OsLP.sjTYdGymhXfE_66L7KjdAr36rT_Uz2Rt	6		0	Os09g0292900	Os09g0292900
+3K	hull_colour	OsLP.GY3KcJX9QzhNWgeDdndBFCY6qdgHIftf	18	Os09g0294300	1	Os09g0294550	Os09g0292900
+3K	leaf_angle	OsLP.spBThicBc6kKLfCJYH8mDLoF3UDcXyDw	17		0	Os07g0418500	
+3K	leaf_sheath_colour	OsLP.zaeopDbP4pGzhXulpA6S8J2ZY7UHmqYJ	24		0	Os06g0204100	Os06g0205100
+3K	leaf_sheath_colour	OsLP.uqmIkM2pHNNdNGSzvYZAfI9p0x1YOSRI	18	Os06g0203702;Os06g0206401;Os06g0206900	3	Os06g0205600	Os06g0205100
+3K	leaf_sheath_colour	OsLP.L3-jEyj9jTJuUWKqKTN7PD_He1t4mwSU	25		0	Os06g0202300	
+3K	leaf_sheath_colour	OsLP.XE0udoXO51QxdFHvauPJ8hlbxOHliVGp	18		0	Os06g0205337	Os06g0205100
+3K	leaf_sheath_colour	OsLP.RrpvJnx5ARYhfNd4wiJ7HRjj7DfAbu5S	18		0	Os06g0206401	
+3K	leaf_sheath_colour	OsLP.jx2p6JLKE1a-UFBeRoANiV-p-a3vhylD	17		0	Os06g0205337	Os06g0205100
+3K	leaf_sheath_colour	OsLP.oJIJW0I_y742FewmZtxUzBnHLSHvD10L	46		0	Os06g0194000	
+3K	leaf_sheath_colour	OsLP.tx-R8wt-vbtFx5a-_Q4WAc3q5ODgc-jB	61	Os06g0240001;Os06g0235900;Os06g0238900;Os06g0238600;Os06g0235300	8	Os06g0236600	
+3K	leaf_sheath_colour	OsLP.rA7i6gnh7jJeguljCT-gT_cUqSolBYXB	18		0	Os06g0248400	
+3K	leaf_sheath_colour	OsLP.jOfdjeQRvcy2FBGDc1DR0knrRCim2b7Y	32	Os06g0195800;Os06g0196700;Os06g0196600	3	Os06g0195600	
+3K	leaf_sheath_colour	OsLP.Rs0wJ3FvqhKwe0DY5wHLd56qNCAl999n	34	Os06g0195800;Os06g0196700;Os06g0196600	3	Os06g0196700	Os06g0205100
+3K	leaf_sheath_colour	OsLP.CxtbKNR3iwZElkEnmQY1m9MERvhr1uXn	48	Os06g0219400;Os06g0219500;Os06g0221200;Os06g0224100;LOC_Os06g12050	5	Os06g0219400	
+3K	leaf_sheath_colour	OsLP.yLCIEWWIQz3To8q9xsYK-FRUW-hB8A3q	47	Os06g0189600;Os06g0192300;Os06g0190800;Os06g0190500;Os06g0190700	5	Os06g0192800	
+3K	leaf_sheath_colour	OsLP.QeuHp1dxpUuyZwM6rasndn6rVohmAXxH	70	Os06g0168400;Os06g0166200;Os06g0164400;Os06g0164900;Os06g0167400	6	Os06g0164000	
+3K	lemma_pubescence	OsLP.MIZQuDJM43VqVqQm1ScdtzT432hpXu9D	29		0	Os06g0255200	
+3K	lemma_pubescence	OsLP.F40_XXi-OCKWv1e7Mig_29rlBsQ6llbh	18		0	Os09g0438100	
+3K	lemma_pubescence	OsLP.4LVPskK0ADOqGSOwLFJCLBbSluz1tCwJ	25		0	Os09g0451266	
+3K	lemma_pubescence	OsLP.hKhjI9MxsRaKW181e8gB6O61mZZQPMKs	26		0	Os09g0479900	
+3K	lemma_pubescence	OsLP.Z9FNR_w7LiRr6Tnxp4AQabmiE7XX9C5r	29		0	Os06g0524700	
+3K	lemma_pubescence	OsLP.hQR8kNtXr_7imb6ThzGvpo5f3fqUDp9I	12		0	Os06g0616400	
+3K	lemma_pubescence	OsLP.E4caTRNXVIOQ3xAEcHeY-P-jOQuR47x3	21	Os06g0539700	1	Os06g0538900	
+3K	lemma_pubescence	OsLP.JSqvtYLabYSOTA6AP7HcFzl-4odS_cZK	6		0	Os06g0338200	
+3K	lemma_pubescence	OsLP.jSZw0O1lfVdPzKNT8DVVIhhQoo4XHkMM	50		0	Os09g0533600	
+3K	lemma_pubescence	OsLP.HmEROlZ7kkeAuPKtmNdFI66HUsiN-qwm	0		0	Os06g0472600	
+3K	lemma_pubescence	OsLP.Nn2I70iblpSrOWwPtp0iQTmX5HT6J01K	100		0	Os08g0538800	
+3K	lemma_pubescence	OsLP.CkyhQnYgTacLlLlEB9OCxYojA8pQgB3j	10		0	Os08g0344600	
+3K	lemma_pubescence	OsLP.LMb3HsBAU8peXa8sxL8OrnUi-PEg7NaO	5		0	Os08g0293300	
+3K	lemma_pubescence	OsLP.ACXW54Fe-Nfjc2KjgGMyWwmpluVewZq4	1		0	Os06g0325200	Os06g0325200
+3K	lemma_pubescence	OsLP.v-0ZXBcp9nu5eh1Wl2KjMKpF6duu3PiQ	17		0	Os03g0585600	
+3K	lemma_pubescence	OsLP.5lR4t6XjUB6C6f6QN9cbXV-jmO1xFsk3	37	Os08g0232000;Os08g0235650;Os08g0235400;Os08g0230500	4	Os08g0234000	
+3K	lemma_pubescence	OsLP.kkyG-wn5bcdjPcjMeL4TDiJghp19vFhX	18		0	Os06g0656300	Os06g0657500
+3K	lemma_pubescence	OsLP.h1uHE6nmvF3vX5NFO7pE_amrhSO0YwxJ	21	Os08g0497600;Os08g0499400	2	Os08g0497600	
+3K	lemma_pubescence	OsLP.6YA6KjbkGCJzqcm25uvyuW2nEQRrK0mI	35		0	Os06g0677000	Os06g0701600
+3K	lemma_pubescence	OsLP.PsmFgt7qmGK6OuWYmZOfz10okU68DFxz	20		0	Os03g0705800	
+3K	lemma_pubescence	OsLP.aWb1mk32xtUxgOKYyXkt8QdoLKqDvPQQ	9		0	Os07g0248800	
+3K	lemma_pubescence	OsLP.vlpS4TI1DT1kqqczbUc5JbrJKDGV0FYf	26		0	Os06g0564100	
+3K	lemma_pubescence	OsLP.VDrNOLmSFlwngn0j5gXJgchvphetsPDe	30		0	Os09g0491708	
+3K	lemma_pubescence	OsLP.2V6AUWJ8cGmE-KyTWIcJSp9GdUhVweBJ	10		0	Os09g0572500	
+3K	lemma_pubescence	OsLP.cXTiV528jBUAB6mWwUZPoySMZXQ31xKM	57		0	Os08g0108100	
+3K	lemma_pubescence	OsLP.KpDuyCMWPdO96PYD6W4grURgpMIYgaQ_	35		0	Os03g0726700	
+3K	lemma_pubescence	OsLP.1B-1EdQcxD66jmdARGvlnR26ttVaS6V-	40		0	Os06g0286700	
+3K	lemma_pubescence	OsLP.KVKwuvrpaSa-VfnpLqK17-pT-TaiuRIh	24		0	Os03g0205150	
+3K	lemma_pubescence	OsLP.ARROolTTDe68wdjK2P9Wid72LYTArmc7	12		0	Os03g0156500	
+3K	lemma_pubescence	OsLP.hk5THuBcjHZSVMtovwXmH0fMGdo1ht3u	26		0	Os08g0179900	
+3K	lemma_pubescence	OsLP.wBGeQ8SQakx8wF2wGCJvajfTQMPo80ny	27		0	Os03g0692700	
+3K	lemma_pubescence	OsLP.u0OAllMHDAk79TO4Iw4yoB6M1sAwIz2I	11		0	Os07g0291300	
+3K	lemma_pubescence	OsLP.JeY9Ybwhiz-oHydTF04F6Ftu036FDvOo	21		0	Os06g0646700	
+3K	lemma_pubescence	OsLP.fw2_J_JoupR9szG0DfHaQy_kDx7i8PLB	0		0	Os08g0467100	
+3K	lemma_pubescence	OsLP.HgMWdtbTF6GEEZadiECEk5OSyNLSk0Td	24		0	Os03g0103800	
+3K	lemma_pubescence	OsLP.B7DrpxDs3TySGPe8a3-ToRAS2_QRJVdI	63		0	Os08g0207951	
+3K	lemma_pubescence	OsLP.GyGJ6i0AnX4XZsyFtYIbhgkA9dubAbg0	28		0	Os09g0427800	
+3K	lemma_pubescence	OsLP.Cc0btYY9sz-_VWqva1VcMj44y3GLIpmf	36	Os11g0157300	1	Os11g0155100	
+3K	lemma_pubescence	OsLP.MsQYza4tE8a5dh-RYuxFd8TMJGg1SZ6V	51		0	Os06g0701300	Os06g0701600
+3K	lemma_pubescence	OsLP.UuoMMgUerHtSkR_FqivATlxXydrxdG0o	23		0	Os08g0144100	
+3K	lemma_pubescence	OsLP.K-HH4RnfdAHyV0yLY87IHPxYkuRRnYKx	31		0	Os09g0547300	
+3K	lemma_pubescence	OsLP.9NHpC49XX-nUuTdDzgsYSqRKQMB5OFrt	7		0	Os07g0273900	
+3K	lemma_pubescence	OsLP.jaCmsXwaAfqJvTflXr2PR1JvJaU8kUmN	49		0	Os03g0752800	
+3K	lemma_pubescence	OsLP.1vD6DpeAOThQKRlDsTZVpvgdgVb5scxw	67		0	Os08g0418600	
+3K	lemma_pubescence	OsLP.CwGRs-gfiJkZHiukk6aBVVbV0Vn6oXX0	17		0	Os01g0914800	Os01g0930400
+3K	lemma_pubescence	OsLP.xcOhjpePqTmxrl6NMtZ8eL60d0b1Pb1F	28	Os08g0165800	1	Os08g0162066	
+3K	panicle_exsertion	OsLP.iYdw6lViJzoQHzVcs39csEvThzHa5mUk	13		0	Os05g0189900	
+3K	panicle_length	OsLP.7ndZ75O22Q6nk-9PNwwFARMUFh_bg-kl	14		0	Os03g0216400	Os03g0215400
+3K	panicle_shattering	OsLP.AQ6UwRnbOeakZ4gNDqPHTTdaZW1ZIp6T	13		0	Os01g0557500	
+3K	panicle_shattering	OsLP.jwKPynlCcKQTY4AMZASStT6WAqP3qbGq	1		0	Os01g0391600	
+3K	panicle_shattering	OsLP.7ddKveEKDwxbNrExUac9zFJyaosbPYL8	39		0	Os01g0356900	
+3K	panicle_threshability	OsLP.uSp2nIh5WqyHEArfIg4HpK8jMfinucvV	20		0	Os02g0761000	
+3K	panicle_threshability	OsLP.5rIJiXYDp9u5bdVA8Wrf2iVomQUcIHSP	34		0	Os01g0328700	
+3K	secondary_branching	OsLP.r7X30Ad-R-PN9enDn0V9YaUz_1Og5Zbc	14		0	Os07g0265100	Os07g0262200
+3K	secondary_branching	OsLP.UluSb1r5ZBpwMBr6qyOS5lTWa-_E8KuB	41		0	Os09g0531600	Os09g0531600
+3K	secondary_branching	OsLP.JPtzcfgdZ8RcSA5qSx3IiaYeNHs-1siW	4		0	Os07g0296900	Os07g0281700
+3K	secondary_branching	OsLP.iUGcJOB9XisAyw6RcwcJrBct3gatiC5M	6		0	Os03g0330300	
+3K	seed_coat_colour	OsLP.SPx2v_yCqacDhvKmIJzCrjombj8-dJeJ	26	Os07g0212200;Os07g0211900;Os07g0213500	3	Os07g0211800	Os07g0211500
+3K	seed_coat_colour	OsLP.bd4_hussezCwibMS_UzcEkBkqOW1ncUh	4		0	Os07g0220600	
+3K	seed_coat_colour	OsLP.GZUJQ2pBrnF5U0-ELV3FIj4iyDrwkG9E	25		0	Os07g0211500	Os07g0211500
+3K	seed_coat_colour	OsLP._qaX-4725PjtUSSY9L8Hzmwe8Ssml-kE	8		0	Os07g0222300	
+3K	seed_coat_colour	OsLP.8fOIrhhe4_d2TugYOXqmB7O9GXBerm_X	10		0	Os07g0216100	
+3K	seed_coat_colour	OsLP.6-hXYiW5SWcWV-AZ3S0jjQ31uI-noc43	33	Os07g0205000;Os07g0206750	2	Os07g0209401	Os07g0211500
+3K	seed_coat_colour	OsLP.bpZSVfPpaplWJO0uPJXT-hna6blKovBD	14	LOC_Os07g25800;Os07g0435300;Os07g0442900	3	Os07g0439100	
+3K	seed_coat_colour	OsLP.i2BFFnZDOgpprkjAPufof8R5RBJoZc8T	16		0	Os07g0214300	
+3K	seed_coat_colour	OsLP.8j63T6rLoztqhSSeh4ptxMbjubMaXSfZ	44	Os07g0516500;Os07g0516200;Os07g0519300;Os07g0516600	4	Os07g0516300	
+3K	seedling_height	OsLP.NFHO6kL1PXvnImuxRfkOcXreqKegVjfs	25		0	Os01g0612000	Os01g0612700
+3K	sterile_lemma_colour	OsLP.e4K5RcwpWBMCDyGPeHpF30-cOtbOB1Gr	17	Os04g0556900;Os04g0551800;Os04g0558400;Os04g0555500	4	Os04g0557000	
+3K	sterile_lemma_colour	OsLP.zaeopDbP4pGzhXulpA6S8J2ZY7UHmqYJ	24		0	Os06g0204100	Os06g0205100
+3K	sterile_lemma_colour	OsLP.EhSeMDj1jIxpVCYl1UgkTHZnjUPV7GUn	17		0	Os04g0557500	
+RDP1	alkali_spreading_value	OsLP.K96HIGILG0w-hRksGuFzwj6JQdUoMfy6	77	Os06g0234200;Os06g0232800;Os06g0235300;Os06g0235900;Os06g0232700	6	Os06g0234800	
+RDP1	alkali_spreading_value	OsLP.pR4aNRcJlfF1uXiNcld_jr5T3y2Mzvph	18	Os03g0713400	1	Os03g0713200	
+RDP1	alkali_spreading_value	OsLP.RsuVzbRKhtfT5Py1PObNkWATC1AJPywz	25	Os08g0180400	1	Os08g0180950	
+RDP1	alkali_spreading_value	OsLP.8VkGvFmtf-MDjU6YMezQeYrlEWIlrxKK	18	Os06g0248400;Os06g0251200;Os06g0250600	3	Os06g0247900	Os06g0247500
+RDP1	alkali_spreading_value	OsLP.TXOmUixIYL2Xg5FUZffZ_iP0uKYGE5fK	21		0	Os08g0185900	
+RDP1	amylose_content	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	59	Os06g0131700;Os06g0130200;Os06g0129600	3	Os06g0133000	Os06g0133000
+RDP1	amylose_content	OsLP.U1fRKgINUL3qHw5BWPt_cNOHQJhl4P_q	38	Os06g0168800;Os06g0170500;Os06g0171900;Os06g0172675;Os06g0172000	5	Os06g0171600	
+RDP1	amylose_content	OsLP.27qlmd-oVciDnRcKZNH2vaGoYrPYf8oz	10		0	Os12g0473900	
+RDP1	amylose_content	OsLP.jR2Ezg8BBzVeAY2_Ud0yDae8ImA7vQWZ	66		0	Os02g0605600	Os02g0606700
+RDP1	amylose_content	OsLP.NrlmZfuQ9Lq5wWHdsXapVewml6JEglwe	46	Os02g0621600	1	Os02g0623300	
+RDP1	amylose_content	OsLP.aJoJKAWWDeKtvDFdm8aRWvTEEYIGUfP6	7	Os10g0437100;Os10g0428200;Os10g0437000	3	Os10g0434000	
+RDP1	awn_presence	OsLP.6FMkVi38fHPFTHvvKz1HYrmfTTR9jwVf	21	Os04g0454900;Os04g0452300;LOC_Os04g38380;Os04g0457100;Os04g0451200	6	Os04g0453500	
+RDP1	blast_resistance	OsLP.WlBXjEvZqkaBgva_5_HQuZuB8G9JVwjZ	161		0	Os04g0620950	
+RDP1	blast_resistance	OsLP._nuNuun2TMVzDbxOL4XtAC2g83LvBUQr	21	Os12g0285600	1	Os12g0285600	Os12g0285100
+RDP1	blast_resistance	OsLP.t7ewpWpLXmCyicKOr91BDu8ySyRJkAKk	52		0	Os06g0191800	
+RDP1	brown_rice_length_width_ratio	OsLP.I8WHDSEBTxS2io8D9ODoQX2Jw-6SH5aX	15	Os05g0188700;Os05g0188600;Os05g0190000	3	Os05g0188500	Os05g0187500
+RDP1	brown_rice_length_width_ratio	OsLP.AltNfilWtNnZRl8YTi0OkLk312dWE_nz	41		0	Os12g0542200	
+RDP1	brown_rice_length_width_ratio	OsLP.9XyIo3Z_TDh8Tdwddr11xdUJ3zHbGMey	29		0	Os07g0605800	
+RDP1	brown_rice_length_width_ratio	OsLP.vdE3wK5tcLZB_05G54i2WZuD4jUiHS-x	32	Os03g0393700;Os03g0393900;Os03g0391700	3	Os03g0393700	
+RDP1	brown_rice_length_width_ratio	OsLP.fdvXiciaO6Z3VFKNw2UeERcRAHVmzYks	18	Os03g0580200;Os03g0579900;Os03g0586600	3	Os03g0582800	
+RDP1	brown_rice_seed_length	OsLP.48fWke3eO6Zdpkmw0X3l_QUgA2Tqdugw	27	Os03g0396900	1	Os03g0397700	
+RDP1	brown_rice_seed_length	OsLP.0CfFUPb1vusdYrl2oHlmanlNBJ2kxThy	30	Os03g0407050;Os03g0407100;Os03g0407900;Os03g0408300;Os03g0406900	10	Os03g0407050	Os03g0407400
+RDP1	brown_rice_seed_length	OsLP.-EDMQ4vJ1HRtgiukFGfwFuCuA-cxWmqI	15	Os05g0190000;Os05g0194000;Os05g0192700;Os05g0191500	4	Os05g0190300	
+RDP1	brown_rice_seed_width	OsLP.I8WHDSEBTxS2io8D9ODoQX2Jw-6SH5aX	15	Os05g0188700;Os05g0188600;Os05g0190000	3	Os05g0188500	Os05g0187500
+RDP1	brown_rice_seed_width	OsLP.JnMVUn_SouyZQUdt6JG7DN9dGmpVIToG	14	Os05g0185800	1	Os05g0187100	Os05g0187500
+RDP1	brown_rice_volume	OsLP.LQnWcMX8b5rW5UGj4fjamCF_F1EOigUU	32	Os02g0713400	1	Os02g0714300	
+RDP1	brown_rice_volume	OsLP.FbbsUDHV1qAxn9LHu2HLjyheCdp6bHc0	14	Os05g0190000	1	Os05g0187800	Os05g0187500
+RDP1	flag_leaf_width	OsLP.NFMCgjRbeoOXIPDn2CGfmMi-qMnyMHnV	50	Os04g0616500;Os04g0613300;Os04g0616700	3	Os04g0612600	
+RDP1	flag_leaf_width	OsLP.8hIx51oRfQafS-cGG0jmzpMgK5cuZIx7	63	Os01g0167600;Os01g0168200;Os01g0169800;Os01g0170600;Os01g0170700	5	Os01g0168100	
+RDP1	flowering_time_at_aberdeen	OsLP.Q2sunfN8wCXjT0e3drxpgVWRh9sQ7IgJ	10	Os06g0275900;Os06g0276300;Os06g0278000;Os06g0275700;Os06g0274500	8	Os06g0278000	
+RDP1	flowering_time_at_aberdeen	OsLP.XXi0Yvt56eAhRZ127ODFIRuAdp3OSJ-5	27		0	Os06g0255700	
+RDP1	flowering_time_at_aberdeen	OsLP.DR96PeJpGqbrBMWBTZs_luYUuQ1-zC17	33		0	Os02g0494700	
+RDP1	flowering_time_at_aberdeen	OsLP.MF36JvajofmWlx9yqSng0t2D49ihQhPn	14		0	Os10g0168500	
+RDP1	flowering_time_at_aberdeen	OsLP.vRAPlhrGTdvGeB97XQt0p0_AnR-VVPUI	31		0	Os01g0922800	Os01g0922800
+RDP1	flowering_time_at_aberdeen	OsLP.MsfeLbZHNqvvlH4nj0HGaG1a-rv5XQ9A	21		0	Os02g0501350	
+RDP1	flowering_time_at_aberdeen	OsLP.GOAWhZ1-rOJFyZO1L3e4w9zFmogeLtvE	2		0	Os06g0483200	
+RDP1	flowering_time_at_aberdeen	OsLP.Zy-WYyKZVSCoWaoy4o8GBHHXwoshpjM4	29	Os06g0297400;Os06g0300300;Os06g0300000	3	Os06g0298200	
+RDP1	flowering_time_at_aberdeen	OsLP.A5R-NVqIcxedKTTM9zvnHXg9nnsyq6BB	47	Os01g0598400	1	Os01g0595400	
+RDP1	flowering_time_at_arkansas	OsLP.5IcNyZ53i-6grD0oGN__frWHoflldO0y	9		0	Os06g0278450	
+RDP1	flowering_time_at_arkansas	OsLP.zI_frmYHejY8K0fAJy-PPGM1zHVRaEUA	36	Os03g0166200	1	Os03g0170400	Os03g0169600
+RDP1	flowering_time_at_faridpur	OsLP.6njgFwzVegtbMEffFdvaKFkVx8DVKWih	22	Os12g0208900;Os12g0204600;Os12g0202850;Os12g0210200;LOC_Os12g10390	10	Os12g0205500	
+RDP1	ft_ratio_of_arkansas_aberdeen	OsLP.XXi0Yvt56eAhRZ127ODFIRuAdp3OSJ-5	27		0	Os06g0255700	
+RDP1	ft_ratio_of_arkansas_aberdeen	OsLP.QUzLKe0g7ZszHk48tkXhe5ZOd9iiC-TM	2		0	Os06g0483200	
+RDP1	ft_ratio_of_arkansas_aberdeen	OsLP.Vx8Cr6HvXgcfBSGaQ1M_8356uS4T84vy	34	Os07g0572500;Os07g0570700;Os07g0575900	3	Os07g0574600	
+RDP1	ft_ratio_of_arkansas_aberdeen	OsLP.-0ZKV2Et7iO04MgSYH7VdPqVDzGFcWhK	10	LOC_Os08g38110	1	Os08g0489800	
+RDP1	ft_ratio_of_arkansas_aberdeen	OsLP.fpoOOTKLAGS1vt5aJz-nI-zJJ9bu9EOU	0		0	Os08g0465800	
+RDP1	ft_ratio_of_faridpur_aberdeen	OsLP.5IcNyZ53i-6grD0oGN__frWHoflldO0y	9		0	Os06g0278450	
+RDP1	ft_ratio_of_faridpur_aberdeen	OsLP.XCoq22jPvScVtfDAAfSesE238moRaMhr	29		0	Os06g0267200	
+RDP1	ft_ratio_of_faridpur_aberdeen	OsLP.Vx8Cr6HvXgcfBSGaQ1M_8356uS4T84vy	34	Os07g0572500;Os07g0570700;Os07g0575900	3	Os07g0574600	
+RDP1	leaf_pubescence	OsLP.D6x5H_F25Lg3tA1KuUZGAG67axQ94dRF	63		0	Os05g0115500	
+RDP1	leaf_pubescence	OsLP.m3VlGApkgnHpwvwpvTRCC1OCsWsCN3WV	28		0	Os09g0347300	
+RDP1	leaf_pubescence	OsLP.WZVf7TXqqbEzburxlN2Nt3z0nFb0Z6v1	49	Os12g0540700;Os12g0540100;Os12g0540000;Os12g0541000;Os12g0535300	12	Os12g0538800	
+RDP1	leaf_pubescence	OsLP.dzE5aj4KUjyibffmV78fAZCOPpFuUtoX	26	Os02g0646500;Os02g0652000;Os02g0648100;Os02g0652600;Os02g0651500	7	Os02g0652100	
+RDP1	leaf_pubescence	OsLP.BZBB8_eBDWf2YEaRA16g17b5ftwD1fdj	53	Os12g0632800;Os12g0632900;Os12g0631200;Os12g0632000;Os12g0633000	12	Os12g0632900	
+RDP1	leaf_pubescence	OsLP.2TzUvAhWfedhmemVuN2ZIKBnKmK1isll	40	Os05g0119200;Os05g0120800;Os05g0121700	3	Os05g0121600	Os05g0118700
+RDP1	leaf_pubescence	OsLP.jFg1dokj4f4_j9rJzBCvIl7WAEppwudN	22	Os09g0491708;Os09g0487600;Os09g0488800;Os09g0488000;Os09g0490200	6	Os09g0484300	
+RDP1	leaf_pubescence	OsLP.i9HljpxkUI4puUODeBgFgIyyZ5LaYP4t	63	Os11g0635300	1	Os11g0636050	
+RDP1	leaf_pubescence	OsLP.IMHdhKLUUaYtnN_477u4naX27Ca2NSUg	78	Os02g0615500	1	Os02g0614966	
+RDP1	panicle_number_per_plant	OsLP.O-aTqAOzWlSvWL1eVoCZZ_hB1J5WRZq6	27		0	Os04g0647300	
+RDP1	pericarp_color	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	24	Os07g0212200;Os07g0211900	2	Os07g0211500	Os07g0211500
+RDP1	pericarp_color	OsLP.NRBYv5Jw_qx2p1Xq97p63xWjR7h1Mno_	31	Os07g0205000;Os07g0206750	2	Os07g0209500	
+RDP1	pericarp_color	OsLP.oOurGl-BMOFz5u8GcwRn3EoSvQUWFHEE	5		0	Os10g0188275	
+RDP1	pericarp_color	OsLP.9NaZB3hChObchndvnr-4jzV57XXREYet	29	Os03g0692700;Os03g0695500	2	Os03g0692400	
+RDP1	pericarp_color	OsLP._K8EDdAFv2fklimoLwej40aonFxzeEvT	54		0	Os05g0119400	
+RDP1	pericarp_color	OsLP.LJGeVFsIYmdMzxe5BwqdGTqIb5j2RhB8	22	Os05g0485500	1	Os05g0485500	
+RDP1	pericarp_color	OsLP.F7gysGypJN1YB_Yh2SDkrqVjZ9F2wVLo	38	Os06g0176200;Os06g0174400;Os06g0174800;Os06g0171700	4	Os06g0172200	
+RDP1	pericarp_color	OsLP.5mA4ZgC9tOu8lxlu2hIJTPS2V9jCxUeM	26	Os03g0398600	1	Os03g0396900	
+RDP1	pericarp_color	OsLP.FpNwTNF1NgS3TTjKs4uwDr4L49diSTHy	39	Os05g0155100;Os05g0154900;Os05g0154600;Os05g0157100;Os05g0155300	8	Os05g0155700	
+RDP1	pericarp_color	OsLP.iQVnxOq6tEMAMv8n8vFybzipE-rLKFu-	34	Os02g0509500;Os02g0510000;Os02g0510200;Os02g0510600;Os02g0510300	9	Os02g0506600	
+RDP1	pericarp_color	OsLP.IbcxUETubSXf6qBsesqaa0mRqIkKrOR7	18	Os11g0229500	1	Os11g0233201	
+RDP1	pericarp_color	OsLP.ngEZdLVvdv_F1LMq69-eqa-dEKenjr5V	36		0	Os07g0498400	
+RDP1	pericarp_color	OsLP.s38u6Op3UeWv4w1J6pKBfnRIews3BD5P	25	Os02g0543000;Os02g0543400;Os02g0542200;LOC_Os02g34120;Os02g0542500	7	Os02g0544566	
+RDP1	pericarp_color	OsLP.D7mPTRRxqgEhjzzZHpco3z1Z3Bm7xHEW	33	Os08g0175200;Os08g0171600;Os08g0169600	3	Os08g0169100	
+RDP1	pericarp_color	OsLP.CxJr7yl49gpkF7XfeLTn_IpiYoLAC9Ym	27	Os03g0397700;Os03g0400200;Os03g0397600	3	Os03g0397700	
+RDP1	pericarp_color	OsLP.bXAeTyGM2zOGQKyaT2fTYWn57XH0JSEp	24	Os06g0654300;Os06g0649800;Os06g0655100;Os06g0654900;Os06g0655500	5	Os06g0652600	
+RDP1	pericarp_color	OsLP.tpNQyE9ow77mfhMrlRs3rGpjgim8Xr0T	8		0	Os10g0479800	
+RDP1	pericarp_color	OsLP.m_YSvR44889SJ_ls8KjVkQupBBnVwx1U	15	Os07g0231900;Os07g0231700;Os07g0231400;Os07g0229900;Os07g0227700	9	Os07g0235200	
+RDP1	pericarp_color	OsLP.R2gqaVjhdvo9eYTCq8TB9piIYyQylU0z	36	Os03g0247300;Os03g0243300;LOC_Os03g14254	3	Os03g0247300	
+RDP1	pericarp_color	OsLP.87tOVqRcmulpEY4KMsMwn7fOnlCp9wWE	33	Os06g0142500;Os06g0142800;Os06g0143400;Os06g0143000;Os06g0140900	15	Os06g0142800	
+RDP1	pericarp_color	OsLP.vG4vWlkbDEwZ4xEOK4iVCNYt7Froo3B6	20	Os05g0486300;Os05g0487300;Os05g0487600;Os05g0486100;Os05g0486600	5	Os05g0489000	
+RDP1	pericarp_color	OsLP.WY3Yz5jiuymxJ6-pi_c5VKp4k9-Bnnfx	18	Os12g0189400;Os12g0193100;Os12g0191500;Os12g0189900;Os12g0188566	6	Os12g0190200	
+RDP1	pericarp_color	OsLP.mHp-6xoKeNF084XwqS0uo7YBKDFR49wm	60	Os09g0358700;Os09g0357400;Os09g0358000	3	Os09g0359800	
+RDP1	pericarp_color	OsLP.3zFig8yt75UsSJYRSYusWsnAacsHGvML	27		0	Os01g0802900	
+RDP1	pericarp_color	OsLP.7Ry6WtC0SJRKctFOe0sYnh1EOoLZMBei	5	Os11g0293900	1	Os11g0291000	
+RDP1	pericarp_color	OsLP.RkaVsq78pF-zTipXvwWzPhhmNWdv9sqH	89		0	Os04g0616900	
+RDP1	pericarp_color	OsLP.o7ayuFnjEkh9F0jb5oFxZFRxES1AlA9T	53		0	Os06g0183800	
+RDP1	pericarp_color	OsLP.PA2arBP_GJZyaPdb1Dri1XMcqmlWe4Yj	3		0	Os05g0507400	
+RDP1	pericarp_color	OsLP.JnMVUn_SouyZQUdt6JG7DN9dGmpVIToG	14	Os05g0185800	1	Os05g0187100	
+RDP1	pericarp_color	OsLP.jbqCkRgqgGQV8dMQN57AQvUxFYnV4lBh	50		0	Os04g0162800	
+RDP1	pericarp_color	OsLP.k3i98cDWeX0FxhT31vY528JguKIdtqRs	11	Os05g0520300;Os05g0516300;Os05g0517800	3	Os05g0520300	
+RDP1	pericarp_color	OsLP.VKpzpqlVq_toyM71gAkktzCI5Cp0Iv9E	81	Os04g0117600	1	Os04g0118400	
+RDP1	plant_height	OsLP.VMZi1zYCIklqsIa8eJd4aHXOLpkP-T2m	31	Os01g0780400;Os01g0782200	2	Os01g0780600	
+RDP1	plant_height	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	26	Os01g0878300	1	Os01g0878300	
+RDP1	primary_panicle_branch_number	OsLP.A6R4RcImU4I7sXZPz0s5jNoK4txFFM_a	25	Os09g0551600;Os09g0549600;Os09g0554200;Os09g0552300;Os09g0557400	9	Os09g0551500	Os09g0549500
+RDP1	seed_length	OsLP.48fWke3eO6Zdpkmw0X3l_QUgA2Tqdugw	27	Os03g0396900	1	Os03g0397700	
+RDP1	seed_length	OsLP.0CfFUPb1vusdYrl2oHlmanlNBJ2kxThy	30	Os03g0407050;Os03g0407100;Os03g0407900;Os03g0408300;Os03g0406900	10	Os03g0407050	Os03g0407400
+RDP1	seed_length_width_ratio	OsLP.I8WHDSEBTxS2io8D9ODoQX2Jw-6SH5aX	15	Os05g0188700;Os05g0188600;Os05g0190000	3	Os05g0188500	Os05g0187500
+RDP1	seed_length_width_ratio	OsLP.9XyIo3Z_TDh8Tdwddr11xdUJ3zHbGMey	29		0	Os07g0605800	
+RDP1	seed_length_width_ratio	OsLP.AltNfilWtNnZRl8YTi0OkLk312dWE_nz	41		0	Os12g0542200	
+RDP1	seed_length_width_ratio	OsLP.UTewwPoThkjdJTY-4KG7U07rsyI-LOYD	40	Os07g0551700;LOC_Os07g36770;Os07g0555400;Os07g0556300;Os07g0557400	6	Os07g0553900	
+RDP1	seed_length_width_ratio	OsLP.48fWke3eO6Zdpkmw0X3l_QUgA2Tqdugw	27	Os03g0396900	1	Os03g0397700	
+RDP1	seed_length_width_ratio	OsLP.LOEcQmKECNKJTZUSCeSqsBfmyxjRngye	15	Os03g0580200;Os03g0577200;Os03g0575700;Os03g0575500;Os03g0575950	8	Os03g0578900	
+RDP1	seed_volume	OsLP.ZrCjeZbjuDrnVsqDSaTX7dvL9lFxqzGK	13		0	Os02g0569400	
+RDP1	seed_volume	OsLP.8aCYkpAeWXLfuU8H-ItYIH6Eb-u36MAp	14	Os05g0187100;Os05g0184901	2	Os05g0187100	Os05g0187500
+RDP1	seed_volume	OsLP.uP4CCEEVBECy79gqhNPe82X8J67QxES2	33	Os02g0713400	1	Os02g0714200	
+RDP1	seed_width	OsLP.FbbsUDHV1qAxn9LHu2HLjyheCdp6bHc0	14	Os05g0190000	1	Os05g0187800	Os05g0187500
+RDP1	seed_width	OsLP.ZrCjeZbjuDrnVsqDSaTX7dvL9lFxqzGK	13		0	Os02g0569400	
+RDP1	seed_width	OsLP.JnMVUn_SouyZQUdt6JG7DN9dGmpVIToG	14	Os05g0185800	1	Os05g0187100	Os05g0187500
+RDP1	seed_width	OsLP.9XyIo3Z_TDh8Tdwddr11xdUJ3zHbGMey	29		0	Os07g0605800	
+RDP1	straighthead_suseptability	OsLP.IVRJzUgCKKi8iseOhds3AdoBqNM3grNG	32	Os01g0780900	1	Os01g0781100	

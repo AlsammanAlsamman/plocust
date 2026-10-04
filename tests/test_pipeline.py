@@ -425,3 +425,14 @@ def test_one_locus_many_traits_keeps_every_record(world, loci, tmp_path):
     assert create(db, [a, b], name="t", version="0") == 2
     recs = LocusDB(db).records(a.passport_id)
     assert sorted(r.trait.name for r in recs) == ["grain weight", "plant height"]
+
+
+def test_ld_call_without_coloc(world, loci):
+    """The LD call must not depend on whether colocalization is switched on."""
+    geno = Genotypes.open(world.bfile)
+    other = loci[0].model_copy(deep=True)
+    other.placements[0].lead_pos += SNP_STEP * BLOCK_SNPS
+    other.credible_set = None
+    for coloc in (True, False):
+        rows = compare([loci[0]], [loci[0].model_copy(deep=True), other], "SRC", geno, MatchConfig(coloc=coloc))
+        assert rows.sort_values("distance_bp")["call"].tolist() == ["same", "distinct_nearby"]

@@ -1,0 +1,7 @@
+gwas_loci	525
+with_same_signal_eqtl	163
+benchmark_loci (cloned gene + same-signal eQTL)	38
+top eQTL gene = cloned gene	0
+any eQTL gene = cloned gene	0
+nearest gene = cloned gene	5
+loci without cloned gene but with eQTL gene (new candidates)	125

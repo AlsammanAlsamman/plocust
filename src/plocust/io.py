@@ -222,12 +222,30 @@ class Genotypes:
 
     def subset(self, iids) -> Genotypes:
         keep = self.samples["iid"].isin(set(map(str, iids))).to_numpy()
-        return Genotypes(self.prefix, self.variants, self.samples, keep)
+        sub = Genotypes(self.prefix, self.variants, self.samples, keep)
+        object.__setattr__(sub, "_by_chrom", getattr(self, "_by_chrom", None))  # share the position index
+        return sub
+
+    def _chrom_index(self) -> dict:
+        """Per chromosome: sorted positions and the matching row numbers of `variants` (built once)."""
+        if getattr(self, "_by_chrom", None) is None:
+            idx = {}
+            v = self.variants
+            for chrom, rows in v.groupby("chrom", sort=False).indices.items():
+                pos = v["pos"].to_numpy()[rows]
+                order = np.argsort(pos, kind="stable")
+                idx[chrom] = (pos[order], rows[order])
+            object.__setattr__(self, "_by_chrom", idx)
+        return self._by_chrom
 
     def region(self, chrom, start: int, end: int) -> pd.DataFrame:
-        chrom = normalize_chrom(chrom)
-        v = self.variants
-        return v[(v["chrom"] == chrom) & (v["pos"] >= start) & (v["pos"] <= end)]
+        """Variants on chrom with start <= pos <= end, in position order (binary search, no full scan)."""
+        hit = self._chrom_index().get(normalize_chrom(chrom))
+        if hit is None:
+            return self.variants.iloc[:0]
+        pos, rows = hit
+        lo, hi = np.searchsorted(pos, start, side="left"), np.searchsorted(pos, end, side="right")
+        return self.variants.iloc[rows[lo:hi]]
 
     def read(self, idx) -> np.ndarray:
         """Matrix samples x variants of A1 counts (NaN = missing)."""
