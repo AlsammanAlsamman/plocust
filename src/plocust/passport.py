@@ -1,0 +1,218 @@
+"""The locus passport: a build-independent description of one GWAS locus.
+
+Identity comes from the sequence anchors (and the credible set). Everything
+else - placements, peak, LD block, genes, neighbours - describes the locus as
+seen in one panel and one build, and may differ between studies.
+
+Coordinates are 1-based and inclusive.
+"""
+
+from __future__ import annotations
+
+import json
+from enum import Enum
+from pathlib import Path
+from typing import Optional
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+
+from .ids import normalize_sequence, passport_id
+
+SCHEMA_VERSION = "0.1.0"
+
+
+class _Model(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+
+class AnchorRole(str, Enum):
+    lead_snp = "lead_snp"
+    block_left = "block_left"
+    block_right = "block_right"
+    gene = "gene"
+
+
+class Anchor(_Model):
+    """A flanking sequence that locates the locus on any assembly by alignment."""
+
+    role: AnchorRole
+    sequence: str
+    variant_offset: Optional[int] = Field(
+        None, ge=0, description="0-based index of the variant inside `sequence` (lead_snp only)"
+    )
+    unique: Optional[bool] = Field(None, description="maps once to the source genome; None = not checked")
+    label: Optional[str] = Field(None, description="e.g. gene ID for a gene anchor")
+
+    @field_validator("sequence")
+    @classmethod
+    def _check_sequence(cls, v: str) -> str:
+        return normalize_sequence(v)
+
+    @model_validator(mode="after")
+    def _check_offset(self) -> Anchor:
+        if self.role is AnchorRole.lead_snp and self.variant_offset is None:
+            raise ValueError("a lead_snp anchor needs variant_offset")
+        if self.variant_offset is not None and self.variant_offset >= len(self.sequence):
+            raise ValueError("variant_offset is outside the anchor sequence")
+        return self
+
+
+class PlacementFlag(str, Enum):
+    missing_anchor = "missing_anchor"
+    multi_mapping = "multi_mapping"
+    split = "split"
+    inverted = "inverted"
+    out_of_order = "out_of_order"
+
+
+class Placement(_Model):
+    """Where the locus sits on one genome build. Derived from anchors, never the identity."""
+
+    build: str
+    chrom: str
+    start: int = Field(ge=1)
+    end: int = Field(ge=1)
+    strand: str = Field("+", pattern=r"^[+-]$")
+    method: str = Field("source", description="'source' = coordinates from the study; 'anchor' = placed by alignment")
+    anchors_placed: Optional[int] = Field(None, ge=0)
+    anchors_total: Optional[int] = Field(None, ge=0)
+    flags: list[PlacementFlag] = []
+
+    @model_validator(mode="after")
+    def _check_interval(self) -> Placement:
+        if self.end < self.start:
+            raise ValueError("placement end is before start")
+        return self
+
+
+class Variant(_Model):
+    id: Optional[str] = None
+    chrom: str
+    pos: int = Field(ge=1)
+    ref: str
+    alt: str
+
+
+class Signal(_Model):
+    """The statistical peak, as observed in the source study."""
+
+    lead: Variant
+    effect_allele: Optional[str] = None
+    effect_allele_freq: Optional[float] = Field(None, ge=0, le=1)
+    beta: Optional[float] = None
+    se: Optional[float] = Field(None, ge=0)
+    pvalue: float = Field(gt=0, le=1)
+    peak_start: Optional[int] = Field(None, ge=1, description="first position above the threshold")
+    peak_end: Optional[int] = Field(None, ge=1)
+    n_significant: Optional[int] = Field(None, ge=0)
+
+
+class CredibleVariant(_Model):
+    id: Optional[str] = None
+    pos: int = Field(ge=1)
+    pip: float = Field(ge=0, le=1, description="posterior inclusion probability")
+
+
+class CredibleSet(_Model):
+    method: str = Field(description="e.g. 'wakefield_abf', 'susie'")
+    coverage: float = Field(0.95, gt=0, le=1)
+    variants: list[CredibleVariant]
+
+
+class LDBlock(_Model):
+    """LD around the lead in the source panel. Panel-specific by nature."""
+
+    start: int = Field(ge=1)
+    end: int = Field(ge=1)
+    method: str = Field(description="e.g. 'r2>=0.6 from lead', 'gabriel'")
+    r2_threshold: Optional[float] = Field(None, ge=0, le=1)
+    n_haplotypes: Optional[int] = Field(None, ge=1)
+    haplotype_freqs: list[float] = []
+    inversion_like: Optional[bool] = Field(None, description="long block with near-perfect LD")
+
+    @property
+    def length_kb(self) -> float:
+        return (self.end - self.start + 1) / 1000
+
+
+class Gene(_Model):
+    id: str
+    name: Optional[str] = None
+    start: int = Field(ge=1)
+    end: int = Field(ge=1)
+    distance_bp: int = Field(ge=0, description="0 when the gene overlaps the lead or credible set")
+    in_credible_set: bool = False
+    annotation: Optional[str] = None
+
+
+class Neighbour(_Model):
+    passport_id: str
+    distance_bp: int = Field(ge=0)
+    r2_with_lead: Optional[float] = Field(None, ge=0, le=1)
+    independent: Optional[bool] = None
+
+
+class Trait(_Model):
+    name: str
+    ontology_id: Optional[str] = Field(None, description="e.g. Planteome TO:0000207")
+
+
+class Source(_Model):
+    study: str
+    panel: Optional[str] = None
+    n_samples: Optional[int] = Field(None, ge=1)
+    gwas_method: Optional[str] = None
+    doi: Optional[str] = None
+
+
+class LocusPassport(_Model):
+    schema_version: str = SCHEMA_VERSION
+    passport_id: str = ""
+    species: str
+    trait: Trait
+    source: Source
+    anchors: list[Anchor]
+    placements: list[Placement] = []
+    signal: Signal
+    credible_set: Optional[CredibleSet] = None
+    ld_block: Optional[LDBlock] = None
+    genes: list[Gene] = []
+    neighbours: list[Neighbour] = []
+    notes: Optional[str] = None
+
+    @model_validator(mode="after")
+    def _assign_id(self) -> LocusPassport:
+        leads = [a for a in self.anchors if a.role is AnchorRole.lead_snp]
+        if len(leads) != 1:
+            raise ValueError("a passport needs exactly one lead_snp anchor")
+        expected = passport_id(self.species, leads[0].sequence)
+        if not self.passport_id:
+            self.passport_id = expected
+        elif self.passport_id != expected:
+            raise ValueError(f"passport_id {self.passport_id} does not match its lead anchor ({expected})")
+        return self
+
+    @property
+    def lead_anchor(self) -> Anchor:
+        return next(a for a in self.anchors if a.role is AnchorRole.lead_snp)
+
+    def placement(self, build: str) -> Optional[Placement]:
+        return next((p for p in self.placements if p.build == build), None)
+
+    def to_json(self, path: str | Path | None = None, indent: int = 2) -> str:
+        text = self.model_dump_json(indent=indent, exclude_none=True)
+        if path is not None:
+            Path(path).write_text(text + "\n")
+        return text
+
+    @classmethod
+    def from_json(cls, path: str | Path) -> LocusPassport:
+        return cls.model_validate_json(Path(path).read_text())
+
+
+def json_schema() -> dict:
+    return LocusPassport.model_json_schema()
+
+
+def write_json_schema(path: str | Path) -> None:
+    Path(path).write_text(json.dumps(json_schema(), indent=2) + "\n")

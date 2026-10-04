@@ -1,0 +1,755 @@
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "description": "A flanking sequence that locates the locus on any assembly by alignment.",
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/AnchorRole"
+        },
+        "sequence": {
+          "title": "Sequence",
+          "type": "string"
+        },
+        "variant_offset": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "0-based index of the variant inside `sequence` (lead_snp only)",
+          "title": "Variant Offset"
+        },
+        "unique": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "maps once to the source genome; None = not checked",
+          "title": "Unique"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "e.g. gene ID for a gene anchor",
+          "title": "Label"
+        }
+      },
+      "required": [
+        "role",
+        "sequence"
+      ],
+      "title": "Anchor",
+      "type": "object"
+    },
+    "AnchorRole": {
+      "enum": [
+        "lead_snp",
+        "block_left",
+        "block_right",
+        "gene"
+      ],
+      "title": "AnchorRole",
+      "type": "string"
+    },
+    "CredibleSet": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "description": "e.g. 'wakefield_abf', 'susie'",
+          "title": "Method",
+          "type": "string"
+        },
+        "coverage": {
+          "default": 0.95,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Coverage",
+          "type": "number"
+        },
+        "variants": {
+          "items": {
+            "$ref": "#/$defs/CredibleVariant"
+          },
+          "title": "Variants",
+          "type": "array"
+        }
+      },
+      "required": [
+        "method",
+        "variants"
+      ],
+      "title": "CredibleSet",
+      "type": "object"
+    },
+    "CredibleVariant": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Id"
+        },
+        "pos": {
+          "minimum": 1,
+          "title": "Pos",
+          "type": "integer"
+        },
+        "pip": {
+          "description": "posterior inclusion probability",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Pip",
+          "type": "number"
+        }
+      },
+      "required": [
+        "pos",
+        "pip"
+      ],
+      "title": "CredibleVariant",
+      "type": "object"
+    },
+    "Gene": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "start": {
+          "minimum": 1,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        },
+        "distance_bp": {
+          "description": "0 when the gene overlaps the lead or credible set",
+          "minimum": 0,
+          "title": "Distance Bp",
+          "type": "integer"
+        },
+        "in_credible_set": {
+          "default": false,
+          "title": "In Credible Set",
+          "type": "boolean"
+        },
+        "annotation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Annotation"
+        }
+      },
+      "required": [
+        "id",
+        "start",
+        "end",
+        "distance_bp"
+      ],
+      "title": "Gene",
+      "type": "object"
+    },
+    "LDBlock": {
+      "additionalProperties": false,
+      "description": "LD around the lead in the source panel. Panel-specific by nature.",
+      "properties": {
+        "start": {
+          "minimum": 1,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        },
+        "method": {
+          "description": "e.g. 'r2>=0.6 from lead', 'gabriel'",
+          "title": "Method",
+          "type": "string"
+        },
+        "r2_threshold": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "R2 Threshold"
+        },
+        "n_haplotypes": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N Haplotypes"
+        },
+        "haplotype_freqs": {
+          "default": [],
+          "items": {
+            "type": "number"
+          },
+          "title": "Haplotype Freqs",
+          "type": "array"
+        },
+        "inversion_like": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "long block with near-perfect LD",
+          "title": "Inversion Like"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "method"
+      ],
+      "title": "LDBlock",
+      "type": "object"
+    },
+    "Neighbour": {
+      "additionalProperties": false,
+      "properties": {
+        "passport_id": {
+          "title": "Passport Id",
+          "type": "string"
+        },
+        "distance_bp": {
+          "minimum": 0,
+          "title": "Distance Bp",
+          "type": "integer"
+        },
+        "r2_with_lead": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "R2 With Lead"
+        },
+        "independent": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Independent"
+        }
+      },
+      "required": [
+        "passport_id",
+        "distance_bp"
+      ],
+      "title": "Neighbour",
+      "type": "object"
+    },
+    "Placement": {
+      "additionalProperties": false,
+      "description": "Where the locus sits on one genome build. Derived from anchors, never the identity.",
+      "properties": {
+        "build": {
+          "title": "Build",
+          "type": "string"
+        },
+        "chrom": {
+          "title": "Chrom",
+          "type": "string"
+        },
+        "start": {
+          "minimum": 1,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        },
+        "strand": {
+          "default": "+",
+          "pattern": "^[+-]$",
+          "title": "Strand",
+          "type": "string"
+        },
+        "method": {
+          "default": "source",
+          "description": "'source' = coordinates from the study; 'anchor' = placed by alignment",
+          "title": "Method",
+          "type": "string"
+        },
+        "anchors_placed": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Anchors Placed"
+        },
+        "anchors_total": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Anchors Total"
+        },
+        "flags": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PlacementFlag"
+          },
+          "title": "Flags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "build",
+        "chrom",
+        "start",
+        "end"
+      ],
+      "title": "Placement",
+      "type": "object"
+    },
+    "PlacementFlag": {
+      "enum": [
+        "missing_anchor",
+        "multi_mapping",
+        "split",
+        "inverted",
+        "out_of_order"
+      ],
+      "title": "PlacementFlag",
+      "type": "string"
+    },
+    "Signal": {
+      "additionalProperties": false,
+      "description": "The statistical peak, as observed in the source study.",
+      "properties": {
+        "lead": {
+          "$ref": "#/$defs/Variant"
+        },
+        "effect_allele": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effect Allele"
+        },
+        "effect_allele_freq": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effect Allele Freq"
+        },
+        "beta": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Beta"
+        },
+        "se": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Se"
+        },
+        "pvalue": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Pvalue",
+          "type": "number"
+        },
+        "peak_start": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "first position above the threshold",
+          "title": "Peak Start"
+        },
+        "peak_end": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Peak End"
+        },
+        "n_significant": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N Significant"
+        }
+      },
+      "required": [
+        "lead",
+        "pvalue"
+      ],
+      "title": "Signal",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "study": {
+          "title": "Study",
+          "type": "string"
+        },
+        "panel": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Panel"
+        },
+        "n_samples": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N Samples"
+        },
+        "gwas_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gwas Method"
+        },
+        "doi": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Doi"
+        }
+      },
+      "required": [
+        "study"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "Trait": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "ontology_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "e.g. Planteome TO:0000207",
+          "title": "Ontology Id"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Trait",
+      "type": "object"
+    },
+    "Variant": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Id"
+        },
+        "chrom": {
+          "title": "Chrom",
+          "type": "string"
+        },
+        "pos": {
+          "minimum": 1,
+          "title": "Pos",
+          "type": "integer"
+        },
+        "ref": {
+          "title": "Ref",
+          "type": "string"
+        },
+        "alt": {
+          "title": "Alt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chrom",
+        "pos",
+        "ref",
+        "alt"
+      ],
+      "title": "Variant",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "passport_id": {
+      "default": "",
+      "title": "Passport Id",
+      "type": "string"
+    },
+    "species": {
+      "title": "Species",
+      "type": "string"
+    },
+    "trait": {
+      "$ref": "#/$defs/Trait"
+    },
+    "source": {
+      "$ref": "#/$defs/Source"
+    },
+    "anchors": {
+      "items": {
+        "$ref": "#/$defs/Anchor"
+      },
+      "title": "Anchors",
+      "type": "array"
+    },
+    "placements": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Placement"
+      },
+      "title": "Placements",
+      "type": "array"
+    },
+    "signal": {
+      "$ref": "#/$defs/Signal"
+    },
+    "credible_set": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CredibleSet"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "ld_block": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LDBlock"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "genes": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Gene"
+      },
+      "title": "Genes",
+      "type": "array"
+    },
+    "neighbours": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Neighbour"
+      },
+      "title": "Neighbours",
+      "type": "array"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "species",
+    "trait",
+    "source",
+    "anchors",
+    "signal"
+  ],
+  "title": "LocusPassport",
+  "type": "object"
+}
