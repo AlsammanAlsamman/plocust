@@ -49,6 +49,10 @@ def imprint_on_build(p: LocusPassport, build: str) -> Optional[pd.DataFrame]:
         return None
     src = next((x for x in p.placements if x.method == "source"), None)
     df = pd.DataFrame({"id": imp.ids, "pos": imp.pos, "ref": imp.ref, "alt": imp.alt, "z": imp.z})
+    if imp.territory_start is not None:  # only this locus's own SNPs, not a neighbouring locus's peak
+        df = df[(df["pos"] >= imp.territory_start) & (df["pos"] <= imp.territory_end)]
+    if len(df) == 0:
+        return None
     if src is not None and src.build != build:
         d = df["pos"] - src.lead_pos
         if pl.strand == "-":

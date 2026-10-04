@@ -221,7 +221,7 @@ def test_effect_direction(world, loci):
     flipped = a.model_copy(deep=True)
     flipped.signal.beta = -flipped.signal.beta  # same SNP, opposite effect: cannot be the same causal effect
     row = compare([a], [flipped], "SRC", geno).iloc[0]
-    assert row["direction"] == "discordant" and row["call"] == "ambiguous"
+    assert row["direction"] == "discordant" and row["call"] == "same_opposite_effect"
     swapped = flipped.model_copy(deep=True)  # opposite sign but reported for the other allele: concordant again
     swapped.signal.effect_allele = swapped.signal.lead.ref
     assert compare([a], [swapped], "SRC", geno).iloc[0]["direction"] == "concordant"
@@ -259,6 +259,16 @@ def test_marker_lookup_without_genome(world, tmp_path):
     flanks = LocusDB(db).marker_flanks()
     ps = identify_loci(ss, STUDY, flanks=flanks, cfg=IdentifyConfig(p_threshold=1e-8))
     assert ps and len(ps[0].lead_anchor.sequence) == 121
+    pl = anchor_passports(ps, Aligner(world.target, build="TGT"))[0]
+    assert pl.lead_pos == ps[0].signal.lead.pos + INSERT_LEN
+
+    # chip manifests often give only ~20 bp each side: short anchors use the near-perfect unique-hit rule
+    short = pd.DataFrame({"marker_id": ss["id"], "sequence": [q[40:-40] for q in seqs]})
+    db2 = tmp_path / "db2.sqlite"
+    create(db2, [], name="t", version="0")
+    add_markers(db2, short, "short chip")
+    ps = identify_loci(ss, STUDY, flanks=LocusDB(db2).marker_flanks(), cfg=IdentifyConfig(p_threshold=1e-8))
+    assert len(ps[0].lead_anchor.sequence) == 41
     pl = anchor_passports(ps, Aligner(world.target, build="TGT"))[0]
     assert pl.lead_pos == ps[0].signal.lead.pos + INSERT_LEN
 
@@ -331,3 +341,33 @@ def test_coloc_across_builds(world, tmp_path):
         shutil.copy(f"{world.bfile}.{ext}", tmp_path / f"tgt.{ext}")
     row = compare(a, a2, "TGT", Genotypes.open(tmp_path / "tgt")).sort_values("distance_bp").iloc[0]
     assert row["coloc_call"] == "same" and row["coloc_snps"] > 50
+
+
+def test_imprint_territory(world):
+    """Two loci: each imprint's territory stops halfway to the other lead."""
+    geno = Genotypes.open(world.bfile)
+    g = geno.read(geno.variants["idx"].to_numpy())
+    c1 = int(np.flatnonzero(geno.variants["pos"] == CAUSAL_POS)[0])
+    nxt = range((c1 // BLOCK_SNPS + 1) * BLOCK_SNPS, (c1 // BLOCK_SNPS + 2) * BLOCK_SNPS)
+    c2 = max(nxt, key=lambda j: g[:, j].std())
+    ps = sorted(_study(world, [c1, c2], 5), key=lambda p: p.signal.lead.pos)
+    assert len(ps) >= 2
+    a, b = ps[0], ps[1]
+    mid = (a.signal.lead.pos + b.signal.lead.pos) // 2
+    assert a.imprint.territory_end == mid and b.imprint.territory_start == mid + 1
+
+
+def test_missing_lead_uses_best_associated_proxy(world, loci, tmp_path):
+    from .conftest import write_bed
+
+    geno = Genotypes.open(world.bfile)
+    v = geno.variants
+    lead = loci[0].signal.lead.pos
+    keep = v[v["pos"] != lead]
+    g = geno.read(keep["idx"].to_numpy())
+    bim = keep.assign(cm=0)[["chrom", "id", "cm", "pos", "a1", "a2"]]
+    write_bed(tmp_path / "nolead", g, bim, geno.samples["iid"].tolist())
+    panel = Genotypes.open(tmp_path / "nolead")
+    assert panel.nearest("1", lead, 0) is None
+    row = compare([loci[0]], [loci[0].model_copy(deep=True)], "SRC", panel).iloc[0]
+    assert row["call"] == "same" and row["r2"] > 0.9

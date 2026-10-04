@@ -174,6 +174,9 @@ class Imprint(_Model):
     independent_signals: int = Field(ge=1, description="loci of this study within the window, this one included")
     ld_edge_r2: Optional[float] = None
     ld_edges: list[tuple[int, int, float]] = []
+    territory_start: Optional[int] = Field(None, description="this locus's own part of the window: halfway to the "
+                                           "neighbouring leads of the same study (source build)")
+    territory_end: Optional[int] = None
 
 
 class Gene(_Model):

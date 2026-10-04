@@ -1,0 +1,7 @@
+study	build	snps_tested	allele_match	allele_match_other_strand	chrom_missing	score	verdict
+RDP1 (REGENIE, MSU6)	MSU6	2000	0.9985	0.0015	0	0.9985	likely build
+RDP1 (REGENIE, MSU6)	IRGSP-1.0	2000	0.52	0.48	0	0.52	
+RDP1 (REGENIE, MSU6)	MH63RS2	2000	0.492	0.507	0	0.507	
+3K (REGENIE, IRGSP-1.0)	IRGSP-1.0	2000	1.0	0.0	0	1.0	likely build
+3K (REGENIE, IRGSP-1.0)	MH63RS2	2000	0.5015	0.4975	0	0.5015	
+3K (REGENIE, IRGSP-1.0)	MSU6	2000	0.4995	0.498	0	0.4995	

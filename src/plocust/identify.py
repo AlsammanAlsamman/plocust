@@ -183,8 +183,9 @@ def signed_z(ss: pd.DataFrame) -> tuple[np.ndarray, bool]:
     return z * sign, True
 
 
-def imprint(ss: pd.DataFrame, lead_row, threshold: float, n_loci_in_window: int, cfg: IdentifyConfig,
+def imprint(ss: pd.DataFrame, lead_row, threshold: float, other_leads: list[int], cfg: IdentifyConfig,
             geno: Optional[Genotypes] = None) -> Imprint:
+    """`other_leads`: positions of the study's other leads on the same chromosome."""
     chrom, lead_pos = lead_row["chrom"], int(lead_row["pos"])
     w = int(cfg.imprint_kb * 1000)
     r = ss[(ss["chrom"] == chrom) & (ss["pos"] >= lead_pos - w) & (ss["pos"] <= lead_pos + w)]
@@ -211,8 +212,14 @@ def imprint(ss: pd.DataFrame, lead_row, threshold: float, n_loci_in_window: int,
                 for j in range(i + 1, len(nodes)):
                     if r2[i, j] >= cfg.imprint_edge_r2:
                         ld_edges.append((int(nodes[i]), int(nodes[j]), round(float(r2[i, j]), 3)))
+    left = [x for x in other_leads if x < lead_pos]
+    right = [x for x in other_leads if x > lead_pos]
+    territory = (max(lead_pos - w, (max(left) + lead_pos) // 2 + 1) if left else lead_pos - w,
+                 min(lead_pos + w, (min(right) + lead_pos) // 2) if right else lead_pos + w)
+    n_loci_in_window = 1 + sum(abs(x - lead_pos) <= w for x in other_leads)
     return Imprint(
         window_bp=w, threshold=threshold, z_signed=signed,
+        territory_start=max(1, territory[0]), territory_end=territory[1],
         ids=r["id"].astype(str).tolist(), pos=r["pos"].astype(int).tolist(),
         ref=r["ref"].fillna("N").astype(str).tolist(), alt=r["alt"].fillna("N").astype(str).tolist(),
         z=[round(float(x), 3) for x in z], bins=cfg.imprint_bins, profile=[round(float(x), 3) for x in profile],
@@ -418,9 +425,7 @@ def identify_loci(
                 signal=signal,
                 credible_set=cs,
                 ld_block=block,
-                imprint=imprint(ss, lead, threshold, 1 + sum(
-                    1 for o in clumps if o is not c and ss.at[o.lead, "chrom"] == chrom
-                    and abs(int(ss.at[o.lead, "pos"]) - lead_pos) <= cfg.imprint_kb * 1000), cfg, geno),
+                imprint=imprint(ss, lead, threshold, others, cfg, geno),
                 genes=nearby_genes(genes, chrom, lead_pos, start, end, cs, cfg) if genes is not None else [],
                 notes="; ".join(notes) or None,
             )

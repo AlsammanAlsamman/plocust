@@ -11,7 +11,7 @@ given, the same-signal test uses LD measured in that panel:
 When both studies report effects, the direction test asks whether the
 trait-increasing alleles sit on the same haplotype in the panel (sign of the
 lead-to-lead correlation x the two effect signs). A "same" call with opposite
-directions is downgraded to "ambiguous".
+directions becomes "same_opposite_effect".
 
 Without genotypes the call falls back to distance ("same_by_position").
 """
@@ -57,6 +57,24 @@ def _panel_index(geno: Genotypes, chrom: str, positions, proxy_bp: int) -> list[
     return out
 
 
+def _best_proxy(p: LocusPassport, build: str, geno: Genotypes, proxy_bp: int) -> Optional[int]:
+    """Stand-in for a lead missing from the panel: the study's most associated SNP (from its imprint)
+    that is in the panel, within proxy_bp of the lead. The nearest SNP may not be in LD with the lead."""
+    from .coloc import imprint_on_build, to_panel
+
+    pl = _lead(p, build)
+    df = imprint_on_build(p, build)
+    if df is None:
+        return None
+    df = df[(df["pos"] - pl.lead_pos).abs() <= proxy_bp]
+    if df.empty:
+        return None
+    m = to_panel(df, geno, tol=20)
+    if m.empty:
+        return None
+    return int(m.loc[m["z_a1"].abs().idxmax(), "idx"])
+
+
 def signal_r2(a: LocusPassport, b: LocusPassport, build: str, geno: Genotypes, cfg: MatchConfig) -> Optional[float]:
     """Highest r2 between the two loci's lead (and, on their own build, credible-set) variants."""
     pa, pb = _lead(a, build), _lead(b, build)
@@ -69,8 +87,17 @@ def signal_r2(a: LocusPassport, b: LocusPassport, build: str, geno: Genotypes, c
         return list(dict.fromkeys(pos))
 
     proxy = int(cfg.proxy_kb * 1000)
-    ia = _panel_index(geno, pa.chrom, positions(a, pa), proxy)
-    ib = _panel_index(geno, pb.chrom, positions(b, pb), proxy)
+
+    def indices(p, pl) -> list[int]:
+        pos = positions(p, pl)
+        exact = _panel_index(geno, pl.chrom, pos, 0)
+        if geno.nearest(pl.chrom, pl.lead_pos, 0) is None:  # lead not genotyped in the panel
+            best = _best_proxy(p, build, geno, proxy)
+            stand_in = [best] if best is not None else _panel_index(geno, pl.chrom, [pl.lead_pos], proxy)
+            exact = stand_in + exact
+        return list(dict.fromkeys(exact))
+
+    ia, ib = indices(a, pa), indices(b, pb)
     if not ia or not ib:
         return None
     g = geno.read(ia + ib)
@@ -157,7 +184,9 @@ def match_pair(a: LocusPassport, b: LocusPassport, build: str, geno: Optional[Ge
         row["call"] = "same" if r2 >= cfg.same_r2 else "distinct_nearby" if r2 < cfg.distinct_r2 else "ambiguous"
         row["direction"] = direction(a, b, build, geno)
         if row["call"] == "same" and row["direction"] == "discordant":
-            row["call"] = "ambiguous"
+            # one signal, but the trait-increasing alleles differ: opposite trait coding (e.g. amylose vs
+            # waxy endosperm), a different trait, or an allele mix-up worth checking
+            row["call"] = "same_opposite_effect"
     if geno is not None and cfg.coloc:
         from .coloc import coloc_pair
 

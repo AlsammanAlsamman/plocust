@@ -159,6 +159,9 @@ def main():
 
     # 2. one REGENIE run per panel for all replicates
     for panel in "AB":
+        if (WORK / f"s2_{panel}_y{N_REP - 1}.regenie").exists() and (WORK / f"pheno_{panel}.tsv").exists():
+            print(f"REGENIE panel {panel}: reusing results (replicates are seeded)", flush=True)
+            continue
         common = ["--phenoFile", WORK / f"pheno_{panel}.tsv", "--covarFile", DATA / "3k/covar5.tsv",
                   "--keep", WORK / f"keep_{panel}.txt", "--threads", "8"]
         # step-1 SNPs must vary inside the panel
@@ -213,6 +216,9 @@ def main():
         "lead distance <= 100 kb": pairs["distance_bp"] <= 100_000,
         "lead distance <= 250 kb": pairs["distance_bp"] <= 250_000,
         "lead distance <= 500 kb": pairs["distance_bp"] <= 500_000,
+        "colocalization (PP.H4 >= 0.8)": pairs["coloc_call"] == "same",
+        "combined: coloc if conclusive, else LD call": pairs["coloc_call"].eq("same")
+        | (pairs["coloc_call"].isna() | pairs["coloc_call"].eq("inconclusive")) & pairs["call"].eq("same"),
     }
     truth = pairs["truth_same"]
     trap = pairs["truth_role"].str.startswith("pair") & pairs["role_b"].str.startswith("pair") & ~truth
@@ -227,6 +233,8 @@ def main():
     res.to_csv(OUT / "summary.tsv", sep="\t", index=False)
     print(res.to_string(index=False))
     det = pd.DataFrame(detect)
+    print(f"\ncoloc calls: {pairs['coloc_call'].value_counts(dropna=False).to_dict()}; "
+          f"direction: {pairs['direction'].value_counts(dropna=False).to_dict()}")
     print(f"\nloci per panel-replicate {det['loci'].mean():.1f}; unassigned (false) loci {det['false_loci'].sum()} "
           f"of {det['loci'].sum()}; ambiguous calls {(pairs['call'] == 'ambiguous').sum()}")
 

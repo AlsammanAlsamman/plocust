@@ -1,0 +1,35 @@
+gene	panel	query	target	target_kind	chrom	query_lead	target_lead	distance_bp	overlap	r2	direction	profile_corr	call	score	PP.H3	PP.H4	coloc_snps	coloc_call
+sd1	core 365K	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	gwas	1	38112582	38112582	0	True	1.0	concordant	0.3512	same	1.0	0.0014	0.9968	43.0	same
+sd1	core 365K	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	OsLP.GnKqrK4VOhM1Y6GcvKFvCDyjnt9nHrpR	gwas	1	38112582	38999212	886630	False	0.7178	concordant	0.4779	same	0.7178				
+sd1	core 365K	OsLP.Rkfb1Ze1eNApu1D7mkJQOAWbkrhtq5zd	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	gwas	1	38632196	38112582	519614	False	0.6343	concordant	0.1781	same	0.6343				
+sd1	core 365K	OsLP.Rkfb1Ze1eNApu1D7mkJQOAWbkrhtq5zd	OsLP.GnKqrK4VOhM1Y6GcvKFvCDyjnt9nHrpR	gwas	1	38632196	38999212	367016	False	0.584	concordant	0.0148	same	0.584				
+sd1	core 365K	OsLP.Rkfb1Ze1eNApu1D7mkJQOAWbkrhtq5zd	OsLP.2J5XIP0ZD0R4ehU6c7WE6xFhXXdbi85_	gwas	1	38632196	39588846	956650	False	0.4528	concordant	-0.2991	ambiguous	0.4528				
+sd1	dense 4.8M	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	gwas	1	38112582	38112582	0	True	1.0	concordant	0.3512	same	1.0	0.0028	0.9955	3477.0	same
+sd1	dense 4.8M	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	OsLP.GnKqrK4VOhM1Y6GcvKFvCDyjnt9nHrpR	gwas	1	38112582	38999212	886630	False	0.7675	concordant	0.4779	same	0.7675				
+sd1	dense 4.8M	OsLP.Rkfb1Ze1eNApu1D7mkJQOAWbkrhtq5zd	OsLP.JxqUD34_8JoiNAVgnKrHnPhQn0kdSkUr	gwas	1	38632196	38112582	519614	False	0.6784	concordant	0.1781	same	0.6784				
+sd1	dense 4.8M	OsLP.Rkfb1Ze1eNApu1D7mkJQOAWbkrhtq5zd	OsLP.GnKqrK4VOhM1Y6GcvKFvCDyjnt9nHrpR	gwas	1	38632196	38999212	367016	False	0.6214	concordant	0.0148	same	0.6214	0.1064	0.3003	875.0	inconclusive
+sd1	dense 4.8M	OsLP.Rkfb1Ze1eNApu1D7mkJQOAWbkrhtq5zd	OsLP.2J5XIP0ZD0R4ehU6c7WE6xFhXXdbi85_	gwas	1	38632196	39588846	956650	False	0.4904	concordant	-0.2991	ambiguous	0.4904				
+Wx	core 365K	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.ZpoDd3eNFwc2g30wmgQnQ33vtVgqT-sS	gwas	6	1765761	1779126	13365	True	1.0	discordant	0.4094	ambiguous	1.0	0.0012	0.9988	62.0	same
+Wx	core 365K	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.75Qcfh5Fq4B2XUvH0yTHtezIKe8aGXx9	gwas	6	1765761	1832115	66354	True	0.2419		0.3277	ambiguous	0.2419	0.0012	0.9988	61.0	same
+Wx	core 365K	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.4WqpilsxSucsuUFZuvPaXUTFocGQIJ8v	gwas	6	1765761	2181132	415371	False	0.037		0.245	distinct_nearby	0.037				
+Wx	core 365K	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.NsKOF9zLiavshmAxyweuue1k6gqmGA1O	gwas	6	1765761	1116627	649134	False	0.207		-0.0024	ambiguous	0.207				
+Wx	core 365K	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.A2pBixlanqIo3r2yU8Kbfqzz5JSjoTdc	gwas	6	1765761	1394031	371730	False	0.084		0.1343	distinct_nearby	0.084	0.0001	0.0292	3.0	inconclusive
+Wx	dense 4.8M	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.ZpoDd3eNFwc2g30wmgQnQ33vtVgqT-sS	gwas	6	1765761	1779126	13365	True	1.0	discordant	0.4094	ambiguous	1.0	0.0061	0.9939	4083.0	same
+Wx	dense 4.8M	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.75Qcfh5Fq4B2XUvH0yTHtezIKe8aGXx9	gwas	6	1765761	1832115	66354	True	0.2796		0.3277	ambiguous	0.2796	0.0063	0.9937	3150.0	same
+Wx	dense 4.8M	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.4WqpilsxSucsuUFZuvPaXUTFocGQIJ8v	gwas	6	1765761	2181132	415371	False	0.0383		0.245	distinct_nearby	0.0383	0.0515	0.5149	411.0	inconclusive
+Wx	dense 4.8M	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.NsKOF9zLiavshmAxyweuue1k6gqmGA1O	gwas	6	1765761	1116627	649134	False	0.223		-0.0024	ambiguous	0.223				
+Wx	dense 4.8M	OsLP.sINQl9kOcBUC72r4Zq4LZyrzDvdpofnC	OsLP.A2pBixlanqIo3r2yU8Kbfqzz5JSjoTdc	gwas	6	1765761	1394031	371730	False	0.0988		0.1343	distinct_nearby	0.0988	0.7063	0.2932	1494.0	inconclusive
+Rc	core 365K	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.EunycFyaufO21oTqsMG9QbzY7stIHuD9	gwas	7	6067855	6066926	929	True	0.1308		0.304	ambiguous	0.1308				
+Rc	core 365K	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.bd4_hussezCwibMS_UzcEkBkqOW1ncUh	gwas	7	6067855	6670284	602429	False	0.011		0.2746	distinct_nearby	0.011				
+Rc	core 365K	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.GZUJQ2pBrnF5U0-ELV3FIj4iyDrwkG9E	gwas	7	6067855	6062746	5109	True	0.0005		0.2923	distinct_nearby	0.0005				
+Rc	core 365K	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP._qaX-4725PjtUSSY9L8Hzmwe8Ssml-kE	gwas	7	6067855	6761880	694025	False	0.0005		0.2194	distinct_nearby	0.0005				
+Rc	core 365K	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.8fOIrhhe4_d2TugYOXqmB7O9GXBerm_X	gwas	7	6067855	6363692	295837	False	0.0004		0.4011	distinct_nearby	0.0004				
+Rc	core 365K	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.6-hXYiW5SWcWV-AZ3S0jjQ31uI-noc43	gwas	7	6067855	5921393	146462	True	0.0		-0.2984	distinct_nearby	0.0				
+Rc	core 365K	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.i2BFFnZDOgpprkjAPufof8R5RBJoZc8T	gwas	7	6067855	6259667	191812	False	0.0003		0.2217	distinct_nearby	0.0003				
+Rc	dense 4.8M	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.EunycFyaufO21oTqsMG9QbzY7stIHuD9	gwas	7	6067855	6066926	929	True	0.9173		0.304	same	0.9173	0.1303	0.8692	3436.0	same
+Rc	dense 4.8M	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.bd4_hussezCwibMS_UzcEkBkqOW1ncUh	gwas	7	6067855	6670284	602429	False	0.1163		0.2746	ambiguous	0.1163				
+Rc	dense 4.8M	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.GZUJQ2pBrnF5U0-ELV3FIj4iyDrwkG9E	gwas	7	6067855	6062746	5109	True	0.0037		0.2923	distinct_nearby	0.0037	0.1303	0.8692	3436.0	same
+Rc	dense 4.8M	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP._qaX-4725PjtUSSY9L8Hzmwe8Ssml-kE	gwas	7	6067855	6761880	694025	False	0.1346		0.2194	ambiguous	0.1346				
+Rc	dense 4.8M	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.8fOIrhhe4_d2TugYOXqmB7O9GXBerm_X	gwas	7	6067855	6363692	295837	False	0.0183		0.4011	distinct_nearby	0.0183	0.114	0.113	1015.0	inconclusive
+Rc	dense 4.8M	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.6-hXYiW5SWcWV-AZ3S0jjQ31uI-noc43	gwas	7	6067855	5921393	146462	True	0.0549		-0.2984	distinct_nearby	0.0549	0.0551	0.9446	2712.0	same
+Rc	dense 4.8M	OsLP.IG9yNNrqC9tHwlGBSvN8Xj75RbwNyNaM	OsLP.i2BFFnZDOgpprkjAPufof8R5RBJoZc8T	gwas	7	6067855	6259667	191812	False	0.0001		0.2217	distinct_nearby	0.0001	0.2679	0.7299	2119.0	inconclusive

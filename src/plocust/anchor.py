@@ -61,14 +61,33 @@ def _project(hit, offset: int, qlen: int) -> int:
     return r + (target - q)
 
 
+SHORT_ANCHOR = 100  # bp; below this minimap2's MAPQ is low even for unique hits
+
+
+def _unique_short(hits, qlen: int):
+    """For short anchors (e.g. 16+16 or 20+20 bp chip flanks): exactly one near-perfect, near-full-length hit."""
+    full = [h for h in hits if h.blen >= 0.9 * qlen and h.mlen >= 0.97 * h.blen]
+    partial = [h for h in hits if h.blen >= 0.8 * qlen]
+    return full[0] if len(full) == 1 and len(partial) == 1 else None
+
+
 def map_anchor(aligner: Aligner, seq: str, offset: int, min_mapq: int = 20) -> tuple[Optional[AnchorHit], int]:
-    """Best unique hit of one anchor, and the number of hits found."""
+    """Best unique hit of one anchor, and the number of hits found.
+
+    Anchors >= 100 bp need MAPQ >= min_mapq. Shorter anchors need exactly one
+    near-perfect full-length hit instead, since minimap2 caps their MAPQ.
+    """
     hits = aligner.map(seq)
     if not hits:
         return None, 0
-    best = next((h for h in hits if h.is_primary), hits[0])
-    if best.mapq < min_mapq:
-        return None, len(hits)
+    if len(seq) < SHORT_ANCHOR:
+        best = _unique_short(hits, len(seq))
+        if best is None:
+            return None, len(hits)
+    else:
+        best = next((h for h in hits if h.is_primary), hits[0])
+        if best.mapq < min_mapq:
+            return None, len(hits)
     hit = AnchorHit(
         chrom=normalize_chrom(best.ctg),
         pos=_project(best, offset, len(seq)) + 1,
