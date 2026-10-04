@@ -13,8 +13,8 @@ Small result tables are in [`results/`](results/).
 | 6 | `06_finemap_sim.py` | fine-mapping model on real genotypes: single vs cross-subpopulation, borrowed LD |
 | 7 | `07_finemap_loci.py` | fine-mapping of every GWAS locus (SuSiE, in-sample LD adjusted for the GWAS PCs) |
 | 8 | `08_cross_subpop.py` | cross-subpopulation fine-mapping on 12 real 3K traits, dense SNPs |
-| 10 | `10_figure_data.py` | data for the atlas figure (`docs/atlas_figure/`, drawn in JavaScript, rendered by `render.sh`) |
 | 9 | `09_known_genes_4k.py` | known cloned genes vs fine-mapped credible sets, RiceVarMap 4K genotypes incl. deletions |
+| 10 | `10_figure_data.py` | data for the atlas figure (`docs/atlas_figure/`, drawn in JavaScript, rendered by `render.sh`) |
 
 ## The database (v0.2.0-atlas, 112 MB, local; every GWAS record carries its fine-mapping)
 
