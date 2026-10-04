@@ -15,49 +15,54 @@
     --grain: #eb6834;
     --leaf: #1baf7a;
     --panicle: #4a3aa7;
-    --chrom-a: #d9d7cf;
-    --chrom-b: #c9c6bb;
+    --chrom-a: #8c8b86;
+    --chrom-b: #6c6b66;
+    --halo: #0b0b0b;
   }
   @media (prefers-color-scheme: dark) {
     :root:where(:not([data-theme="light"])) {
       --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #8e8d86; --grid: #2e2d2a;
-      --culm: #3987e5; --grain: #d95926; --leaf: #199e70; --panicle: #9085e9; --chrom-a: #3a3934; --chrom-b: #4a4842;
+      --culm: #3987e5; --grain: #d95926; --leaf: #199e70; --panicle: #9085e9;
+      --chrom-a: #5a5953; --chrom-b: #45443f; --halo: #ffffff;
     }
   }
   :root[data-theme="dark"] {
     --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #8e8d86; --grid: #2e2d2a;
-    --culm: #3987e5; --grain: #d95926; --leaf: #199e70; --panicle: #9085e9; --chrom-a: #3a3934; --chrom-b: #4a4842;
+    --culm: #3987e5; --grain: #d95926; --leaf: #199e70; --panicle: #9085e9;
+    --chrom-a: #5a5953; --chrom-b: #45443f; --halo: #ffffff;
   }
   html, body { margin: 0; background: var(--surface); color: var(--ink); }
   body { font-family: "Inter", "Segoe UI", "Helvetica Neue", "DejaVu Sans", Arial, sans-serif; }
   #wrap { max-width: 2400px; margin: 0 auto; }
   svg { width: 100%; height: auto; display: block; }
   svg text { font-family: inherit; }
+  .halo { paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
   #tip { position: fixed; pointer-events: none; background: var(--surface); color: var(--ink);
-         border: 1px solid var(--grid); border-radius: 8px; padding: 8px 10px; font-size: 13px; line-height: 1.4;
-         box-shadow: 0 4px 16px rgba(0,0,0,.12); display: none; max-width: 280px; }
-  .hit:hover { stroke: var(--ink); stroke-width: 2; }
+         border: 1px solid var(--grid); border-radius: 8px; padding: 8px 10px; font-size: 13px; line-height: 1.45;
+         box-shadow: 0 4px 16px rgba(0,0,0,.12); display: none; max-width: 300px; }
+  .hit:hover { filter: brightness(1.15); }
 </style>
 </head>
 <body>
 <div id="wrap"><svg id="fig" xmlns="http://www.w3.org/2000/svg" role="img"
-  aria-label="Rice locus atlas: GWAS loci on the 12 rice chromosomes, linked to plant organs, genes and expression"></svg></div>
+  aria-label="Rice locus atlas: GWAS loci on the 12 rice chromosomes, linked to plant organs, fine-mapping precision, known genes and leaf expression"></svg></div>
 <div id="tip"></div>
 <script src="atlas_data.js"></script>
 <script>
-// ------------------------------------------------------------------ setup
+// ======================================================================== setup
 const D = window.ATLAS;
-const W = 2400, H = 1520;
+const W = 2400, H = 1500;
 const NS = "http://www.w3.org/2000/svg";
 const svg = document.getElementById("fig");
 svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const ORG = {
-  grain:   { label: "Grain",                 color: css("--grain"),   shape: "circle"   },
-  panicle: { label: "Panicle & flowering",   color: css("--panicle"), shape: "diamond"  },
-  leaf:    { label: "Leaf",                  color: css("--leaf"),    shape: "triangle" },
-  culm:    { label: "Culm & plant form",     color: css("--culm"),    shape: "square"   },
+  grain:   { label: "Grain",               color: css("--grain"),   shape: "circle"   },
+  panicle: { label: "Panicle & flowering", color: css("--panicle"), shape: "diamond"  },
+  leaf:    { label: "Leaf",                color: css("--leaf"),    shape: "triangle" },
+  culm:    { label: "Culm & plant form",   color: css("--culm"),    shape: "square"   },
 };
+const ORDER = ["grain", "panicle", "leaf", "culm"];
 function el(tag, a = {}, parent = svg) {
   const e = document.createElementNS(NS, tag);
   for (const [k, v] of Object.entries(a)) e.setAttribute(k, v);
@@ -69,12 +74,12 @@ function text(x, y, s, size, color, weight = 400, anchor = "start", parent = svg
   t.textContent = s;
   return t;
 }
-function marker(shape, x, y, r, fill, stroke, parent, sw = 1.6) {
-  const common = { fill, stroke, "stroke-width": sw };
-  if (shape === "circle") return el("circle", { cx: x, cy: y, r, ...common }, parent);
-  if (shape === "square") return el("rect", { x: x - r * 0.9, y: y - r * 0.9, width: r * 1.8, height: r * 1.8, rx: 1.5, ...common }, parent);
-  if (shape === "diamond") return el("path", { d: `M${x},${y - r * 1.25}L${x + r * 1.25},${y}L${x},${y + r * 1.25}L${x - r * 1.25},${y}Z`, ...common }, parent);
-  return el("path", { d: `M${x},${y - r * 1.3}L${x + r * 1.15},${y + r * 0.8}L${x - r * 1.15},${y + r * 0.8}Z`, ...common }, parent);
+function marker(shape, x, y, r, fill, stroke, parent = svg, sw = 1.6) {
+  const c = { fill, stroke, "stroke-width": sw };
+  if (shape === "circle") return el("circle", { cx: x, cy: y, r, ...c }, parent);
+  if (shape === "square") return el("rect", { x: x - r * 0.88, y: y - r * 0.88, width: r * 1.76, height: r * 1.76, rx: 1.5, ...c }, parent);
+  if (shape === "diamond") return el("path", { d: `M${x},${y - r * 1.25}L${x + r * 1.25},${y}L${x},${y + r * 1.25}L${x - r * 1.25},${y}Z`, ...c }, parent);
+  return el("path", { d: `M${x},${y - r * 1.3}L${x + r * 1.15},${y + r * 0.8}L${x - r * 1.15},${y + r * 0.8}Z`, ...c }, parent);
 }
 const tip = document.getElementById("tip");
 function hover(node, html) {
@@ -84,14 +89,22 @@ function hover(node, html) {
   node.addEventListener("mouseleave", () => { tip.style.display = "none"; });
 }
 
-// ------------------------------------------------------------------ title
-text(60, 78, "The rice locus atlas", 44, css("--ink"), 800);
-text(62, 116, `${D.stats.loci} GWAS locus passports across ${D.stats.traits} traits on the 12 rice chromosomes, linked to the plant organ they shape, ` +
-     `their fine-mapping precision, known genes and leaf expression`, 20, css("--ink-2"));
+// ======================================================================== header
+text(60, 76, "The rice locus atlas", 44, css("--ink"), 800);
+text(62, 112, `${D.stats.loci} GWAS locus passports from ${D.stats.traits} traits, placed on the rice genome and linked to the plant organ ` +
+     `they shape, their fine-mapping precision, known genes and leaf expression`, 20, css("--ink-2"));
+const S = D.stats;
+[[S.records.toLocaleString(), "passport records"], [S.loci, "GWAS loci"], [S.signals, "fine-mapped signals"],
+ [S.eqtls.toLocaleString(), "leaf eQTLs"], [S.genes.toLocaleString(), "cloned genes"], [S.known_gene_loci, "loci at a known gene"]]
+  .forEach(([v, lab], k) => {
+    const x = 60 + k * 215;
+    text(x, 178, String(v), 32, css("--ink"), 800);
+    text(x, 202, lab, 15, css("--ink-2"));
+  });
 
-// ------------------------------------------------------------------ genome circle geometry
-const CX = 1650, CY = 800, R_CHR = 470, R_CHR_IN = 450, R_EQ_OUT = 438, R_EQ_IN = 414, R_DOT_OUT = 398, R_DOT_IN = 200;
-const GAP = 0.016;                       // radians between chromosomes
+// ======================================================================== genome circle geometry
+const CX = 1660, CY = 800, R_OUT = 460, R_BAND = 428, R_EQ_OUT = 418, R_EQ_IN = 394, R_DOT_OUT = 378, R_DOT_IN = 176;
+const GAP = 0.02;
 const total = D.chroms.reduce((s, c) => s + c.length, 0);
 const span = 2 * Math.PI - GAP * D.chroms.length;
 const start = {};
@@ -99,202 +112,253 @@ let a0 = -Math.PI / 2 + GAP / 2;
 for (const c of D.chroms) { start[c.name] = a0; a0 += c.length / total * span + GAP; }
 const angle = (chrom, pos) => start[chrom] + pos / total * span;
 const polar = (ang, r) => [CX + r * Math.cos(ang), CY + r * Math.sin(ang)];
-function arc(r1, r2, a1, a2) {
+function arcPath(r1, r2, a1, a2) {
   const [x1, y1] = polar(a1, r2), [x2, y2] = polar(a2, r2), [x3, y3] = polar(a2, r1), [x4, y4] = polar(a1, r1);
   const big = a2 - a1 > Math.PI ? 1 : 0;
   return `M${x1},${y1}A${r2},${r2} 0 ${big} 1 ${x2},${y2}L${x3},${y3}A${r1},${r1} 0 ${big} 0 ${x4},${y4}Z`;
 }
-const maxP = Math.min(40, Math.max(...D.loci.map(l => l.mlog10p)));
-const radius = p => R_DOT_IN + (Math.min(p, maxP) - 5) / (maxP - 5) * (R_DOT_OUT - R_DOT_IN);
+// significance on a square-root scale: spreads the many moderate loci, keeps strong ones apart
+const P_MIN = 4, P_CAP = 40;
+const radius = p => R_DOT_IN + Math.sqrt((Math.min(Math.max(p, P_MIN), P_CAP) - P_MIN) / (P_CAP - P_MIN)) * (R_DOT_OUT - R_DOT_IN);
 
-// guide circles for significance
-const gGrid = el("g");
-for (const p of [10, 20, 30, 40].filter(p => p <= maxP)) {
-  el("circle", { cx: CX, cy: CY, r: radius(p), fill: "none", stroke: css("--grid"), "stroke-width": 1 }, gGrid);
-  text(CX - 6, CY - radius(p) - 4, String(p), 13, css("--muted"), 400, "end", gGrid);
+// significance guides, labelled in the gap between chr12 and chr1
+const gapAngle = -Math.PI / 2;
+for (const p of [5, 10, 20, 40]) {
+  el("circle", { cx: CX, cy: CY, r: radius(p), fill: "none", stroke: css("--grid"), "stroke-width": 1.2 });
+  const [gx, gy] = polar(gapAngle, radius(p));
+  text(gx, gy + 5, String(p), 13, css("--muted"), 600, "middle", svg, { class: "halo" });
 }
+{ const [gx, gy] = polar(gapAngle, R_DOT_IN - 24); text(gx, gy, "−log10 p", 13, css("--muted"), 600, "middle", svg, { class: "halo" }); }
 
-// ------------------------------------------------------------------ organ -> genome links (behind)
-const gLinks = el("g", { opacity: 0.55 });
-
-// ------------------------------------------------------------------ chromosomes and Mb ticks
+// ======================================================================== chromosome band, labels inside
 D.chroms.forEach((c, i) => {
   const a1 = angle(c.name, 0), a2 = angle(c.name, c.length);
-  el("path", { d: arc(R_CHR_IN, R_CHR, a1, a2), fill: i % 2 ? css("--chrom-b") : css("--chrom-a") });
+  el("path", { d: arcPath(R_BAND, R_OUT, a1, a2), fill: i % 2 ? css("--chrom-b") : css("--chrom-a") });
   for (let mb = 10; mb * 1e6 < c.length; mb += 10) {
-    const [x1, y1] = polar(angle(c.name, mb * 1e6), R_CHR), [x2, y2] = polar(angle(c.name, mb * 1e6), R_CHR + 7);
-    el("line", { x1, y1, x2, y2, stroke: css("--muted"), "stroke-width": 1 });
+    const [x1, y1] = polar(angle(c.name, mb * 1e6), R_OUT - 6), [x2, y2] = polar(angle(c.name, mb * 1e6), R_OUT);
+    el("line", { x1, y1, x2, y2, stroke: css("--surface"), "stroke-width": 1.4 });
   }
-  const [lx, ly] = polar((a1 + a2) / 2, R_CHR_IN - 46);
-  text(lx, ly + 6, String(c.name), 18, css("--ink-2"), 700, "middle");
 });
+function chromLabels() {
+  D.chroms.forEach(c => {
+    const mid = (angle(c.name, 0) + angle(c.name, c.length)) / 2;
+    const [lx, ly] = polar(mid, (R_BAND + R_OUT) / 2);
+    let deg = mid * 180 / Math.PI + 90;
+    if (Math.sin(mid) > 0) deg += 180;                 // keep text upright on the lower half
+    text(lx, ly + 5, `chr${c.name}`, 15, "#ffffff", 700, "middle", svg, { transform: `rotate(${deg} ${lx} ${ly})` });
+  });
+}
 
-// ------------------------------------------------------------------ expression ring (leaf eQTL density)
-const allCounts = D.eqtl.flatMap(e => e.counts);
-const cmax = Math.max(...allCounts);
+// ======================================================================== expression ring (leaf eQTL density)
+const cmax = Math.max(...D.eqtl.flatMap(e => e.counts));
 const ramp = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"];
+const step = n => Math.min(ramp.length - 1, Math.floor(Math.sqrt(n / cmax) * ramp.length));
 for (const e of D.eqtl) {
   const c = D.chroms.find(x => x.name === e.chrom);
   e.counts.forEach((n, k) => {
     const s = k * D.bin, t = Math.min((k + 1) * D.bin, c.length);
-    const idx = Math.min(ramp.length - 1, Math.floor(Math.sqrt(n / cmax) * ramp.length));
-    const seg = el("path", { d: arc(R_EQ_IN, R_EQ_OUT, angle(e.chrom, s), angle(e.chrom, t) - 0.0008), fill: ramp[idx] });
+    if (t <= s) return;
+    const seg = el("path", { d: arcPath(R_EQ_IN, R_EQ_OUT, angle(e.chrom, s), angle(e.chrom, t)), fill: ramp[step(n)],
+                             stroke: css("--surface"), "stroke-width": 0.6 });
     hover(seg, `<b>chr${e.chrom}: ${(s / 1e6).toFixed(0)}–${(t / 1e6).toFixed(0)} Mb</b><br>${n} local leaf eQTLs`);
   });
 }
 
-// ------------------------------------------------------------------ pleiotropy chords
-const gChords = el("g");
+// ======================================================================== landmark genes outside the band
+const lm = [...D.landmarks].map(g => ({ ...g, a: angle(g.chrom, g.pos) })).sort((x, y) => x.a - y.a);
+lm.forEach(g => (g.lab = g.a));
+for (let it = 0; it < 300; it++) {
+  let moved = false;
+  for (let k = 1; k < lm.length; k++) {
+    const d = lm[k].lab - lm[k - 1].lab;
+    if (d < 0.11) { lm[k - 1].lab -= (0.11 - d) / 2; lm[k].lab += (0.11 - d) / 2; moved = true; }
+  }
+  if (!moved) break;
+}
+lm.forEach((g, k) => {
+  const o = ORG[g.organ];
+  const rl = R_OUT + 38 + (k % 2) * 26;
+  const [x1, y1] = polar(g.a, R_OUT + 1), [x2, y2] = polar(g.a, R_OUT + 14), [x3, y3] = polar(g.lab, rl), [x4, y4] = polar(g.lab, rl + 8);
+  el("path", { d: `M${x1},${y1}L${x2},${y2}L${x3},${y3}`, stroke: o.color, "stroke-width": 1.8, fill: "none" });
+  el("circle", { cx: x1, cy: y1, r: 4.5, fill: o.color, stroke: css("--surface"), "stroke-width": 1.5 });
+  const cos = Math.cos(g.lab), sin = Math.sin(g.lab);
+  const anchor = cos > 0.2 ? "start" : cos < -0.2 ? "end" : "middle";
+  const t = text(x4, y4 + (sin > 0.5 ? 16 : sin < -0.5 ? -2 : 6), g.name, 19, css("--ink"), 700, anchor, svg,
+                 { "font-style": "italic", class: "halo" });
+  hover(t, `<b><i>${g.name}</i></b> · chr${g.chrom}:${g.pos.toLocaleString()}<br>${g.loci_within_300kb} ${o.label.toLowerCase()} loci within 300 kb`);
+});
+
+// ======================================================================== links: same SNP (pleiotropy) vs same signal in two studies
+const gLinks = el("g");
+const pleio = new Map();
 for (const k of D.links) {
   const a = D.loci[k.a], b = D.loci[k.b];
-  const [x1, y1] = polar(angle(a.chrom, a.pos), R_DOT_IN - 8), [x2, y2] = polar(angle(b.chrom, b.pos), R_DOT_IN - 8);
-  const p = el("path", { d: `M${x1},${y1}Q${CX},${CY} ${x2},${y2}`, fill: "none", stroke: css("--ink-2"),
-                         "stroke-opacity": k.kind.startsWith("same signal") ? 0.75 : 0.35,
-                         "stroke-width": k.kind.startsWith("same signal") ? 2.4 : 1.4 }, gChords);
-  hover(p, `<b>${k.kind}</b><br>${a.trait} (${a.panel})<br>↔ ${b.trait} (${b.panel})`);
+  if (a.chrom === b.chrom && Math.abs(a.pos - b.pos) < 1000) {        // same lead SNP: mark the dot, no chord
+    for (const [i, j] of [[k.a, k.b], [k.b, k.a]]) {
+      if (!pleio.has(i)) pleio.set(i, new Set([D.loci[i].trait]));
+      pleio.get(i).add(D.loci[j].trait);
+    }
+    continue;
+  }
+  const r = R_DOT_IN - 8;
+  const aa = angle(a.chrom, a.pos), ab = angle(b.chrom, b.pos);
+  const [x1, y1] = polar(aa, r), [x2, y2] = polar(ab, r);
+  const sep = Math.abs(aa - ab);
+  const [qx, qy] = sep < 0.6 ? polar((aa + ab) / 2, r - 40 - sep * 120) : [CX, CY];
+  const p = el("path", { d: `M${x1},${y1}Q${qx},${qy} ${x2},${y2}`, fill: "none", stroke: css("--ink-2"),
+                         "stroke-width": 2.2, "stroke-opacity": 0.7 }, gLinks);
+  hover(p, `<b>${k.kind}</b><br>${a.trait} (${a.panel}) ↔ ${b.trait} (${b.panel})<br>chr${a.chrom}: ` +
+           `${(a.pos / 1e6).toFixed(2)} ↔ ${(b.pos / 1e6).toFixed(2)} Mb`);
 }
 
-// ------------------------------------------------------------------ loci
+// ======================================================================== loci
+const nearLandmark = l => D.landmarks.some(g => g.chrom === l.chrom && Math.abs(g.pos - l.pos) <= 300000 && g.organ === l.organ);
 const gDots = el("g");
-const sorted = [...D.loci].map((l, i) => ({ ...l, i })).sort((x, y) => x.mlog10p - y.mlog10p);
+const sorted = D.loci.map((l, i) => ({ ...l, i })).sort((x, y) => x.mlog10p - y.mlog10p);
 for (const l of sorted) {
   const o = ORG[l.organ];
   const sharp = l.cs_size !== null && l.cs_size <= 5 && l.top_pip >= 0.5;
   const [x, y] = polar(angle(l.chrom, l.pos), radius(l.mlog10p));
-  const m = marker(o.shape, x, y, sharp ? 6.5 : 5.5, sharp ? o.color : css("--surface"), o.color, gDots, sharp ? 1.2 : 1.8);
-  hover(m, `<b>${l.trait}</b> · ${l.panel}<br>chr${l.chrom}:${l.pos.toLocaleString()}<br>−log10 p ${l.mlog10p}` +
-           `<br>credible set: ${l.cs_size ?? "–"} variant(s), top PIP ${l.top_pip ?? "–"}` + (l.gene ? `<br>known gene: <i>${l.gene}</i>` : ""));
+  if (nearLandmark(l)) el("circle", { cx: x, cy: y, r: 11, fill: "none", stroke: css("--halo"), "stroke-width": 1.4 }, gDots);
+  if (pleio.has(l.i)) el("circle", { cx: x, cy: y, r: 15, fill: "none", stroke: css("--ink-2"), "stroke-width": 1.2,
+                                       "stroke-dasharray": "3 3" }, gDots);
+  const m = marker(o.shape, x, y, sharp ? 5.6 : 4.8, sharp ? o.color : css("--surface"), o.color, gDots, sharp ? 1 : 1.7);
+  hover(m, `<b>${l.trait}</b> · ${l.panel}<br>chr${l.chrom}:${l.pos.toLocaleString()} · −log10 p ${l.mlog10p}` +
+           `<br>credible set: ${l.cs_size ?? "–"} variant(s)${l.top_pip != null ? `, top PIP ${l.top_pip}` : ""}` +
+           (l.gene ? `<br>known gene nearby: <i>${l.gene}</i>` : "") +
+           (pleio.has(l.i) ? `<br>same lead SNP also: ${[...pleio.get(l.i)].filter(t => t !== l.trait).join(", ")}` : ""));
 }
+chromLabels();
+text(CX, CY - 8, "rice genome", 22, css("--ink-2"), 700, "middle");
+text(CX, CY + 18, "IRGSP-1.0 · 373 Mb", 16, css("--muted"), 400, "middle");
 
-// ------------------------------------------------------------------ landmark genes (outside)
-const lm = [...D.landmarks].map(g => ({ ...g, a: angle(g.chrom, g.pos) })).sort((x, y) => x.a - y.a);
-const MINGAP = 0.11;
-for (let it = 0; it < 50; it++) {          // relax: push neighbours apart until every gap >= MINGAP
-  let moved = false;
-  for (let k = 1; k < lm.length; k++) {
-    const d = lm[k].lab - lm[k - 1].lab;
-    if (isNaN(d)) continue;
-    if (d < MINGAP) { lm[k - 1].lab -= (MINGAP - d) / 2; lm[k].lab += (MINGAP - d) / 2; moved = true; }
-  }
-  if (it === 0) lm.forEach(g => (g.lab = g.a));
-  if (!moved && it > 0) break;
-}
-lm.forEach((g, k) => {
-  const o = ORG[g.organ];
-  const rl = R_CHR + 48 + (k % 2) * 30;
-  const [x1, y1] = polar(g.a, R_CHR + 2), [x2, y2] = polar(g.a, R_CHR + 22), [x3, y3] = polar(g.lab, rl), [x4, y4] = polar(g.lab, rl + 8);
-  el("path", { d: `M${x1},${y1}L${x2},${y2}L${x3},${y3}`, stroke: o.color, "stroke-width": 1.6, fill: "none" });
-  el("circle", { cx: x1, cy: y1, r: 4, fill: o.color });
-  const anchor = Math.cos(g.lab) >= 0.15 ? "start" : Math.cos(g.lab) <= -0.15 ? "end" : "middle";
-  const dy = Math.sin(g.lab) > 0.6 ? 18 : Math.sin(g.lab) < -0.6 ? -4 : 6;
-  const t = text(x4, y4 + dy, g.name, 19, css("--ink"), 700, anchor, svg, { "font-style": "italic" });
-  hover(t, `<b><i>${g.name}</i></b> chr${g.chrom}:${g.pos.toLocaleString()}<br>${g.loci_within_300kb} ${o.label.toLowerCase()} loci within 300 kb`);
-});
-text(CX - 6, CY - R_DOT_OUT - 22, "−log10 p", 13, css("--muted"), 600, "end");
-text(CX, CY - 12, "rice genome", 22, css("--ink-2"), 600, "middle");
-text(CX, CY + 16, "IRGSP-1.0, 373 Mb", 17, css("--muted"), 400, "middle");
-
-// ------------------------------------------------------------------ the plant (left)
-const P = { x: 430, ground: 1180 };
+// ======================================================================== the plant: a fan of tillers with arching leaves and drooping panicles
+const P = { x: 590, ground: 1240 };
 const gPlant = el("g");
-const stemTop = 360;
-// roots
-for (let k = -4; k <= 4; k++) {
-  el("path", { d: `M${P.x},${P.ground} q${k * 14},40 ${k * 26},${70 + Math.abs(k) * 8}`, stroke: css("--muted"),
-               "stroke-width": 2, fill: "none", "stroke-linecap": "round" }, gPlant);
+el("path", { d: `M${P.x - 220},${P.ground + 2} Q${P.x},${P.ground - 8} ${P.x + 220},${P.ground + 2}`, stroke: css("--muted"),
+             "stroke-width": 2.5, fill: "none" }, gPlant);
+for (let k = -6; k <= 6; k++) {
+  el("path", { d: `M${P.x + k * 3},${P.ground} q${k * 9},${28 + Math.abs(k) * 2} ${k * 20 + (k % 2) * 6},${64 - Math.abs(k) * 3}`,
+               stroke: css("--muted"), "stroke-width": 1.5, fill: "none", "stroke-linecap": "round", opacity: 0.8 }, gPlant);
 }
-el("line", { x1: P.x - 170, y1: P.ground, x2: P.x + 170, y2: P.ground, stroke: css("--grid"), "stroke-width": 3 }, gPlant);
-// tillers (culm)
-for (const [dx, top] of [[-34, 420], [34, 440], [0, stemTop]]) {
-  el("path", { d: `M${P.x + dx * 0.2},${P.ground} C${P.x + dx * 0.4},${P.ground - 300} ${P.x + dx},${top + 200} ${P.x + dx},${top}`,
-               stroke: ORG.culm.color, "stroke-width": dx === 0 ? 7 : 5, fill: "none", "stroke-linecap": "round" }, gPlant);
-}
-// nodes
-for (const y of [1010, 850, 700]) el("ellipse", { cx: P.x, cy: y, rx: 7, ry: 4, fill: ORG.culm.color }, gPlant);
-// leaves
-const leaf = (x, y, dx, dy, w) => el("path", {
-  d: `M${x},${y} C${x + dx * 0.4},${y + dy * 0.3 - w} ${x + dx * 0.8},${y + dy * 0.7 - w} ${x + dx},${y + dy} ` +
-     `C${x + dx * 0.75},${y + dy * 0.7 + w * 0.3} ${x + dx * 0.35},${y + dy * 0.35 + w * 0.6} ${x},${y + 8}`,
-  fill: ORG.leaf.color, "fill-opacity": 0.85, stroke: ORG.leaf.color, "stroke-width": 1 }, gPlant);
-leaf(P.x, 1010, -230, 90, 30); leaf(P.x, 985, 220, 60, 28); leaf(P.x, 850, -210, 30, 26);
-leaf(P.x, 820, 240, -10, 26); leaf(P.x, 700, -190, -60, 24);
-leaf(P.x, 650, 170, -150, 22);  // flag leaf
-// panicle: drooping rachis with branches and grains
-const rachis = `M${P.x},${stemTop} C${P.x + 40},${stemTop - 90} ${P.x + 130},${stemTop - 110} ${P.x + 190},${stemTop - 40}`;
-el("path", { d: rachis, stroke: ORG.panicle.color, "stroke-width": 4, fill: "none", "stroke-linecap": "round" }, gPlant);
-const grains = [];
-for (let k = 0; k < 7; k++) {
-  const t = 0.12 + k * 0.12;
-  const bx = P.x + 190 * t + 20 * Math.sin(t * 3), by = stemTop - 95 * Math.sin(Math.PI * t * 0.95) + 10;
-  const ex = bx + 18 + k * 4, ey = by + 55 + k * 6;
-  el("path", { d: `M${bx},${by} Q${bx + 10},${by + 25} ${ex},${ey}`, stroke: ORG.panicle.color, "stroke-width": 2, fill: "none" }, gPlant);
-  for (let j = 0; j < 3; j++) {
-    const gx = bx + (ex - bx) * (0.45 + j * 0.27) + 7, gy = by + (ey - by) * (0.45 + j * 0.27);
-    el("ellipse", { cx: gx, cy: gy, rx: 5.5, ry: 10, fill: ORG.grain.color, transform: `rotate(-25 ${gx} ${gy})` }, gPlant);
-    grains.push([gx, gy]);
-  }
-}
-
-// organ callouts: count of loci per organ, its traits, anchor on the plant
-const counts = {};
-for (const l of D.loci) counts[l.organ] = (counts[l.organ] || 0) + 1;
-const traitsOf = o => [...new Set(D.loci.filter(l => l.organ === o).map(l => l.trait))];
-const callouts = [
-  { o: "grain", ax: grains[grains.length - 1][0], ay: grains[grains.length - 1][1], bx: 60, by: 250 },
-  { o: "panicle", ax: P.x + 120, ay: stemTop - 95, bx: 60, by: 480 },
-  { o: "leaf", ax: P.x - 150, ay: 880, bx: 60, by: 715 },
-  { o: "culm", ax: P.x - 4, ay: 1100, bx: 60, by: 950 },
+const tillers = [
+  { dx: -150, top: 540, lean: -1 }, { dx: -90, top: 440, lean: -1 }, { dx: -20, top: 400, lean: 1 },
+  { dx: 55, top: 425, lean: 1 }, { dx: 140, top: 500, lean: 1 },
 ];
-for (const c of callouts) {
-  const o = ORG[c.o], tr = traitsOf(c.o);
+const nodes = [], panicles = [];
+const gLeaves = el("g", {}, gPlant);   // leaves behind culms
+tillers.forEach((t, i) => {
+  const bx = P.x + t.dx * 0.1, tx = P.x + t.dx;
+  const path = `M${bx},${P.ground - 4} C${P.x + t.dx * 0.2},${P.ground - 340} ${P.x + t.dx * 0.8},${t.top + 180} ${tx},${t.top}`;
+  el("path", { d: path, stroke: ORG.culm.color, "stroke-width": i === 2 ? 5 : 4, fill: "none", "stroke-linecap": "round" }, gPlant);
+  for (const f of [0.3, 0.55]) {
+    const yy = P.ground - (P.ground - t.top) * f, xx = bx + (tx - bx) * Math.pow(f, 1.7);
+    el("ellipse", { cx: xx, cy: yy, rx: 5, ry: 3, fill: ORG.culm.color }, gPlant);
+    nodes.push({ x: xx, y: yy, side: ((i + (f > 0.4 ? 1 : 0)) % 2) ? 1 : -1, len: 150 + ((i * 2 + (f > 0.4)) % 3) * 45 });
+  }
+  // panicle: the rachis rises, arches and hangs; primary branches carry grains
+  const ex = tx + t.lean * 105, ey = t.top + 70;
+  el("path", { d: `M${tx},${t.top} C${tx + t.lean * 6},${t.top - 70} ${tx + t.lean * 75},${t.top - 75} ${ex},${ey}`,
+               stroke: ORG.panicle.color, "stroke-width": 2.6, fill: "none", "stroke-linecap": "round" }, gPlant);
+  for (let k = 0; k < 6; k++) {
+    const u = 0.3 + k * 0.12;
+    const bxk = (1 - u) ** 3 * tx + 3 * (1 - u) ** 2 * u * (tx + t.lean * 6) + 3 * (1 - u) * u * u * (tx + t.lean * 75) + u ** 3 * ex;
+    const byk = (1 - u) ** 3 * t.top + 3 * (1 - u) ** 2 * u * (t.top - 70) + 3 * (1 - u) * u * u * (t.top - 75) + u ** 3 * ey;
+    const lx = bxk + t.lean * (8 + k * 2), ly = byk + 30 + k * 4;
+    el("path", { d: `M${bxk},${byk} Q${bxk + t.lean * 3},${byk + 15} ${lx},${ly}`, stroke: ORG.panicle.color, "stroke-width": 1.3, fill: "none" }, gPlant);
+    for (const v of [0.5, 0.95]) {
+      const gx = bxk + (lx - bxk) * v + t.lean * 4, gy = byk + (ly - byk) * v;
+      el("ellipse", { cx: gx, cy: gy, rx: 3.6, ry: 6.8, fill: ORG.grain.color, transform: `rotate(${t.lean * -18} ${gx} ${gy})` }, gPlant);
+    }
+  }
+  panicles.push({ top: [tx + t.lean * 45, t.top - 60], grain: [ex, ey] });
+});
+// leaves: long narrow blades arching outward and drooping at the tip
+function blade(x, y, side, len) {
+  const tipx = x + side * len, tipy = y + len * 0.25;
+  const c1x = x + side * len * 0.3, c1y = y - len * 0.45, c2x = x + side * len * 0.75, c2y = y - len * 0.25;
+  el("path", { d: `M${x},${y} C${c1x},${c1y - 6} ${c2x},${c2y - 4} ${tipx},${tipy} C${c2x - side * 6},${c2y + 10} ${c1x - side * 4},${c1y + 12} ${x},${y + 7}Z`,
+               fill: ORG.leaf.color, "fill-opacity": 0.92, stroke: ORG.leaf.color, "stroke-width": 1 }, gLeaves);
+  return [x + side * len * 0.62, y - len * 0.28];
+}
+const leafPoints = nodes.map(n => blade(n.x, n.y, n.side, n.len));
+blade(P.x + tillers[2].dx * 0.85, tillers[2].top + 95, 1, 165);   // flag leaf
+
+// organ boxes (left), dashed leader to the organ
+const counts = {}; for (const l of D.loci) counts[l.organ] = (counts[l.organ] || 0) + 1;
+const traitsOf = o => [...new Set(D.loci.filter(l => l.organ === o).map(l => l.trait))];
+const anchorOf = {
+  grain: panicles[0].grain,
+  panicle: panicles[1].top,
+  leaf: leafPoints[0],
+  culm: [P.x + tillers[0].dx * 0.2, P.ground - 250],
+};
+const boxY = { grain: 260, panicle: 500, leaf: 740, culm: 980 };
+const BOX_X = 50, BOX_W = 232, BOX_H = 160;
+for (const key of ORDER) {
+  const o = ORG[key], tr = traitsOf(key), by = boxY[key], [axp, ayp] = anchorOf[key];
   const g = el("g");
-  el("rect", { x: c.bx, y: c.by, width: 250, height: 150, rx: 14, fill: css("--surface"), stroke: o.color, "stroke-width": 2 }, g);
-  marker(o.shape, c.bx + 24, c.by + 30, 8, o.color, o.color, g);
-  text(c.bx + 42, c.by + 37, o.label, 21, css("--ink"), 700, "start", g);
-  text(c.bx + 18, c.by + 72, `${counts[c.o] || 0} loci · ${tr.length} traits`, 17, css("--ink-2"), 600, "start", g);
-  const show = tr.slice(0, 4).join(", ") + (tr.length > 4 ? ", …" : "");
-  const words = show.split(" "); let line = "", yy = c.by + 100;
-  for (const w of words) {
-    if ((line + w).length > 30) { text(c.bx + 18, yy, line, 14, css("--muted"), 400, "start", g); line = ""; yy += 19; }
+  el("rect", { x: BOX_X, y: by, width: BOX_W, height: BOX_H, rx: 14, fill: css("--surface"), stroke: o.color, "stroke-width": 2 }, g);
+  marker(o.shape, BOX_X + 24, by + 30, 8, o.color, o.color, g);
+  text(BOX_X + 42, by + 37, o.label, 20, css("--ink"), 700, "start", g);
+  text(BOX_X + 18, by + 68, `${counts[key] || 0} loci · ${tr.length} traits`, 17, css("--ink-2"), 600, "start", g);
+  let line = "", yy = by + 94;
+  for (const w of (tr.slice(0, 5).join(", ") + (tr.length > 5 ? ", …" : "")).split(" ")) {
+    if ((line + w).length > 26) {
+      if (yy < by + BOX_H - 8) text(BOX_X + 18, yy, line.trim(), 14, css("--muted"), 400, "start", g);
+      line = ""; yy += 19;
+    }
     line += w + " ";
   }
-  text(c.bx + 18, yy, line, 14, css("--muted"), 400, "start", g);
-  el("path", { d: `M${c.bx + 250},${c.by + 75} C${c.bx + 320},${c.by + 75} ${c.ax - 60},${c.ay} ${c.ax},${c.ay}`,
-               stroke: o.color, "stroke-width": 1.6, fill: "none", "stroke-dasharray": "5 4" });
-  el("circle", { cx: c.ax, cy: c.ay, r: 5, fill: o.color });
-  hover(g.firstChild, `<b>${o.label}</b><br>${tr.join("<br>")}`);
-  // organ -> genome: links to its three strongest loci
-  const top = D.loci.filter(l => l.organ === c.o).sort((x, y) => y.mlog10p - x.mlog10p).slice(0, 3);
-  for (const l of top) {
-    const [x, y] = polar(angle(l.chrom, l.pos), radius(l.mlog10p));
-    el("path", { d: `M${c.ax},${c.ay} C${c.ax + 380},${c.ay} ${x - 300},${y} ${x},${y}`, stroke: o.color,
-                 "stroke-width": 1.4, fill: "none" }, gLinks);
-  }
+  if (line.trim() && yy < by + BOX_H - 8) text(BOX_X + 18, yy, line.trim(), 14, css("--muted"), 400, "start", g);
+  el("path", { d: `M${BOX_X + BOX_W},${by + BOX_H / 2} C${BOX_X + BOX_W + 80},${by + BOX_H / 2} ${axp - 70},${ayp} ${axp},${ayp}`,
+               stroke: o.color, "stroke-width": 1.8, fill: "none", "stroke-dasharray": "6 5" });
+  el("circle", { cx: axp, cy: ayp, r: 6, fill: o.color, stroke: css("--surface"), "stroke-width": 2 });
+  hover(g.firstChild, `<b>${o.label}</b> · ${counts[key] || 0} loci<br>${tr.join("<br>")}`);
 }
 
-// ------------------------------------------------------------------ legend and numbers (bottom)
-const LX = 60, LY = 1390;
-const gLeg = el("g");
-let lx = LX;
-for (const [k, o] of Object.entries(ORG)) {
-  marker(o.shape, lx + 8, LY, 7, o.color, o.color, gLeg);
-  text(lx + 22, LY + 6, o.label, 17, css("--ink"), 600, "start", gLeg);
-  lx += 70 + o.label.length * 9;
-}
-marker("circle", LX + 8, LY + 40, 6.5, css("--ink-2"), css("--ink-2"), gLeg, 1.2);
-text(LX + 22, LY + 46, "filled = sharp fine-mapping (≤ 5 variants, top PIP ≥ 0.5)", 16, css("--ink-2"), 400, "start", gLeg);
-marker("circle", LX + 488, LY + 40, 5.5, css("--surface"), css("--ink-2"), gLeg, 1.8);
-text(LX + 502, LY + 46, "hollow = broad credible set", 16, css("--ink-2"), 400, "start", gLeg);
-text(LX, LY + 84, "dot distance from centre = −log10 p   ·   blue ring = leaf eQTL density (per 2 Mb)   ·   " +
-     "inner chords = one locus, several traits / same signal across studies   ·   labels = classic cloned genes", 16, css("--muted"), 400, "start", gLeg);
-const S = D.stats;
-const nums = [[S.records.toLocaleString(), "passport records"], [S.loci, "GWAS loci"], [S.signals, "fine-mapped signals"],
-              [S.eqtls.toLocaleString(), "leaf eQTLs"], [S.genes.toLocaleString(), "cloned genes"], [S.known_gene_loci, "loci at a known gene"]];
-nums.forEach(([v, lab], k) => {
-  const x = 60 + k * 230, y = 175;
-  text(x, y, String(v), 34, css("--ink"), 800, "start", gLeg);
-  text(x, y + 24, lab, 15, css("--ink-2"), 400, "start", gLeg);
+// ======================================================================== bridge: organ share bar -> genome
+const BX = 950, BY = 470, BW = 28, BH = 660;
+text(BX + BW / 2, BY - 22, "loci per organ", 15, css("--ink-2"), 700, "middle");
+let yb = BY;
+ORDER.forEach((key, k) => {
+  const n = counts[key] || 0, h = n / D.loci.length * BH;
+  const r = el("rect", { x: BX, y: yb + 1, width: BW, height: Math.max(h - 2, 2), rx: 3, fill: ORG[key].color });
+  hover(r, `<b>${ORG[key].label}</b>: ${n} of ${D.loci.length} loci`);
+  text(BX - 10, yb + h / 2 + 6, `${Math.round(n / D.loci.length * 100)}%`, 15, css("--ink-2"), 600, "end");
+  // ribbon into the left side of the genome circle
+  const ys = yb + h / 2, [xe, ye] = polar(Math.PI - (k - 1.5) * 0.14, R_OUT + 12);
+  el("path", { d: `M${BX + BW + 4},${ys} C${BX + 180},${ys} ${xe - 170},${ye} ${xe},${ye}`, stroke: ORG[key].color,
+               "stroke-width": Math.max(3, h / 9), "stroke-opacity": 0.22, fill: "none" });
+  yb += h;
 });
+
+// ======================================================================== legend
+const LX = 60, LY = 1340;
+let lx = LX;
+for (const key of ORDER) {
+  const o = ORG[key];
+  marker(o.shape, lx + 8, LY, 7, o.color, o.color);
+  text(lx + 22, LY + 6, o.label, 17, css("--ink"), 600);
+  lx += 64 + o.label.length * 9.2;
+}
+const L2 = LY + 40;
+marker("circle", LX + 8, L2, 5.6, css("--ink-2"), css("--ink-2"), svg, 1);
+text(LX + 22, L2 + 5, "filled: fine-mapped to ≤ 5 variants (top PIP ≥ 0.5)", 15, css("--ink-2"));
+marker("circle", LX + 420, L2, 4.8, css("--surface"), css("--ink-2"), svg, 1.7);
+text(LX + 434, L2 + 5, "hollow: broad credible set", 15, css("--ink-2"));
+el("circle", { cx: LX + 668, cy: L2, r: 10, fill: "none", stroke: css("--halo"), "stroke-width": 1.4 });
+text(LX + 686, L2 + 5, "ring: within 300 kb of a labelled gene", 15, css("--ink-2"));
+el("circle", { cx: LX + 1008, cy: L2, r: 12, fill: "none", stroke: css("--ink-2"), "stroke-width": 1.2, "stroke-dasharray": "3 3" });
+text(LX + 1028, L2 + 5, "dashed: one lead SNP, several traits", 15, css("--ink-2"));
+const L3 = LY + 84;
+el("path", { d: `M${LX},${L3} q20,-14 40,0`, stroke: css("--ink-2"), "stroke-width": 2.2, fill: "none" });
+text(LX + 50, L3 + 5, "chord: same signal in two studies (RDP1 ~ 3K)", 15, css("--ink-2"));
+text(LX + 440, L3 + 5, "leaf eQTLs per 2 Mb", 15, css("--ink-2"));
+ramp.forEach((c, k) => el("rect", { x: LX + 610 + k * 30, y: L3 - 9, width: 28, height: 16, fill: c }));
+text(LX + 610, L3 + 28, "0", 13, css("--muted"));
+text(LX + 610 + ramp.length * 30, L3 + 28, String(cmax), 13, css("--muted"), 400, "end");
+text(LX + 850, L3 + 5, "distance from centre: −log10 p (square-root scale)", 15, css("--ink-2"));
 </script>
 </body>
 </html>

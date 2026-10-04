@@ -9,6 +9,6 @@ google-chrome --headless=new --disable-gpu --hide-scrollbars --allow-file-access
 python3 - "$OUT" <<'PY'
 import sys
 from PIL import Image
-im = Image.open(sys.argv[1]); im.crop((0, 0, 4800, 3040)).save(sys.argv[1], optimize=True)
+im = Image.open(sys.argv[1]); im.crop((0, 0, 4800, 3000)).save(sys.argv[1], optimize=True)
 PY
 ls -la "$OUT"
