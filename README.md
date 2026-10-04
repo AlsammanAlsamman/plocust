@@ -241,7 +241,6 @@ plocust db info        plocust-db-rice.sqlite
 
 ## 📚 More
 
-- [`PLAN.md`](PLAN.md): design decisions and plan
 - [`validation/README.md`](validation/README.md): all validation results
 - [`schema/passport.schema.json`](schema/passport.schema.json): the passport format (JSON Schema)
 
