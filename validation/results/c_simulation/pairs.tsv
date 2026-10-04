@@ -1,57 +1,57 @@
-query	target	target_kind	chrom	query_lead	target_lead	distance_bp	overlap	r2	call	score	truth_same	truth_role	role_b	overlap0	rep
-OsLP.jXmhTHNtelc8ILNej9JhYz_y67e7Cl5S	OsLP.qtFvcVLG4ylWom6x_pw_PbZ6lhPAKfdm	gwas	1	22973439	22972230	1209	True	1.0	same	1.0	False	shared	none	True	0
-OsLP.NeiqBL9APfUpke2nr_D0J-_psOk5FWmj	OsLP.daw8y-Q1SC9VOIKC94sPayv3vfu2Kwht	gwas	1	11594753	10903682	691071	False	0.6306	same	0.6306	True	shared	shared	False	0
-OsLP.NeiqBL9APfUpke2nr_D0J-_psOk5FWmj	OsLP.taQZ3aGTRqfUryp8xJFZWfzjSJwnomNi	gwas	1	11594753	11471078	123675	True	1.0	same	1.0	True	shared	shared	True	0
-OsLP.e4n492hggELnJYgWux0rF_aw0MIlK14f	OsLP.LeowAPCMT8GqyUXTKaQePjDGEPstSxh0	gwas	6	13061813	13191329	129516	False	0.0298	distinct_nearby	0.0298	False	pair2	pair2	False	1
-OsLP.e4n492hggELnJYgWux0rF_aw0MIlK14f	OsLP.kaNIlt-c8ph6pLYPf1-hF_sx89UujyL9	gwas	6	13061813	13853195	791382	False	0.0296	distinct_nearby	0.0296	False	pair2	pair2	False	1
-OsLP.QvXz5BZjB1cDfr3PbjY6yeiPSo5iV0Sv	OsLP.C5uudr8T2fODkSpRfpsnUxO9a4yoOhdr	gwas	6	17619853	17916717	296864	False	0.0176	distinct_nearby	0.0176	False	none	none	False	1
-OsLP.RqZdODLW0nAzgtT0a8eVq6ukNnfhkLBC	OsLP.LeowAPCMT8GqyUXTKaQePjDGEPstSxh0	gwas	6	13270510	13191329	79181	True	0.0319	distinct_nearby	0.0319	False	none	pair2	True	1
-OsLP.RqZdODLW0nAzgtT0a8eVq6ukNnfhkLBC	OsLP.kaNIlt-c8ph6pLYPf1-hF_sx89UujyL9	gwas	6	13270510	13853195	582685	True	0.0212	distinct_nearby	0.0212	False	none	pair2	True	1
-OsLP.u2Z1T7_6B9t41jfZhp5u2hFGc169236D	OsLP.u2Z1T7_6B9t41jfZhp5u2hFGc169236D	gwas	9	13008748	13008748	0	True	1.0	same	1.0	True	shared	shared	True	2
-OsLP.Pp5RqxCVLixibxBpsw-d4gTaocVizORV	OsLP.K1HuT1EmK0pj5TqpeGa24zWZ-NXnfNZ7	gwas	8	10699424	10084349	615075	True	1.0	same	1.0	True	shared	shared	True	2
-OsLP.rbeRBr8_aCyjSc68XEDlaghMq3oW87sr	OsLP.t__HiULbRxQpQ_Vy3C9P0bicVWs8WAVm	gwas	6	13822798	13518310	304488	True	0.7751	same	0.7751	True	shared	shared	True	3
-OsLP.rbeRBr8_aCyjSc68XEDlaghMq3oW87sr	OsLP.S95WZPouXg_jqw7dygjdBr0it_OHF4Ev	gwas	6	13822798	13682034	140764	True	0.0108	distinct_nearby	0.0108	False	shared	none	True	3
-OsLP.pw0rm8nd4G6baujauVEKpq_vuIInB0_x	OsLP.RKREuwAkp89S9WW1Ln0FY8e3NBUiof6I	gwas	6	28904146	28905407	1261	True	0.0144	distinct_nearby	0.0144	False	shared	none	True	3
-OsLP.pw0rm8nd4G6baujauVEKpq_vuIInB0_x	OsLP.dupf5EoGxp3NuKb_SUXQsnD35L17eJvB	gwas	6	28904146	28916497	12351	True	0.8551	same	0.8551	True	shared	shared	True	3
-OsLP.lcJmlH72JJliOw-Y-gd0tWtAjeOosBIW	OsLP.X_H6xHQvZHRdSQHFmtm_OGo-CMlR5ecK	gwas	6	17347779	17825093	477314	True	0.0366	distinct_nearby	0.0366	False	none	none	True	3
-OsLP.WoN7k31Qc3OkMnS1m8OpG8LKABkyhodp	OsLP.t__HiULbRxQpQ_Vy3C9P0bicVWs8WAVm	gwas	6	13201491	13518310	316819	True	0.0477	distinct_nearby	0.0477	True	shared	shared	True	3
-OsLP.WoN7k31Qc3OkMnS1m8OpG8LKABkyhodp	OsLP.S95WZPouXg_jqw7dygjdBr0it_OHF4Ev	gwas	6	13201491	13682034	480543	True	0.0009	distinct_nearby	0.0009	False	shared	none	True	3
-OsLP.6P3L-6OVy_qTJUpnNktpILzAcLZq9SaY	OsLP.6P3L-6OVy_qTJUpnNktpILzAcLZq9SaY	gwas	10	4495832	4495832	0	True	1.0	same	1.0	True	shared	shared	True	3
-OsLP.aLNQwOIkP6GBmD4haTnw4-X8AvOlwFI9	OsLP.X_H6xHQvZHRdSQHFmtm_OGo-CMlR5ecK	gwas	6	17866478	17825093	41385	True	0.065	distinct_nearby	0.065	False	none	none	True	3
-OsLP.c5NwfYRgE0PfXr5oW5DpU74daa1xo3UG	OsLP.icAMxRIESS0nC0eJ5JI1y9Yyr9GDeetv	gwas	7	12778823	12544326	234497	True	1.0	same	1.0	True	shared	shared	True	3
-OsLP.4gaPQeiaUGS8fRNo6yJAMV8dH_d1oRkC	OsLP.icAMxRIESS0nC0eJ5JI1y9Yyr9GDeetv	gwas	7	11614905	12544326	929421	False	0.9136	same	0.9136	True	shared	shared	False	3
-OsLP.bAQckGNcRUqexmHdDYYTymv79DDBT1CC	OsLP.icAMxRIESS0nC0eJ5JI1y9Yyr9GDeetv	gwas	7	13359218	12544326	814892	False	0.8668	same	0.8668	False	none	shared	False	3
-OsLP.GJQqAak4bA8qzMmdsl_q983yTBX220Ln	OsLP.6P3L-6OVy_qTJUpnNktpILzAcLZq9SaY	gwas	10	3785944	4495832	709888	False	0.0547	distinct_nearby	0.0547	False	none	shared	False	3
-OsLP.RLwR1v5J_bjDynLCGEay7JRrPBMUIDg7	OsLP.xUXqUKAyqTAh5C3zmpnbjscMiV3hw1UE	gwas	12	11947847	12422831	474984	True	1.0	same	1.0	True	shared	shared	True	5
-OsLP.RLwR1v5J_bjDynLCGEay7JRrPBMUIDg7	OsLP.dyq7EOuiUjhrorFmzZSyv7cT_K4Lo-ND	gwas	12	11947847	11272236	675611	True	0.9592	same	0.9592	False	shared	none	True	5
-OsLP.rza-cF-vBEuZE-gth4dm4aoXJ0Ksxlz1	OsLP._NNxVVUcFxJP_GSE9SK421BYoLxVLmif	gwas	12	12813454	13009440	195986	True	1.0	same	1.0	True	shared	shared	True	5
-OsLP.rza-cF-vBEuZE-gth4dm4aoXJ0Ksxlz1	OsLP.xUXqUKAyqTAh5C3zmpnbjscMiV3hw1UE	gwas	12	12813454	12422831	390623	True	0.952	same	0.952	True	shared	shared	True	5
-OsLP.5V05E_kpLn4mILKW2HSAoAgXia-XM9pJ	OsLP.dyq7EOuiUjhrorFmzZSyv7cT_K4Lo-ND	gwas	12	11385640	11272236	113404	True	1.0	same	1.0	False	none	none	True	5
-OsLP.MyqyOSqx_yBzGL-mMTIObTUoBA6okK0v	OsLP.dyq7EOuiUjhrorFmzZSyv7cT_K4Lo-ND	gwas	12	10772889	11272236	499347	False	0.4589	ambiguous	0.4589	False	none	none	False	5
-OsLP.UCFC2F7m2CsAwsQESlg9IVxJluDSkepV	OsLP._NNxVVUcFxJP_GSE9SK421BYoLxVLmif	gwas	12	13764943	13009440	755503	False	0.7305	same	0.7305	False	none	shared	False	5
-OsLP.Ju6Hu9-4LbSYocz-SruoPgVu9thfPVXE	OsLP.Ju6Hu9-4LbSYocz-SruoPgVu9thfPVXE	gwas	7	20825685	20825685	0	True	1.0	same	1.0	True	shared	shared	True	7
-OsLP.20K59WtK1M6EdEdhVEbrgCKMgQrcX1tT	OsLP.-1flfZkErp_h8HVq4-6jY6RnWr6rAAst	gwas	1	23322356	23607300	284944	True	0.3586	ambiguous	0.3586	False	pair2	pair2	True	7
-OsLP.wsj_70lWdoH7wOTUtogOL3lwQ6TiksLI	OsLP.fuikTOc37hegS8LQzOZZjTs_TdAtpAIG	gwas	2	8758545	8494293	264252	False	0.0451	distinct_nearby	0.0451	False	pair2	pair2	False	8
-OsLP.N1bPp5eCheuValAlxRwI5YhVL7LzEXo0	OsLP.sw5TkWkGEapqGAm31E_q9NeXS6ygIj8g	gwas	1	42591871	42565152	26719	True	1.0	same	1.0	True	shared	shared	True	8
-OsLP.N1bPp5eCheuValAlxRwI5YhVL7LzEXo0	OsLP._MqryIgQ_eys4gfp4Uy1Q4V51lHjv3Ny	gwas	1	42591871	43075392	483521	False	0.5284	same	0.5284	False	shared	none	False	8
-OsLP.N1bPp5eCheuValAlxRwI5YhVL7LzEXo0	OsLP.6EWWL18vq2CbgdVZqRpzdZQ4hM6WQT_6	gwas	1	42591871	43172018	580147	False	0.2949	ambiguous	0.2949	False	shared	none	False	8
-OsLP.WZaML23XgaZsaj6eRtQdQvoEA1ciTcH0	OsLP.joyC4cPh6rxS7xPCLu_ZDfy83ZfNk6pW	gwas	8	18817960	19004293	186333	True	0.0886	distinct_nearby	0.0886	False	pair0	pair0	True	9
-OsLP.rrOutzG41LBSrbrsa7zv9AyTlO26UBnt	OsLP.K_aHAxtEPSX2u9v--fAPlhV5qfr7NBJw	gwas	12	11291072	10666606	624466	True	0.0208	distinct_nearby	0.0208	False	pair3	pair3	True	9
-OsLP.45CgFCJ8J7-ff0snuWOn8Hx4Bq14tIMS	OsLP.K_aHAxtEPSX2u9v--fAPlhV5qfr7NBJw	gwas	12	10789609	10666606	123003	True	0.0262	distinct_nearby	0.0262	False	pair3	pair3	True	9
-OsLP.JPitkYISmPq0150K3Ac6tczJ0PnQw6x6	OsLP.JPitkYISmPq0150K3Ac6tczJ0PnQw6x6	gwas	6	29206600	29206600	0	True	1.0	same	1.0	True	shared	shared	True	9
-OsLP.tWu_99mNA1fcvdVK9-GVSztKyzYXhsUY	OsLP.tWu_99mNA1fcvdVK9-GVSztKyzYXhsUY	gwas	11	23119755	23119755	0	True	1.0	same	1.0	True	shared	shared	True	10
-OsLP.P1r407Fj5gpsWqzF36eSHtyZp5oQ34cs	OsLP.P1r407Fj5gpsWqzF36eSHtyZp5oQ34cs	gwas	4	1086407	1086407	0	True	1.0	same	1.0	True	shared	shared	True	10
-OsLP.tveqgOuDq66VFhSICYfe034qpE8dK2A8	OsLP.tWu_99mNA1fcvdVK9-GVSztKyzYXhsUY	gwas	11	22506181	23119755	613574	False	0.207	ambiguous	0.207	True	shared	shared	False	10
-OsLP.GS-PfMp71Nf0iHcLNyStokaVJ8HJdpVg	OsLP.tWu_99mNA1fcvdVK9-GVSztKyzYXhsUY	gwas	11	23859426	23119755	739671	False	0.1496	ambiguous	0.1496	True	shared	shared	False	10
-OsLP.y9PEmFr3EJVk833NdA-vAS6j-B2wOT2T	OsLP.hGQqCPQvM93PLQRshXgkckeJzLXLbEta	gwas	11	4035270	3990987	44283	True	0.7895	same	0.7895	True	shared	shared	True	12
-OsLP.y9PEmFr3EJVk833NdA-vAS6j-B2wOT2T	OsLP.X0uvjXbrzhX1ec318OOFpNsLezfIIlRp	gwas	11	4035270	3994719	40551	True	0.8244	same	0.8244	False	shared	none	True	12
-OsLP.BN1pmoYZ32Cdjl9iztFsZNahMrCxopYA	OsLP.7Ia5u0hKqsU9qIgwUZMUxX0JycyY_nig	gwas	11	24418857	24405909	12948	True	1.0	same	1.0	True	shared	shared	True	13
-OsLP.x0PHec1zFQuQ1kCmfNAFbFymR2Fztp25	OsLP.dPuNsvOrK5GU0j0510dpPY67U8sLWiU8	gwas	1	21969306	22218988	249682	False	0.2511	ambiguous	0.2511	False	pair3	pair3	False	13
-OsLP.GEmFlcAiW6xRG06B8iuteFBj5RNHFpFo	OsLP.LYEooEEXp3g15MspAr5P6se-DDofhB4T	gwas	11	20543531	20863630	320099	False	0.0125	distinct_nearby	0.0125	False	pair3	pair3	False	14
-OsLP.gM6VIXJlnhdrEkNV1KFRoI5TM_QooS2z	OsLP._oPPGKLkSfmweCdgmSYiiN2toLIhlkrC	gwas	10	17742307	17974478	232171	True	1.0	same	1.0	True	shared	shared	True	14
-OsLP.zq7iTF1ZUPeOJLGma55xLUL3VySwMmZk	OsLP.zq7iTF1ZUPeOJLGma55xLUL3VySwMmZk	gwas	6	29396707	29396707	0	True	1.0	same	1.0	True	shared	shared	True	15
-OsLP.rYClXJdt-Pd5CmEYvt0WBKVMoIUbxO-L	OsLP.uNWYFkyC_edVACBakz1LGjM4wyFa0Med	gwas	3	7859913	8200898	340985	False	0.0481	distinct_nearby	0.0481	False	pair0	pair0	False	17
-OsLP.HRDhkOAlZloOVpmq-VGOfGTicLz-L1aB	OsLP.tLUA-D7UyCFBUEqk5r9dxc1EfXB2gFK7	gwas	1	6596913	6873771	276858	False	0.4371	ambiguous	0.4371	False	pair2	pair2	False	17
-OsLP.FqU-DkMwE7rYmhiawSYDYmnZOZBdjRVY	OsLP.tLUA-D7UyCFBUEqk5r9dxc1EfXB2gFK7	gwas	1	6103404	6873771	770367	False	0.346	ambiguous	0.346	False	none	pair2	False	17
-OsLP.7P4s9inZ1yOfQlk7qFLWzLdIxZOco1ff	OsLP.PJ2ppzdxN-wF6VsEGm4R4QdUCJ-8Un-b	gwas	6	4720830	4984563	263733	True	0.0307	distinct_nearby	0.0307	False	pair1	pair1	True	19
-OsLP.F9b8kKRURv9vS5Nqv6aUXhwFH57yePG3	OsLP.nWZZqTxNfWylq_yck2jg-OYG5UVTiUOE	gwas	1	7623601	6821615	801986	False	0.2191	ambiguous	0.2191	False	shared	none	False	19
+query	target	target_kind	chrom	query_lead	target_lead	distance_bp	overlap	r2	direction	profile_corr	call	score	PP.H3	PP.H4	coloc_snps	coloc_call	truth_same	truth_role	role_b	overlap0	rep
+OsLP.jXmhTHNtelc8ILNej9JhYz_y67e7Cl5S	OsLP.qtFvcVLG4ylWom6x_pw_PbZ6lhPAKfdm	gwas	1	22973439	22972230	1209	True	1.0	concordant	0.589	same	1.0	0.0051	0.9948	557.0	same	False	shared	none	True	0
+OsLP.NeiqBL9APfUpke2nr_D0J-_psOk5FWmj	OsLP.daw8y-Q1SC9VOIKC94sPayv3vfu2Kwht	gwas	1	11594753	10903682	691071	False	0.6306		0.0359	same	0.6306					True	shared	shared	False	0
+OsLP.NeiqBL9APfUpke2nr_D0J-_psOk5FWmj	OsLP.taQZ3aGTRqfUryp8xJFZWfzjSJwnomNi	gwas	1	11594753	11471078	123675	True	1.0		-0.0941	same	1.0	0.0095	0.9904	288.0	same	True	shared	shared	True	0
+OsLP.e4n492hggELnJYgWux0rF_aw0MIlK14f	OsLP.LeowAPCMT8GqyUXTKaQePjDGEPstSxh0	gwas	6	13061813	13191329	129516	False	0.0298		-0.2133	distinct_nearby	0.0298	0.9441	0.0078	204.0	distinct	False	pair2	pair2	False	1
+OsLP.e4n492hggELnJYgWux0rF_aw0MIlK14f	OsLP.kaNIlt-c8ph6pLYPf1-hF_sx89UujyL9	gwas	6	13061813	13853195	791382	False	0.0296		0.0752	distinct_nearby	0.0296					False	pair2	pair2	False	1
+OsLP.QvXz5BZjB1cDfr3PbjY6yeiPSo5iV0Sv	OsLP.C5uudr8T2fODkSpRfpsnUxO9a4yoOhdr	gwas	6	17619853	17916717	296864	False	0.0176		0.3274	distinct_nearby	0.0176	0.0219	0.2647	331.0	inconclusive	False	none	none	False	1
+OsLP.RqZdODLW0nAzgtT0a8eVq6ukNnfhkLBC	OsLP.LeowAPCMT8GqyUXTKaQePjDGEPstSxh0	gwas	6	13270510	13191329	79181	True	0.0319		-0.5266	distinct_nearby	0.0319	0.0151	0.1637	250.0	inconclusive	False	none	pair2	True	1
+OsLP.RqZdODLW0nAzgtT0a8eVq6ukNnfhkLBC	OsLP.kaNIlt-c8ph6pLYPf1-hF_sx89UujyL9	gwas	6	13270510	13853195	582685	True	0.0212		0.2079	distinct_nearby	0.0212					False	none	pair2	True	1
+OsLP.u2Z1T7_6B9t41jfZhp5u2hFGc169236D	OsLP.u2Z1T7_6B9t41jfZhp5u2hFGc169236D	gwas	9	13008748	13008748	0	True	1.0	concordant	0.6767	same	1.0	0.0025	0.9974	172.0	same	True	shared	shared	True	2
+OsLP.Pp5RqxCVLixibxBpsw-d4gTaocVizORV	OsLP.K1HuT1EmK0pj5TqpeGa24zWZ-NXnfNZ7	gwas	8	10699424	10084349	615075	True	1.0	concordant	-0.3212	same	1.0					True	shared	shared	True	2
+OsLP.rbeRBr8_aCyjSc68XEDlaghMq3oW87sr	OsLP.t__HiULbRxQpQ_Vy3C9P0bicVWs8WAVm	gwas	6	13822798	13518310	304488	True	0.7751	concordant	0.2717	same	0.7751	0.0	0.0447	2.0	inconclusive	True	shared	shared	True	3
+OsLP.rbeRBr8_aCyjSc68XEDlaghMq3oW87sr	OsLP.S95WZPouXg_jqw7dygjdBr0it_OHF4Ev	gwas	6	13822798	13682034	140764	True	0.0108		-0.3095	distinct_nearby	0.0108	0.0508	0.9491	159.0	same	False	shared	none	True	3
+OsLP.pw0rm8nd4G6baujauVEKpq_vuIInB0_x	OsLP.RKREuwAkp89S9WW1Ln0FY8e3NBUiof6I	gwas	6	28904146	28905407	1261	True	0.0144		0.6636	distinct_nearby	0.0144	0.0214	0.9786	141.0	same	False	shared	none	True	3
+OsLP.pw0rm8nd4G6baujauVEKpq_vuIInB0_x	OsLP.dupf5EoGxp3NuKb_SUXQsnD35L17eJvB	gwas	6	28904146	28916497	12351	True	0.8551	concordant	0.6087	same	0.8551	0.6449	0.3538	125.0	inconclusive	True	shared	shared	True	3
+OsLP.lcJmlH72JJliOw-Y-gd0tWtAjeOosBIW	OsLP.X_H6xHQvZHRdSQHFmtm_OGo-CMlR5ecK	gwas	6	17347779	17825093	477314	True	0.0366		0.4044	distinct_nearby	0.0366	0.0002	0.0021	12.0	inconclusive	False	none	none	True	3
+OsLP.WoN7k31Qc3OkMnS1m8OpG8LKABkyhodp	OsLP.t__HiULbRxQpQ_Vy3C9P0bicVWs8WAVm	gwas	6	13201491	13518310	316819	True	0.0477		0.4849	distinct_nearby	0.0477	0.0058	0.0515	117.0	inconclusive	True	shared	shared	True	3
+OsLP.WoN7k31Qc3OkMnS1m8OpG8LKABkyhodp	OsLP.S95WZPouXg_jqw7dygjdBr0it_OHF4Ev	gwas	6	13201491	13682034	480543	True	0.0009		-0.0652	distinct_nearby	0.0009					False	shared	none	True	3
+OsLP.6P3L-6OVy_qTJUpnNktpILzAcLZq9SaY	OsLP.6P3L-6OVy_qTJUpnNktpILzAcLZq9SaY	gwas	10	4495832	4495832	0	True	1.0	concordant	0.936	same	1.0	0.0011	0.9989	711.0	same	True	shared	shared	True	3
+OsLP.aLNQwOIkP6GBmD4haTnw4-X8AvOlwFI9	OsLP.X_H6xHQvZHRdSQHFmtm_OGo-CMlR5ecK	gwas	6	17866478	17825093	41385	True	0.065		0.3974	distinct_nearby	0.065	0.0362	0.0916	525.0	inconclusive	False	none	none	True	3
+OsLP.c5NwfYRgE0PfXr5oW5DpU74daa1xo3UG	OsLP.icAMxRIESS0nC0eJ5JI1y9Yyr9GDeetv	gwas	7	12778823	12544326	234497	True	1.0	concordant	-0.2619	same	1.0	0.0142	0.9849	233.0	same	True	shared	shared	True	3
+OsLP.4gaPQeiaUGS8fRNo6yJAMV8dH_d1oRkC	OsLP.icAMxRIESS0nC0eJ5JI1y9Yyr9GDeetv	gwas	7	11614905	12544326	929421	False	0.9136	concordant	0.1127	same	0.9136					True	shared	shared	False	3
+OsLP.bAQckGNcRUqexmHdDYYTymv79DDBT1CC	OsLP.icAMxRIESS0nC0eJ5JI1y9Yyr9GDeetv	gwas	7	13359218	12544326	814892	False	0.8668	concordant	0.2079	same	0.8668					False	none	shared	False	3
+OsLP.GJQqAak4bA8qzMmdsl_q983yTBX220Ln	OsLP.6P3L-6OVy_qTJUpnNktpILzAcLZq9SaY	gwas	10	3785944	4495832	709888	False	0.0547		-0.2005	distinct_nearby	0.0547					False	none	shared	False	3
+OsLP.RLwR1v5J_bjDynLCGEay7JRrPBMUIDg7	OsLP.xUXqUKAyqTAh5C3zmpnbjscMiV3hw1UE	gwas	12	11947847	12422831	474984	True	1.0	concordant	0.1447	same	1.0	0.0039	0.973	4.0	same	True	shared	shared	True	5
+OsLP.RLwR1v5J_bjDynLCGEay7JRrPBMUIDg7	OsLP.dyq7EOuiUjhrorFmzZSyv7cT_K4Lo-ND	gwas	12	11947847	11272236	675611	True	0.9592	concordant	0.1171	same	0.9592					False	shared	none	True	5
+OsLP.rza-cF-vBEuZE-gth4dm4aoXJ0Ksxlz1	OsLP._NNxVVUcFxJP_GSE9SK421BYoLxVLmif	gwas	12	12813454	13009440	195986	True	1.0	concordant	-0.1156	same	1.0	0.0305	0.9693	217.0	same	True	shared	shared	True	5
+OsLP.rza-cF-vBEuZE-gth4dm4aoXJ0Ksxlz1	OsLP.xUXqUKAyqTAh5C3zmpnbjscMiV3hw1UE	gwas	12	12813454	12422831	390623	True	0.952	concordant	-0.062	same	0.952	0.0062	0.9936	67.0	same	True	shared	shared	True	5
+OsLP.5V05E_kpLn4mILKW2HSAoAgXia-XM9pJ	OsLP.dyq7EOuiUjhrorFmzZSyv7cT_K4Lo-ND	gwas	12	11385640	11272236	113404	True	1.0	concordant	0.1247	same	1.0	0.0255	0.9743	241.0	same	False	none	none	True	5
+OsLP.MyqyOSqx_yBzGL-mMTIObTUoBA6okK0v	OsLP.dyq7EOuiUjhrorFmzZSyv7cT_K4Lo-ND	gwas	12	10772889	11272236	499347	False	0.4589		-0.1858	ambiguous	0.4589					False	none	none	False	5
+OsLP.UCFC2F7m2CsAwsQESlg9IVxJluDSkepV	OsLP._NNxVVUcFxJP_GSE9SK421BYoLxVLmif	gwas	12	13764943	13009440	755503	False	0.7305	concordant	-0.1101	same	0.7305					False	none	shared	False	5
+OsLP.Ju6Hu9-4LbSYocz-SruoPgVu9thfPVXE	OsLP.Ju6Hu9-4LbSYocz-SruoPgVu9thfPVXE	gwas	7	20825685	20825685	0	True	1.0	concordant	0.5512	same	1.0	0.0003	0.9997	669.0	same	True	shared	shared	True	7
+OsLP.20K59WtK1M6EdEdhVEbrgCKMgQrcX1tT	OsLP.-1flfZkErp_h8HVq4-6jY6RnWr6rAAst	gwas	1	23322356	23607300	284944	True	0.3586		0.6703	ambiguous	0.3586	0.6283	0.022	293.0	inconclusive	False	pair2	pair2	True	7
+OsLP.wsj_70lWdoH7wOTUtogOL3lwQ6TiksLI	OsLP.fuikTOc37hegS8LQzOZZjTs_TdAtpAIG	gwas	2	8758545	8494293	264252	False	0.0451		0.0859	distinct_nearby	0.0451	0.4422	0.0496	85.0	inconclusive	False	pair2	pair2	False	8
+OsLP.N1bPp5eCheuValAlxRwI5YhVL7LzEXo0	OsLP.sw5TkWkGEapqGAm31E_q9NeXS6ygIj8g	gwas	1	42591871	42565152	26719	True	1.0	concordant	0.1566	same	1.0	0.0555	0.9445	344.0	same	True	shared	shared	True	8
+OsLP.N1bPp5eCheuValAlxRwI5YhVL7LzEXo0	OsLP._MqryIgQ_eys4gfp4Uy1Q4V51lHjv3Ny	gwas	1	42591871	43075392	483521	False	0.5284		0.4879	same	0.5284	0.0001	0.0344	3.0	inconclusive	False	shared	none	False	8
+OsLP.N1bPp5eCheuValAlxRwI5YhVL7LzEXo0	OsLP.6EWWL18vq2CbgdVZqRpzdZQ4hM6WQT_6	gwas	1	42591871	43172018	580147	False	0.2949		0.4348	ambiguous	0.2949					False	shared	none	False	8
+OsLP.WZaML23XgaZsaj6eRtQdQvoEA1ciTcH0	OsLP.joyC4cPh6rxS7xPCLu_ZDfy83ZfNk6pW	gwas	8	18817960	19004293	186333	True	0.0886		0.2422	distinct_nearby	0.0886	0.999	0.0	99.0	distinct	False	pair0	pair0	True	9
+OsLP.rrOutzG41LBSrbrsa7zv9AyTlO26UBnt	OsLP.K_aHAxtEPSX2u9v--fAPlhV5qfr7NBJw	gwas	12	11291072	10666606	624466	True	0.0208		0.4586	distinct_nearby	0.0208					False	pair3	pair3	True	9
+OsLP.45CgFCJ8J7-ff0snuWOn8Hx4Bq14tIMS	OsLP.K_aHAxtEPSX2u9v--fAPlhV5qfr7NBJw	gwas	12	10789609	10666606	123003	True	0.0262		-0.2303	distinct_nearby	0.0262	0.988	0.0006	267.0	distinct	False	pair3	pair3	True	9
+OsLP.JPitkYISmPq0150K3Ac6tczJ0PnQw6x6	OsLP.JPitkYISmPq0150K3Ac6tczJ0PnQw6x6	gwas	6	29206600	29206600	0	True	1.0	concordant	0.862	same	1.0	0.0004	0.9996	250.0	same	True	shared	shared	True	9
+OsLP.tWu_99mNA1fcvdVK9-GVSztKyzYXhsUY	OsLP.tWu_99mNA1fcvdVK9-GVSztKyzYXhsUY	gwas	11	23119755	23119755	0	True	1.0	concordant	0.7745	same	1.0	0.0	1.0	1187.0	same	True	shared	shared	True	10
+OsLP.P1r407Fj5gpsWqzF36eSHtyZp5oQ34cs	OsLP.P1r407Fj5gpsWqzF36eSHtyZp5oQ34cs	gwas	4	1086407	1086407	0	True	1.0	concordant	0.8832	same	1.0	0.0	1.0	738.0	same	True	shared	shared	True	10
+OsLP.tveqgOuDq66VFhSICYfe034qpE8dK2A8	OsLP.tWu_99mNA1fcvdVK9-GVSztKyzYXhsUY	gwas	11	22506181	23119755	613574	False	0.207		0.2129	ambiguous	0.207					True	shared	shared	False	10
+OsLP.GS-PfMp71Nf0iHcLNyStokaVJ8HJdpVg	OsLP.tWu_99mNA1fcvdVK9-GVSztKyzYXhsUY	gwas	11	23859426	23119755	739671	False	0.1496		0.3768	ambiguous	0.1496					True	shared	shared	False	10
+OsLP.y9PEmFr3EJVk833NdA-vAS6j-B2wOT2T	OsLP.hGQqCPQvM93PLQRshXgkckeJzLXLbEta	gwas	11	4035270	3990987	44283	True	0.7895	concordant	0.2218	same	0.7895	0.0303	0.9692	59.0	same	True	shared	shared	True	12
+OsLP.y9PEmFr3EJVk833NdA-vAS6j-B2wOT2T	OsLP.X0uvjXbrzhX1ec318OOFpNsLezfIIlRp	gwas	11	4035270	3994719	40551	True	0.8244		0.2782	same	0.8244	0.0016	0.9983	79.0	same	False	shared	none	True	12
+OsLP.BN1pmoYZ32Cdjl9iztFsZNahMrCxopYA	OsLP.7Ia5u0hKqsU9qIgwUZMUxX0JycyY_nig	gwas	11	24418857	24405909	12948	True	1.0		0.7497	same	1.0	0.0138	0.9862	714.0	same	True	shared	shared	True	13
+OsLP.x0PHec1zFQuQ1kCmfNAFbFymR2Fztp25	OsLP.dPuNsvOrK5GU0j0510dpPY67U8sLWiU8	gwas	1	21969306	22218988	249682	False	0.2511		0.4821	ambiguous	0.2511	0.9666	0.0032	178.0	distinct	False	pair3	pair3	False	13
+OsLP.GEmFlcAiW6xRG06B8iuteFBj5RNHFpFo	OsLP.LYEooEEXp3g15MspAr5P6se-DDofhB4T	gwas	11	20543531	20863630	320099	False	0.0125		0.1912	distinct_nearby	0.0125	0.0506	0.7556	200.0	inconclusive	False	pair3	pair3	False	14
+OsLP.gM6VIXJlnhdrEkNV1KFRoI5TM_QooS2z	OsLP._oPPGKLkSfmweCdgmSYiiN2toLIhlkrC	gwas	10	17742307	17974478	232171	True	1.0	concordant	0.1588	same	1.0	0.0087	0.9909	80.0	same	True	shared	shared	True	14
+OsLP.zq7iTF1ZUPeOJLGma55xLUL3VySwMmZk	OsLP.zq7iTF1ZUPeOJLGma55xLUL3VySwMmZk	gwas	6	29396707	29396707	0	True	1.0	concordant	0.9493	same	1.0	0.0001	0.9999	259.0	same	True	shared	shared	True	15
+OsLP.rYClXJdt-Pd5CmEYvt0WBKVMoIUbxO-L	OsLP.uNWYFkyC_edVACBakz1LGjM4wyFa0Med	gwas	3	7859913	8200898	340985	False	0.0481		0.5614	distinct_nearby	0.0481	0.0967	0.016	52.0	inconclusive	False	pair0	pair0	False	17
+OsLP.HRDhkOAlZloOVpmq-VGOfGTicLz-L1aB	OsLP.tLUA-D7UyCFBUEqk5r9dxc1EfXB2gFK7	gwas	1	6596913	6873771	276858	False	0.4371		0.423	ambiguous	0.4371	0.9914	0.0016	112.0	distinct	False	pair2	pair2	False	17
+OsLP.FqU-DkMwE7rYmhiawSYDYmnZOZBdjRVY	OsLP.tLUA-D7UyCFBUEqk5r9dxc1EfXB2gFK7	gwas	1	6103404	6873771	770367	False	0.346		-0.3505	ambiguous	0.346					False	none	pair2	False	17
+OsLP.7P4s9inZ1yOfQlk7qFLWzLdIxZOco1ff	OsLP.PJ2ppzdxN-wF6VsEGm4R4QdUCJ-8Un-b	gwas	6	4720830	4984563	263733	True	0.0307		0.3379	distinct_nearby	0.0307	0.9805	0.0017	114.0	distinct	False	pair1	pair1	True	19
+OsLP.F9b8kKRURv9vS5Nqv6aUXhwFH57yePG3	OsLP.nWZZqTxNfWylq_yck2jg-OYG5UVTiUOE	gwas	1	7623601	6821615	801986	False	0.2191		0.4953	ambiguous	0.2191					False	shared	none	False	19

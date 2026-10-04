@@ -98,3 +98,61 @@ Example cards: `results/d_real_gwas/card_3k_*.png`.
 3. **Simulation power**: more replicates and a larger second panel.
 4. **Clump fragmentation** in long-range LD inflates locus counts (36 RDP1 pericarp loci); consider
    merging clumps whose leads are in LD or whose LD blocks overlap.
+
+---
+
+# Round 2 (2026-10-04): new features
+
+Script: `f_new_features.py`, `f2_markers_scale.py`; simulation re-scored with `c_simulation.py`.
+RDP1 was re-analysed with REGENIE (413 lines, 4 PCs) to get effect signs; the published file has p-values only.
+Dense LD panel: 3K filtered SNP set v0.7 (4.8M SNPs), cut to the *sd1*, *Wx* and *Rc* regions.
+
+## F1. Genome-build detection (positions + alleles only)
+
+| Study | True build | Allele match on true build | On the other builds |
+|---|---|---|---|
+| RDP1 | MSU6 | 99.85% | 50–52% |
+| 3K | IRGSP-1.0 | 100% | 50% |
+
+It separates MSU6 from IRGSP-1.0 even though most SNPs moved by only ~1 kb.
+
+## F2. Marker lookup: no genome at all
+
+Chip-manifest flanks stored in the database, anchored onto IRGSP-1.0; truth = published MSU7 positions.
+
+| Flank length | Markers | Placed | Exact position | Wrong |
+|---|---|---|---|---|
+| 41 bp (20+1+20) | 300 | 100% | 100% | 0 |
+| 33 bp (16+1+16) | 300 | 100% | 100% | 0 |
+
+minimap2 alone placed only 4/11 of the first test loci: short queries get few seeds and low MAPQ. Short anchors
+now use a near-perfect unique-hit rule plus an exact-search fallback (unique occurrence on either strand).
+
+## F3. Cross-study with all evidence (RDP1 MSU6 → IRGSP-1.0 vs 3K)
+
+| Gene | Leads apart | r² (core panel) | r² (dense panel) | Direction | Coloc PP.H4 (dense) | Call |
+|---|---|---|---|---|---|---|
+| *sd1* | 0 bp (same SNP) | 1.00 | 1.00 | concordant | 0.996 | same |
+| *Wx* | 13 kb | 1.00 | 1.00 | **discordant** | 0.988 | **same_opposite_effect** |
+| *Rc* | 0.9 kb | 0.13 | **0.92** | n/a | 0.842 | same (dense) / ambiguous (core) |
+
+- **Correction to round 1:** *Rc* was not allelic heterogeneity. The RDP1 lead is missing from the core panel and the
+  nearest SNP used as a proxy was not in LD with it. With the dense panel the leads have r² = 0.92 and colocalize.
+  Lessons: the reference LD panel must be dense, and proxies are now the study's best-associated SNP that the
+  panel has (from the imprint), not the nearest one.
+- *Wx*: RDP1 measures amylose, 3K records glutinous (waxy) endosperm, which has almost no amylose. One signal,
+  opposite trait coding; the direction test detects it.
+- **Territories:** before restricting colocalization to each locus's own territory, two secondary 3K loci near *Rc*
+  were also "colocalized" (their windows contained the main *Rc* peak). They are now inconclusive (PP.H4 0.67, 0.04).
+
+## C (re-scored). Simulation with colocalization
+
+| Method | Called same | Precision | Recall | Nearby-distinct wrongly called same |
+|---|---|---|---|---|
+| plocust LD test | 28 | 0.75 | 0.88 | 0 / 12 |
+| colocalization (PP.H4 ≥ 0.8) | 21 | 0.76 | 0.67 | 0 / 12 |
+| combined (coloc if conclusive, else LD) | 30 | 0.70 | 0.88 | 0 / 12 |
+| LD-block overlap | 36 | 0.56 | 0.83 | 5 / 12 |
+
+Colocalization does not beat the LD test in this simulation (where every lead is in the panel); its value is as
+independent confirmation and when leads are missing from the panel (*Rc*). Effect directions: 23 concordant, 0 discordant.

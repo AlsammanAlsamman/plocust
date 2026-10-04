@@ -4,3 +4,5 @@ coordinate overlap (LD-block intervals)	24	36	0.556	0.833	12	5
 lead distance <= 100 kb	24	16	0.688	0.458	12	0
 lead distance <= 250 kb	24	26	0.577	0.625	12	4
 lead distance <= 500 kb	24	41	0.463	0.792	12	10
+colocalization (PP.H4 >= 0.8)	24	21	0.762	0.667	12	0
+combined: coloc if conclusive, else LD call	24	30	0.7	0.875	12	0
