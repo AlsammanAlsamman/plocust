@@ -57,18 +57,7 @@ Wherever the anchor sequence is found, the locus is found.
 
 ## ⚙️ How it works
 
-```mermaid
-flowchart LR
-    A[GWAS results table] --> B{Which genome<br>version?}
-    B --> C[Find loci]
-    C --> D[Describe each locus<br>signal · LD · imprint · genes]
-    D --> E[DNA anchors<br>+ stable ID]
-    E --> F[Place on any genome<br>or variety]
-    F --> G[Compare studies<br>same / different?]
-    F --> H[Match known genes]
-    G --> I[Locus card<br>for breeders]
-    H --> I
-```
+<p align="center"><img src="docs/images/flowchart.png" alt="plocust workflow: inputs, six steps, outputs" width="100%"></p>
 
 1. **Detect the genome version** from positions and alleles (the right one matches ~100 %, a wrong one ~50 %).
 2. **Find loci**: group significant SNPs; credible set, LD block, haplotypes.
