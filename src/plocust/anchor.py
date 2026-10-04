@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
+from .ids import reverse_complement
 from .io import normalize_chrom
 from .passport import AnchorRole, LocusPassport, Placement, PlacementFlag
 
@@ -25,9 +26,37 @@ class Aligner:
         if not self._a:
             raise RuntimeError(f"could not build a minimap2 index for {fasta}")
         self.build = build or fasta.name.split(".dna")[0]
+        self.fasta = fasta
+        self._chroms: Optional[dict[str, str]] = None
 
     def map(self, seq: str):
         return list(self._a.map(seq))
+
+    def exact(self, seq: str, offset: int) -> list[tuple[str, int, int]]:
+        """Exact occurrences of seq (any base at `offset`) on both strands: (chrom, 1-based pos of offset, strand).
+
+        Fallback for short anchors that minimap2 misses (few seeds, repeat-filtered seeds).
+        Loads the assembly into memory on first use.
+        """
+        if self._chroms is None:
+            import pysam
+
+            fa = pysam.FastaFile(str(self.fasta))
+            self._chroms = {normalize_chrom(n): fa.fetch(n).upper() for n in fa.references}
+        hits = []
+        rc = reverse_complement(seq)
+        for strand, q, off in ((1, seq, offset), (-1, rc, len(seq) - 1 - offset)):
+            left, right = q[:off], q[off + 1 :]
+            for chrom, text in self._chroms.items():
+                i = text.find(left)
+                while i != -1:
+                    j = i + len(left) + 1
+                    if text.startswith(right, j):
+                        hits.append((chrom, i + off + 1, strand))
+                    i = text.find(left, i + 1)
+                if len(hits) > 1:
+                    return hits
+        return hits
 
 
 @dataclass
@@ -74,16 +103,21 @@ def _unique_short(hits, qlen: int):
 def map_anchor(aligner: Aligner, seq: str, offset: int, min_mapq: int = 20) -> tuple[Optional[AnchorHit], int]:
     """Best unique hit of one anchor, and the number of hits found.
 
-    Anchors >= 100 bp need MAPQ >= min_mapq. Shorter anchors need exactly one
-    near-perfect full-length hit instead, since minimap2 caps their MAPQ.
+    Anchors >= 100 bp need MAPQ >= min_mapq. Shorter anchors (chip flanks) need exactly one
+    near-perfect full-length hit, since minimap2 caps their MAPQ; when minimap2 finds none, an
+    exact search (any base at the variant) must find exactly one occurrence on either strand.
     """
     hits = aligner.map(seq)
-    if not hits:
-        return None, 0
     if len(seq) < SHORT_ANCHOR:
-        best = _unique_short(hits, len(seq))
+        best = _unique_short(hits, len(seq)) if hits else None
         if best is None:
-            return None, len(hits)
+            exact = aligner.exact(seq, offset)
+            if len(exact) == 1:
+                chrom, pos, strand = exact[0]
+                return AnchorHit(chrom=chrom, pos=pos, strand=strand, mapq=0, identity=1.0), 1
+            return None, max(len(hits), len(exact))
+    elif not hits:
+        return None, 0
     else:
         best = next((h for h in hits if h.is_primary), hits[0])
         if best.mapq < min_mapq:
