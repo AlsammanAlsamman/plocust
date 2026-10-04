@@ -206,9 +206,10 @@ Full details: [`validation/README.md`](validation/README.md).
 
 <p align="center"><img src="docs/images/rice_atlas.png" alt="Rice locus atlas: 525 GWAS loci on the 12 rice chromosomes linked to plant organs, fine-mapping precision, known genes and leaf eQTL density" width="100%"></p>
 
-<p align="center"><i>Every dot is a locus passport, placed on the genome, coloured and shaped by the plant organ its trait belongs to,
-and set further out the stronger its association. Filled = fine-mapped to ≤ 5 variants; blue ring = leaf eQTL density;
-chords = one locus acting on several traits; labels = classic cloned genes (<b>sd1</b>, <b>Wx</b>, <b>Rc</b>, <b>GS3</b> …).
+<p align="center"><i>Every marker is a locus passport, placed on the genome and coloured and shaped by the plant organ
+its trait belongs to; the stronger the association, the further from the centre. Filled = fine-mapped to ≤ 5 variants;
+black ring = next to a labelled cloned gene (<b>sd1</b>, <b>Wx</b>, <b>Rc</b>, <b>GS3</b> …); dashed ring = one lead SNP for several
+traits; chords = the same signal found in two studies; blue ring = leaf eQTL density.
 Interactive version with hover details: <code>docs/atlas_figure/atlas.html</code>.</i></p>
 
 plocust has been run on public rice data: GWAS for **64 traits** (3K and RDP1 panels), **44,354 leaf eQTLs**,
