@@ -2,7 +2,7 @@
   "$defs": {
     "Anchor": {
       "additionalProperties": false,
-      "description": "A flanking sequence that locates the locus on any assembly by alignment.",
+      "description": "A flanking sequence that locates the locus on any assembly by alignment.\n\n`variant_offset` marks the position the anchor stands for: the lead\nvariant, a block edge, or the centre of a gene anchor.",
       "properties": {
         "role": {
           "$ref": "#/$defs/AnchorRole"
@@ -196,6 +196,163 @@
       "title": "Gene",
       "type": "object"
     },
+    "Imprint": {
+      "additionalProperties": false,
+      "description": "The locus's surroundings as seen in the GWAS summary statistics of the source study.\n\n`pos`, `ids`, `ref`, `alt`, `z` are parallel lists for every tested SNP within\n+- window_bp of the lead (source build). `z` is signed for the alt allele when the\nstudy reports effects (`z_signed`), otherwise |z| from the p-value.\n`profile` is the max |z| in `bins` equal bins across the window, centred on the\nlead: a fixed-length shape that can be compared between studies.\n`ld_edges` links the top significant SNPs (indices into the lists) with r2 >= ld_edge_r2.",
+      "properties": {
+        "window_bp": {
+          "minimum": 1,
+          "title": "Window Bp",
+          "type": "integer"
+        },
+        "threshold": {
+          "title": "Threshold",
+          "type": "number"
+        },
+        "z_signed": {
+          "title": "Z Signed",
+          "type": "boolean"
+        },
+        "ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ids",
+          "type": "array"
+        },
+        "pos": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Pos",
+          "type": "array"
+        },
+        "ref": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ref",
+          "type": "array"
+        },
+        "alt": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Alt",
+          "type": "array"
+        },
+        "z": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Z",
+          "type": "array"
+        },
+        "bins": {
+          "title": "Bins",
+          "type": "integer"
+        },
+        "profile": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Profile",
+          "type": "array"
+        },
+        "half_max_width_bp": {
+          "description": "span of SNPs with -log10 p >= half the lead's",
+          "minimum": 0,
+          "title": "Half Max Width Bp",
+          "type": "integer"
+        },
+        "n_significant": {
+          "minimum": 0,
+          "title": "N Significant",
+          "type": "integer"
+        },
+        "independent_signals": {
+          "description": "loci of this study within the window, this one included",
+          "minimum": 1,
+          "title": "Independent Signals",
+          "type": "integer"
+        },
+        "ld_edge_r2": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ld Edge R2"
+        },
+        "ld_edges": {
+          "default": [],
+          "items": {
+            "maxItems": 3,
+            "minItems": 3,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Ld Edges",
+          "type": "array"
+        },
+        "territory_start": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "this locus's own part of the window: halfway to the neighbouring leads of the same study (source build)",
+          "title": "Territory Start"
+        },
+        "territory_end": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Territory End"
+        }
+      },
+      "required": [
+        "window_bp",
+        "threshold",
+        "z_signed",
+        "ids",
+        "pos",
+        "ref",
+        "alt",
+        "z",
+        "bins",
+        "profile",
+        "half_max_width_bp",
+        "n_significant",
+        "independent_signals"
+      ],
+      "title": "Imprint",
+      "type": "object"
+    },
     "LDBlock": {
       "additionalProperties": false,
       "description": "LD around the lead in the source panel. Panel-specific by nature.",
@@ -271,6 +428,15 @@
       ],
       "title": "LDBlock",
       "type": "object"
+    },
+    "LocusKind": {
+      "enum": [
+        "gwas",
+        "gene",
+        "qtl"
+      ],
+      "title": "LocusKind",
+      "type": "string"
     },
     "Neighbour": {
       "additionalProperties": false,
@@ -351,6 +517,20 @@
           "description": "'source' = coordinates from the study; 'anchor' = placed by alignment",
           "title": "Method",
           "type": "string"
+        },
+        "lead_pos": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "position of the lead variant (or gene anchor centre) on this build",
+          "title": "Lead Pos"
         },
         "anchors_placed": {
           "anyOf": [
@@ -664,12 +844,25 @@
       "title": "Passport Id",
       "type": "string"
     },
+    "kind": {
+      "$ref": "#/$defs/LocusKind",
+      "default": "gwas"
+    },
     "species": {
       "title": "Species",
       "type": "string"
     },
     "trait": {
       "$ref": "#/$defs/Trait"
+    },
+    "traits_other": {
+      "default": [],
+      "description": "further traits linked to this locus (pleiotropy)",
+      "items": {
+        "$ref": "#/$defs/Trait"
+      },
+      "title": "Traits Other",
+      "type": "array"
     },
     "source": {
       "$ref": "#/$defs/Source"
@@ -690,7 +883,15 @@
       "type": "array"
     },
     "signal": {
-      "$ref": "#/$defs/Signal"
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Signal"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "credible_set": {
       "anyOf": [
@@ -707,6 +908,17 @@
       "anyOf": [
         {
           "$ref": "#/$defs/LDBlock"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "imprint": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Imprint"
         },
         {
           "type": "null"
@@ -747,8 +959,7 @@
     "species",
     "trait",
     "source",
-    "anchors",
-    "signal"
+    "anchors"
   ],
   "title": "LocusPassport",
   "type": "object"
