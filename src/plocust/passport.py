@@ -33,7 +33,11 @@ class AnchorRole(str, Enum):
 
 
 class Anchor(_Model):
-    """A flanking sequence that locates the locus on any assembly by alignment."""
+    """A flanking sequence that locates the locus on any assembly by alignment.
+
+    `variant_offset` marks the position the anchor stands for: the lead
+    variant, a block edge, or the centre of a gene anchor.
+    """
 
     role: AnchorRole
     sequence: str
@@ -50,11 +54,19 @@ class Anchor(_Model):
 
     @model_validator(mode="after")
     def _check_offset(self) -> Anchor:
-        if self.role is AnchorRole.lead_snp and self.variant_offset is None:
-            raise ValueError("a lead_snp anchor needs variant_offset")
+        if self.variant_offset is None:
+            if self.role is AnchorRole.lead_snp:
+                raise ValueError("a lead_snp anchor needs variant_offset")
+            self.variant_offset = len(self.sequence) // 2
         if self.variant_offset is not None and self.variant_offset >= len(self.sequence):
             raise ValueError("variant_offset is outside the anchor sequence")
         return self
+
+
+class LocusKind(str, Enum):
+    gwas = "gwas"  # a GWAS peak; the primary anchor is the lead SNP
+    gene = "gene"  # a cloned / known gene; the primary anchor is in the gene
+    qtl = "qtl"  # a mapped QTL interval with a marker as primary anchor
 
 
 class PlacementFlag(str, Enum):
@@ -74,6 +86,7 @@ class Placement(_Model):
     end: int = Field(ge=1)
     strand: str = Field("+", pattern=r"^[+-]$")
     method: str = Field("source", description="'source' = coordinates from the study; 'anchor' = placed by alignment")
+    lead_pos: Optional[int] = Field(None, ge=1, description="position of the lead variant (or gene anchor centre) on this build")
     anchors_placed: Optional[int] = Field(None, ge=0)
     anchors_total: Optional[int] = Field(None, ge=0)
     flags: list[PlacementFlag] = []
@@ -168,24 +181,33 @@ class Source(_Model):
 class LocusPassport(_Model):
     schema_version: str = SCHEMA_VERSION
     passport_id: str = ""
+    kind: LocusKind = LocusKind.gwas
     species: str
     trait: Trait
+    traits_other: list[Trait] = Field([], description="further traits linked to this locus (pleiotropy)")
     source: Source
     anchors: list[Anchor]
     placements: list[Placement] = []
-    signal: Signal
+    signal: Optional[Signal] = None
     credible_set: Optional[CredibleSet] = None
     ld_block: Optional[LDBlock] = None
     genes: list[Gene] = []
     neighbours: list[Neighbour] = []
     notes: Optional[str] = None
 
+    @property
+    def primary_role(self) -> AnchorRole:
+        return AnchorRole.gene if self.kind is LocusKind.gene else AnchorRole.lead_snp
+
     @model_validator(mode="after")
     def _assign_id(self) -> LocusPassport:
-        leads = [a for a in self.anchors if a.role is AnchorRole.lead_snp]
-        if len(leads) != 1:
-            raise ValueError("a passport needs exactly one lead_snp anchor")
-        expected = passport_id(self.species, leads[0].sequence)
+        role = self.primary_role
+        primary = [a for a in self.anchors if a.role is role]
+        if len(primary) != 1:
+            raise ValueError(f"a {self.kind.value} passport needs exactly one {role.value} anchor")
+        if self.kind is LocusKind.gwas and self.signal is None:
+            raise ValueError("a gwas passport needs a signal")
+        expected = passport_id(self.species, primary[0].sequence)
         if not self.passport_id:
             self.passport_id = expected
         elif self.passport_id != expected:
@@ -193,8 +215,12 @@ class LocusPassport(_Model):
         return self
 
     @property
+    def primary_anchor(self) -> Anchor:
+        return next(a for a in self.anchors if a.role is self.primary_role)
+
+    @property
     def lead_anchor(self) -> Anchor:
-        return next(a for a in self.anchors if a.role is AnchorRole.lead_snp)
+        return self.primary_anchor
 
     def placement(self, build: str) -> Optional[Placement]:
         return next((p for p in self.placements if p.build == build), None)
@@ -216,3 +242,17 @@ def json_schema() -> dict:
 
 def write_json_schema(path: str | Path) -> None:
     Path(path).write_text(json.dumps(json_schema(), indent=2) + "\n")
+
+
+def read_passports(path: str | Path) -> list[LocusPassport]:
+    """Read a .jsonl collection (one passport per line) or a single .json passport."""
+    path = Path(path)
+    if path.suffix == ".jsonl":
+        return [LocusPassport.model_validate_json(line) for line in path.read_text().splitlines() if line.strip()]
+    return [LocusPassport.from_json(path)]
+
+
+def write_passports(path: str | Path, passports: list[LocusPassport]) -> None:
+    with open(path, "w") as fh:
+        for p in passports:
+            fh.write(p.model_dump_json(exclude_none=True) + "\n")
