@@ -1,6 +1,7 @@
 """plocust: build-independent locus passports for plant GWAS."""
 
 import argparse
+import csv
 import json
 import sys
 from pathlib import Path
@@ -135,8 +136,9 @@ def cmd_db_build_genes(args):
     from .io import Genome, read_genes
 
     genome = Genome(args.genome, build=args.build)
-    table = pd.read_csv(args.genes, sep="\t")
-    kw = pd.read_csv(args.keywords, sep="\t") if args.keywords else None
+    read = dict(sep="\t", quoting=csv.QUOTE_NONE, encoding_errors="replace", dtype=str)
+    table = pd.read_csv(args.genes, **read)
+    kw = pd.read_csv(args.keywords, **read) if args.keywords else None
     passports = gene_passports(read_genes(args.gff), table, genome, args.species, args.study, keywords=kw)
     for spec in args.assembly or []:
         fasta, build = spec.rsplit(":", 1) if ":" in spec else (spec, None)

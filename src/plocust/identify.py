@@ -37,7 +37,7 @@ class IdentifyConfig:
     flank: int = 100  # anchor = variant +- flank bp
     block_r2: float = 0.5  # LD block = region around the lead where r2 with it stays >= this
     block_max_kb: float = 1500
-    block_max_miss: int = 10  # consecutive SNPs below block_r2 before the block ends
+    block_max_gap_kb: float = 50  # the block ends after this distance without a SNP at r2 >= block_r2
     haplotype_snps: int = 30
     haplotype_min_freq: float = 0.02
     inversion_min_kb: float = 300
@@ -68,12 +68,17 @@ class StudyInfo:
 
 
 def z_scores(ss: pd.DataFrame) -> np.ndarray:
-    """|z| from beta/se when present, otherwise from the two-sided p-value."""
-    z = np.abs(norm.isf(ss["p"].to_numpy() / 2))
+    """|z| from the two-sided p-value, the same quantity that ranks the leads.
+
+    beta/se is used only where p underflowed (<= 1e-300); tests such as Firth or LRT give p-values
+    that differ from the Wald ratio, and mixing the two would let the credible set disagree with the lead.
+    """
+    p = ss["p"].to_numpy(dtype=float)
+    z = np.abs(norm.isf(p / 2))
     if "beta" in ss and "se" in ss:
         bz = np.abs(ss["beta"].to_numpy(dtype=float) / ss["se"].to_numpy(dtype=float))
-        ok = np.isfinite(bz)
-        z[ok] = bz[ok]
+        under = (p <= 1e-300) & np.isfinite(bz)
+        z[under] = np.maximum(z[under], bz[under])
     return z
 
 
@@ -170,19 +175,19 @@ def ld_block(chrom: str, lead_pos: int, geno: Genotypes, cfg: IdentifyConfig) ->
     g = geno.read(region["idx"].to_numpy())
     li = region.index.get_loc(lead_rows.index[0])
     r2 = r2_with(g, g[:, li])
+    pos = region["pos"].to_numpy()
+    gap = cfg.block_max_gap_kb * 1000
     left = right = li
-    miss = 0
     for i in range(li - 1, -1, -1):
-        if r2[i] >= cfg.block_r2:
-            left, miss = i, 0
-        elif (miss := miss + 1) >= cfg.block_max_miss:
+        if pos[left] - pos[i] > gap:
             break
-    miss = 0
+        if r2[i] >= cfg.block_r2:
+            left = i
     for i in range(li + 1, len(r2)):
-        if r2[i] >= cfg.block_r2:
-            right, miss = i, 0
-        elif (miss := miss + 1) >= cfg.block_max_miss:
+        if pos[i] - pos[right] > gap:
             break
+        if r2[i] >= cfg.block_r2:
+            right = i
 
     inside = np.arange(left, right + 1)
     strong = inside[r2[inside] >= cfg.block_r2]
@@ -204,7 +209,7 @@ def ld_block(chrom: str, lead_pos: int, geno: Genotypes, cfg: IdentifyConfig) ->
 
 def _haplotypes(g: np.ndarray, cfg: IdentifyConfig) -> tuple[Optional[int], list[float]]:
     """Haplotypes over block SNPs, treating homozygous calls as haplotypes (inbred panels)."""
-    if g.shape[1] == 0:
+    if g.shape[1] < 2:  # one SNP is an allele, not a haplotype
         return None, []
     cols = np.linspace(0, g.shape[1] - 1, min(cfg.haplotype_snps, g.shape[1])).round().astype(int)
     h = g[:, np.unique(cols)]
@@ -280,6 +285,7 @@ def identify_loci(
     threshold = cfg.p_threshold if cfg.p_threshold is not None else 0.05 / len(ss)
     clumps = clump(ss, threshold, cfg, geno)
 
+    claimed = {i for c in clumps for i in c.members}
     passports = []
     for c in clumps:
         lead = ss.loc[c.lead]
@@ -297,9 +303,11 @@ def identify_loci(
         start = min(int(members["pos"].min()), block.start if block else lead_pos)
         end = max(int(members["pos"].max()), block.end if block else lead_pos)
 
-        # Credible set over all tested SNPs in the clump window that are not closer to another lead.
+        # Credible set over the tested SNPs in the clump window, minus the members of other clumps
+        # and SNPs closer to another lead (one causal variant per clump).
         w = cfg.window_kb * 1000
         win = ss[(ss["chrom"] == chrom) & (ss["pos"] >= lead_pos - w) & (ss["pos"] <= lead_pos + w)]
+        win = win[~win.index.isin(claimed.difference(c.members))]
         others = [int(ss.at[o.lead, "pos"]) for o in clumps if o is not c and ss.at[o.lead, "chrom"] == chrom]
         if others:
             d_self = np.abs(win["pos"].to_numpy() - lead_pos)

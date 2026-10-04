@@ -151,7 +151,7 @@ def gene_passports(genes: pd.DataFrame, gene_table: pd.DataFrame, genome: Genome
     kw = {}
     if keywords is not None:
         for gid, k in keywords.groupby(id_col)["Keyword"]:
-            kw[gid] = list(dict.fromkeys(str(x) for x in k if isinstance(x, str)))
+            kw[gid] = k.dropna().astype(str).value_counts().index.tolist()  # most-cited keyword first
     loc = genes.set_index("id")
     out = []
     for _, row in gene_table.iterrows():

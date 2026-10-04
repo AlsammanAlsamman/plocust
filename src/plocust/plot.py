@@ -48,8 +48,8 @@ def locus_card(
 
     plt.rcParams.update({"font.size": 9, "axes.edgecolor": MUTED, "axes.labelcolor": INK_2, "xtick.color": INK_2,
                          "ytick.color": INK_2, "font.family": "DejaVu Sans"})
-    fig = plt.figure(figsize=(12, 6.8), facecolor=SURFACE)
-    gs = fig.add_gridspec(3, 2, width_ratios=[2.3, 1], height_ratios=[3, 1.2, 1.1], hspace=0.12, wspace=0.08,
+    fig = plt.figure(figsize=(13, 6.8), facecolor=SURFACE)
+    gs = fig.add_gridspec(3, 2, width_ratios=[2.1, 1], height_ratios=[3, 1.2, 1.1], hspace=0.12, wspace=0.16,
                           left=0.06, right=0.98, top=0.88, bottom=0.08)
     ax = fig.add_subplot(gs[0, 0])
     axg = fig.add_subplot(gs[1, 0], sharex=ax)
@@ -78,7 +78,8 @@ def locus_card(
             known_r2 = np.isfinite(r2)
             ax.scatter(x[~known_r2], y[~known_r2], s=12, color=MUTED, lw=0, zorder=2)
             sc = ax.scatter(x[known_r2], y[known_r2], c=r2[known_r2], cmap=cmap, vmin=0, vmax=1, s=16, lw=0, zorder=3)
-            cb = fig.colorbar(sc, ax=ax, fraction=0.025, pad=0.01)
+            cax = ax.inset_axes([1.01, 0.05, 0.012, 0.9])  # inset, so the panel keeps the gene track's width
+            cb = fig.colorbar(sc, cax=cax)
             cb.set_label("r² with lead", color=INK_2)
             cb.outline.set_visible(False)
         else:
@@ -151,7 +152,7 @@ def locus_card(
             lines.append(f"credible set: {len(passport.credible_set.variants)} SNPs "
                          f"({passport.credible_set.coverage:.0%})")
     if blk:
-        lines += ["", "LD BLOCK", f"{blk.length_kb:,.0f} kb, {blk.n_haplotypes or '?'} haplotypes"
+        lines += ["", "LD BLOCK", f"{blk.length_kb:,.1f} kb, {blk.n_haplotypes or '-'} haplotypes"
                   + ("  [inversion-like]" if blk.inversion_like else "")]
     lines += ["", "ANCHORS"]
     for a in passport.anchors:
@@ -167,7 +168,7 @@ def locus_card(
             kp = k.placement(build)
             d = abs(kp.lead_pos - lead) / 1000 if kp else float("nan")
             traits = ", ".join([k.trait.name] + [t.name for t in k.traits_other][:2])
-            lines.append(f"{(k.genes[0].name if k.genes else k.passport_id)[:14]:<14} {d:5.0f} kb  {traits[:28]}")
+            lines.append(f"{(k.genes[0].name if k.genes else k.passport_id)[:12]:<12} {d:4.0f} kb  {traits[:22]}")
     axi.text(0.02, 1.0, "\n".join(lines), va="top", ha="left", fontsize=8.2, color=INK, family="DejaVu Sans Mono",
              transform=axi.transAxes, linespacing=1.45)
 

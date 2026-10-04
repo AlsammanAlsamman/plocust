@@ -155,3 +155,43 @@ def test_cli_end_to_end(world, tmp_path):
     assert main(["card", str(out), "--sumstats", str(world.sumstats_path), "--gff", str(world.gff), "--bfile",
                  str(world.bfile), "--p", "1e-8", "--out", str(png)]) == 0
     assert png.stat().st_size > 10_000
+
+
+def test_read_sumstats_log10p(tmp_path):
+    f = tmp_path / "r.regenie"
+    f.write_text("CHROM GENPOS ID ALLELE0 ALLELE1 A1FREQ N BETA SE LOG10P\n1 100 a C T 0.2 500 0.1 0.02 5\n1 200 b G A 0.3 500 0.1 0.02 400\n")
+    ss = read_sumstats(f, sep=" ")
+    assert ss["p"].tolist() == pytest.approx([1e-5, 1e-300], rel=1e-9)
+    assert ss["pos"].tolist() == [100, 200] and ss["af"].tolist() == [0.2, 0.3]
+
+
+
+def test_credible_sets_do_not_borrow_other_clumps(world, tmp_path):
+    """A strong signal with a perfect-LD copy at 140 kb, and an independent weaker signal at 125 kb.
+
+    LD clumping gives the 140 kb copy to the strong clump. It lies closer to the weak lead, and
+    before the fix it ended up in the weak locus's credible set.
+    """
+    from .conftest import write_bed
+
+    rng = np.random.default_rng(3)
+    n = 400
+    x = rng.integers(0, 2, n) * 2.0
+    z = rng.integers(0, 2, n) * 2.0
+    noise = rng.integers(0, 2, (n, 6)) * 2.0
+    g = np.column_stack([x, z, x, noise])
+    pos = [100_500, 125_500, 140_500, 20_500, 40_500, 60_500, 200_500, 230_500, 260_500]
+    order = np.argsort(pos)
+    g, pos = g[:, order], np.array(pos)[order]
+    bim = pd.DataFrame({"chrom": "1", "id": [f"v{p}" for p in pos], "cm": 0, "pos": pos, "a1": "N", "a2": "N"})
+    write_bed(tmp_path / "p", g, bim, [f"i{k}" for k in range(n)])
+    geno = Genotypes.open(tmp_path / "p")
+    p_of = {100_500: 1e-40, 140_500: 1e-40 * 1.0001, 125_500: 1e-12}
+    ss = pd.DataFrame({"chrom": "1", "pos": pos, "id": [f"v{p}" for p in pos],
+                       "p": [p_of.get(p, 0.5) for p in pos]})
+    from plocust.io import standardize_sumstats
+
+    ps = identify_loci(standardize_sumstats(ss), STUDY, genome=Genome(world.genome, "SRC"), geno=geno,
+                       cfg=IdentifyConfig(p_threshold=1e-8))
+    weak = next(p for p in ps if p.signal.lead.pos == 125_500)
+    assert 140_500 not in {v.pos for v in weak.credible_set.variants}

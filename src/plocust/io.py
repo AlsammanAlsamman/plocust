@@ -19,8 +19,8 @@ _CHROM_PREFIX = re.compile(r"^(chr|chromosome|chrom)_?", re.IGNORECASE)
 
 
 def normalize_chrom(chrom) -> str:
-    """'chr01', 'Chr1', 'chromosome1', '1', 1 -> '1'. Other names are kept as they are."""
-    s = _CHROM_PREFIX.sub("", str(chrom).strip())
+    """'chr01', 'Chr1', 'chromosome1', 'chr01|13101', 1 -> '1'. Other names are kept as they are."""
+    s = _CHROM_PREFIX.sub("", re.split(r"[|\s]", str(chrom).strip())[0])
     return str(int(s)) if s.isdigit() else s
 
 
@@ -31,7 +31,7 @@ SUMSTATS_COLUMNS = ["chrom", "pos", "id", "ref", "alt", "effect_allele", "beta",
 # Lower-case column name -> standard name, for the common GWAS tools.
 _ALIASES = {
     "chrom": ["chrom", "#chrom", "chr", "chromosome", "chr_id"],
-    "pos": ["pos", "bp", "position", "ps", "base_pair_location"],
+    "pos": ["pos", "bp", "position", "ps", "base_pair_location", "genpos"],
     "id": ["id", "snp", "rs", "marker", "snp_id", "variant_id", "rsid"],
     "ref": ["ref", "allele0", "a2", "other_allele"],
     "alt": ["alt", "allele1", "a1", "effect_allele"],
@@ -39,7 +39,7 @@ _ALIASES = {
     "beta": ["beta", "effect", "b"],
     "se": ["se", "stderr", "standard_error"],
     "p": ["p", "pvalue", "p_value", "p_wald", "p_lrt", "p.value", "pval", "p_score"],
-    "af": ["af", "maf", "a1_freq", "freq", "effect_allele_frequency"],
+    "af": ["af", "maf", "a1_freq", "a1freq", "freq", "effect_allele_frequency"],
     "n": ["n", "obs_ct", "n_miss_complement", "nobs"],
 }
 
@@ -65,6 +65,9 @@ def standardize_sumstats(raw: pd.DataFrame, columns: Optional[dict[str, str]] = 
         hit = next((lower[a] for a in aliases if a in lower), None)
         if hit is not None:
             found[std] = hit
+    if "p" not in found and "log10p" in lower:  # REGENIE and others report -log10(p)
+        raw = raw.assign(_p=np.maximum(10.0 ** -pd.to_numeric(raw[lower["log10p"]], errors="coerce"), 1e-300))
+        found["p"] = "_p"
     missing = [c for c in ("chrom", "pos", "p") if c not in found]
     if missing:
         raise ValueError(f"summary statistics need columns {missing}; pass `columns` to map them")
