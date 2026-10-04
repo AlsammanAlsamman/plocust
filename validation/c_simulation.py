@@ -5,7 +5,8 @@ Per replicate:
     4 nearby-distinct pairs        100-400 kb apart, r2 < 0.1;     -> loci should NOT be called "same"
                                    one SNP active in each panel       (coordinate overlap is fooled here)
     2 private causal SNPs/panel    elsewhere
-Each causal SNP explains 3% of phenotypic variance. GWAS per panel: plink2 --glm + 5 PCs.
+Each causal SNP explains 4% of phenotypic variance. GWAS per panel: REGENIE mixed model + 5 PCs
+(PCs alone leave strong inflation in rice; all replicates are run as one multi-phenotype REGENIE job).
 
 Truth for a detected locus: the active causal SNP (within 1 Mb) with the highest r2 to its lead in its own
 panel, if r2 >= 0.3. A pair of loci (panel A x panel B, leads within 1 Mb) is truly "same" when both are
@@ -31,13 +32,18 @@ OUT = ROOT / "validation" / "results" / "c_simulation"
 PLINK = DATA / "bin/plink2"
 BUILD = "IRGSP-1.0"
 N_REP = int(sys.argv[1]) if len(sys.argv) > 1 else 20
-H2_EACH = 0.03
+H2_EACH = 0.04
+REGENIE = DATA / "bin/regenie_v4.1.3.gz_x86_64_Linux"
 RNG = np.random.default_rng(2026)
 
 
 def plink(*args):
     subprocess.run([str(PLINK), "--threads", "8", "--memory", "8000", *map(str, args)], check=True,
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def run(cmd):
+    subprocess.run([str(x) for x in cmd], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 def split_panels():
@@ -141,21 +147,35 @@ def main():
     cand = candidates()
     print(f"panel A {ga.n_samples}, panel B {gb.n_samples}, candidate SNPs {len(cand)}", flush=True)
 
+    # 1. draw causal SNPs and phenotypes for every replicate
+    reps = [draw_causals(geno_all, cand, ga, gb) for _ in range(N_REP)]
+    for panel, g in (("A", ga), ("B", gb)):
+        ids = g.samples[g._keep]["iid"].to_numpy()
+        ph = pd.DataFrame({"FID": ids, "IID": ids})
+        for rep, causals in enumerate(reps):
+            ph[f"y{rep}"] = phenotype(g, causals, panel)
+        ph.to_csv(WORK / f"pheno_{panel}.tsv", sep="\t", index=False)
+    pd.concat({i: c for i, c in enumerate(reps)}).to_csv(OUT / "causals.tsv", sep="\t")
+
+    # 2. one REGENIE run per panel for all replicates
+    for panel in "AB":
+        common = ["--phenoFile", WORK / f"pheno_{panel}.tsv", "--covarFile", DATA / "3k/covar5.tsv",
+                  "--keep", WORK / f"keep_{panel}.txt", "--threads", "8"]
+        # step-1 SNPs must vary inside the panel
+        plink("--bfile", DATA / "3k/step1set", "--keep", WORK / f"keep_{panel}.txt", "--maf", "0.05",
+              "--make-bed", "--out", WORK / f"step1_{panel}")
+        run([REGENIE, "--step", "1", "--bed", WORK / f"step1_{panel}", "--bsize", "1000", "--lowmem",
+             "--lowmem-prefix", WORK / f"tmp{panel}", "--out", WORK / f"s1_{panel}", *common])
+        run([REGENIE, "--step", "2", "--bed", DATA / "3k/core3k", "--pred", WORK / f"s1_{panel}_pred.list",
+             "--bsize", "400", "--minMAC", "50", "--out", WORK / f"s2_{panel}", *common])
+        print(f"REGENIE panel {panel} done", flush=True)
+
+    # 3. passports and matching per replicate
     all_pairs, detect = [], []
-    for rep in range(N_REP):
-        causals = draw_causals(geno_all, cand, ga, gb)
+    for rep, causals in enumerate(reps):
         loci = {}
-        for panel, g, iids in (("A", ga, ia), ("B", gb, ib)):
-            ids = g.samples[g._keep]["iid"].to_numpy()
-            y = phenotype(g, causals, panel)
-            ph = pd.DataFrame({"FID": ids, "IID": ids, "y": y})
-            ph.to_csv(WORK / f"pheno_{panel}.tsv", sep="\t", index=False)
-            pcs[["FID", "IID"] + [f"PC{i}" for i in range(1, 6)]].to_csv(WORK / "covar.tsv", sep="\t", index=False)
-            plink("--bfile", DATA / "3k/core3k", "--keep", WORK / f"keep_{panel}.txt", "--maf", "0.05",
-                  "--pheno", WORK / f"pheno_{panel}.tsv", "--covar", WORK / "covar.tsv",
-                  "--covar-variance-standardize", "--glm", "hide-covar", "cols=+a1freq,+beta,+se",
-                  "--out", WORK / f"gwas_{panel}")
-            ss = read_sumstats(WORK / f"gwas_{panel}.y.glm.linear")
+        for panel, g in (("A", ga), ("B", gb)):
+            ss = read_sumstats(WORK / f"s2_{panel}_y{rep}.regenie", sep=" ")
             loci[panel] = identify_loci(ss, StudyInfo("Oryza sativa", "sim", f"sim{rep}{panel}", BUILD),
                                         genome=genome, geno=g, cfg=IdentifyConfig(window_kb=500, min_significant=2))
         truth_a = assign(loci["A"], causals, "A", ga)

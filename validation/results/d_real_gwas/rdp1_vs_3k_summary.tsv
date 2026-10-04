@@ -1,0 +1,5 @@
+trait	rdp1_loci	3k_loci	rdp1_anchored	same_signal	ambiguous	distinct_nearby_only	within100kb_anchored	within100kb_naive_msu6
+Plant height	2	14	2	1	1	0	1	1
+Awn presence	1	0	1	0	0	0	0	0
+Pericarp color	36	9	36	0	1	3	2	2
+Amylose content	6	16	6	1	0	0	1	1

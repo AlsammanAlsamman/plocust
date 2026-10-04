@@ -1,0 +1,29 @@
+trait	study	expected_gene	in_locus	nearest_kb
+Plant height	RDP1	sd1	False	269.9
+Plant height	RDP1	(all cloned genes in loci)	1	
+Plant height	3K	sd1	True	269.9
+Plant height	3K	(all cloned genes in loci)	156	
+Awn presence	RDP1	An-1	False	
+Awn presence	RDP1	LABA1	False	
+Awn presence	RDP1	GAD1	False	
+Awn presence	RDP1	RAE2	False	
+Awn presence	RDP1	An-2	False	
+Awn presence	RDP1	DL	False	
+Awn presence	RDP1	(all cloned genes in loci)	2	
+Awn presence	3K	An-1	False	
+Awn presence	3K	LABA1	False	
+Awn presence	3K	GAD1	False	
+Awn presence	3K	RAE2	False	
+Awn presence	3K	An-2	False	
+Awn presence	3K	DL	False	
+Awn presence	3K	(all cloned genes in loci)	0	
+Pericarp color	RDP1	Rc	True	4.9
+Pericarp color	RDP1	Rd	False	
+Pericarp color	RDP1	(all cloned genes in loci)	35	
+Pericarp color	3K	Rc	True	0.2
+Pericarp color	3K	Rd	False	
+Pericarp color	3K	(all cloned genes in loci)	29	
+Amylose content	RDP1	Wx	True	0.0
+Amylose content	RDP1	(all cloned genes in loci)	2	
+Amylose content	3K	Wx	True	13.4
+Amylose content	3K	(all cloned genes in loci)	127	

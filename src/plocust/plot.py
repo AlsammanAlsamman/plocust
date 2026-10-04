@@ -93,7 +93,7 @@ def locus_card(
         if passport.signal:
             ax.scatter([lead / mb], [-np.log10(passport.signal.pvalue)], marker="D", s=70, color=ACCENT,
                        edgecolor=SURFACE, lw=1.5, zorder=5, label="lead SNP")
-        ax.legend(loc="upper right", frameon=False, fontsize=8)
+        ax.legend(loc="lower right", bbox_to_anchor=(1.0, 1.0), ncol=2, frameon=False, fontsize=8)
     else:
         ax.text(0.5, 0.5, f"placed on {build} by sequence anchors\n(association shown on source build {src.build})",
                 ha="center", va="center", color=INK_2, transform=ax.transAxes)
@@ -103,6 +103,8 @@ def locus_card(
 
     # --- gene track
     known_ids = {k.genes[0].id: k for k in (known or []) if k.genes}
+    ranked = rank_known(passport, list(known_ids.values()), build, lead)
+    labelled = {k.genes[0].id for k in ranked[:6]}  # dense regions are unreadable when every gene is labelled
     if genes is not None:
         g = genes[(genes["chrom"] == chrom) & (genes["end"] >= lo) & (genes["start"] <= hi)].sort_values("start")
         rows_end = []
@@ -114,7 +116,7 @@ def locus_card(
             hit = row["id"] in known_ids
             axg.plot([row["start"] / mb, row["end"] / mb], [-lane, -lane], lw=6 if hit else 4,
                      color=ACCENT if hit else MUTED, solid_capstyle="round")
-            if hit:
+            if row["id"] in labelled:
                 sym = known_ids[row["id"]].genes[0].name or row["id"]
                 axg.text((row["start"] + row["end"]) / 2 / mb, -lane + 0.45, sym, ha="center", fontsize=8,
                          color=INK, weight="bold")
@@ -152,8 +154,11 @@ def locus_card(
             lines.append(f"credible set: {len(passport.credible_set.variants)} SNPs "
                          f"({passport.credible_set.coverage:.0%})")
     if blk:
-        lines += ["", "LD BLOCK", f"{blk.length_kb:,.1f} kb, {blk.n_haplotypes or '-'} haplotypes"
-                  + ("  [inversion-like]" if blk.inversion_like else "")]
+        if blk.end > blk.start:
+            desc = f"{blk.length_kb:,.1f} kb, {blk.n_haplotypes or '-'} haplotypes"
+        else:
+            desc = f"lead only (no SNP at r²≥{blk.r2_threshold})"
+        lines += ["", "LD BLOCK", desc + ("  [inversion-like]" if blk.inversion_like else "")]
     lines += ["", "ANCHORS"]
     for a in passport.anchors:
         u = {True: "unique", False: "not unique", None: "unchecked"}[a.unique]
@@ -163,12 +168,14 @@ def locus_card(
         fl = f" [{', '.join(f.value for f in p.flags)}]" if p.flags else ""
         lines.append(f"{p.build:<12} chr{p.chrom}:{(p.lead_pos or p.start):,} {p.strand}{fl}")
     if known:
-        lines += ["", "KNOWN GENES NEARBY"]
-        for k in sorted(known, key=lambda k: abs((k.placement(build).lead_pos if k.placement(build) else 0) - lead))[:6]:
+        lines += ["", "KNOWN GENES (trait match first)"]
+        for k in ranked[:6]:
             kp = k.placement(build)
             d = abs(kp.lead_pos - lead) / 1000 if kp else float("nan")
+            star = "*" if trait_match(passport, k) else " "
             traits = ", ".join([k.trait.name] + [t.name for t in k.traits_other][:2])
-            lines.append(f"{(k.genes[0].name if k.genes else k.passport_id)[:12]:<12} {d:4.0f} kb  {traits[:22]}")
+            lines.append(f"{star}{(k.genes[0].name if k.genes else k.passport_id)[:11]:<11} {d:4.0f} kb  {traits[:22]}")
+        lines.append("* trait keyword matches this locus")
     axi.text(0.02, 1.0, "\n".join(lines), va="top", ha="left", fontsize=8.2, color=INK, family="DejaVu Sans Mono",
              transform=axi.transAxes, linespacing=1.45)
 
@@ -176,6 +183,21 @@ def locus_card(
     fig.savefig(out, dpi=160, facecolor=SURFACE)
     plt.close(fig)
     return out
+
+
+def trait_match(passport: LocusPassport, known: LocusPassport) -> bool:
+    """Does any word of the locus trait (e.g. 'plant height') appear in the known locus's traits?"""
+    words = {w for w in passport.trait.name.lower().replace("/", " ").split() if len(w) > 3}
+    names = " ".join([known.trait.name] + [t.name for t in known.traits_other]).lower()
+    return bool(words) and any(w in names for w in words)
+
+
+def rank_known(passport: LocusPassport, known: list[LocusPassport], build: str, lead: int) -> list[LocusPassport]:
+    """Known loci ordered by trait match, then distance to the lead."""
+    def key(k):
+        kp = k.placement(build)
+        return (not trait_match(passport, k), abs(kp.lead_pos - lead) if kp else float("inf"))
+    return sorted(known, key=key)
 
 
 def _r2_to_lead(r: pd.DataFrame, lead: int, chrom: str, geno: Genotypes) -> np.ndarray:
